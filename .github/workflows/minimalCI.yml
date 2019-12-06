@@ -17,5 +17,5 @@ jobs:
         with:
           java-version: 1.8
       - name: RunTests
-        run: bash ./grandlew test -stacktrace
+        run: bash ./gradlew test --stacktrace
   
