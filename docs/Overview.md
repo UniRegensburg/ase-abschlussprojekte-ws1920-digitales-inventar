@@ -2,8 +2,8 @@
 
 ### Problemkontext
 
-  Viele Menschen verlieren oft den Überblick in ihrem eigenen Haushalt und wissen nicht mehr welche Gegenstände in ihrem aktuellen Besitz sind und welche nicht.
-  Hinzu kommt, dass es nicht immer einfach ist den Haushalt ordentlich zu gestalten und manche Sachen einfach verschwinden und erst Wochen später wieder gefunden werden.
+Viele Menschen verlieren oft den Überblick in ihrem eigenen Haushalt und wissen nicht mehr welche Gegenstände in ihrem aktuellen Besitz sind und welche nicht.
+Hinzu kommt, dass es nicht immer einfach ist den Haushalt ordentlich zu gestalten und manche Sachen einfach verschwinden und erst Wochen später wieder gefunden werden.
   
 ### Funktionsumfang
 
@@ -26,7 +26,7 @@ Um dieses Problem zu minimieren, soll die "Digitales Inventar" - App dem Nutzer 
 ### Ziele
 
 Um die oben genannten Probleme, wie das Suchen nach Gegenständen, zu minimieren soll die App den Nutzern Helfen mehr Ordnung in ihren Haushalt zu bekommen.
-Dafür soll sie die Informationen nutzerfreundlich zur Verfügung stellen, um so den Nutzer kognitiv zu entlasten.
+Dafür soll sie die Informationen nutzerfreundlich zur Verfügung stellen, um so Nutzer/-innen kognitiv zu entlasten.
 
 ## NutzerInnen
 
@@ -36,14 +36,16 @@ Personen, die das Suchen von Gegenständen in ihrem Haushalt digital unterstütz
 
 #### Die Kernfunktionen umfassen
 
-* Eintragen von Gegenständen
+* Erfassen von Gegenständen
+* Editieren von Gegenständen
 * Annotieren von Gegenständen
 * Suchen von Gegenständen
 * Löschen von Gegenständen
+* Übersicht des Inventars
 
 #### Szenarien
 
-Person A sucht einen gewissen Gegenstand und weiß nicht wo dieser aufzufinden ist. Der Standort des Gegenstands kann durch eine Suche in der App ausfindig gemacht werden.
+Person A sucht einen gewissen Gegenstand und weiß nicht, wo dieser aufzufinden ist. Der Standort des Gegenstands kann durch eine Suche in der App ausfindig gemacht werden.
 
 Person B will für den Einkauf einen Überblick über den aktuellen Bestand Bescheid wissen und kann dies einfach mobil in der App nachschlagen.
 
