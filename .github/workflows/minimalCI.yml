@@ -1,6 +1,5 @@
 name: Minimal Android CI Workflow
-env: 
-  gradle_PATH: ./DigitalesInventar/gradlew
+
 
 on:
   push:
@@ -21,7 +20,8 @@ jobs:
         with:
           java-version: 1.8
       - name: Run Tests 
-        run: bash cd DigitalesInventar && bash $gradle_PATH test --stacktrace  
+        run: bash ./gradlew test --stacktrace  
+        working-directory: ./DigitalesInventar
   apk:
     name: Generate APK
     needs: test
@@ -34,12 +34,13 @@ jobs:
         with:
           java-version: 1.8
       - name: Build APK
-        run: bash $gradle_PATH assembleDebug --stacktrace
+        run: bash ./gradlew assembleDebug --stacktrace
+        working-directory: ./DigitalesInventar
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
           name: apk
-          path: DigitalesInventar/app/build/outputs/apk/debug/app-debug.apk 
+          path: ./DigitalesInventar/app/build/outputs/apk/debug/app-debug.apk 
   release:
     name: Release APK
     needs: apk
