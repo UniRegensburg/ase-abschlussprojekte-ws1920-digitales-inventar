@@ -6,9 +6,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:layout_anchorGravity="center"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+        android:background="?attr/colorPrimary" />
+        //app:layout_anchorGravity="center"
+        //app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <LinearLayout
         android:id="@+id/KategorySpinner"
@@ -63,11 +63,13 @@
         android:orientation="horizontal">
 
        <Button
+           android:id="@+id/addItemCancel"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_weight="1"
            android:text="cancel"/>
         <Button
+            android:id="@+id/addItemSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
