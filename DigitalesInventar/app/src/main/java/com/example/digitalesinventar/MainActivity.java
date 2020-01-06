@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -146,6 +147,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                Snackbar.make(v, "Item is saved", Snackbar.LENGTH_LONG)
                        .setAction("Action", null).show();
+               //create Database entry
+                getEntry();
                setupMainMenu();
             }
         });
@@ -166,5 +169,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //for database entry
+
+    public void getEntry() {
+        EditText itemName = (EditText)findViewById(R.id.itemName);
+        DatabaseActivity.addEntry(itemName.toString());
     }
 }
