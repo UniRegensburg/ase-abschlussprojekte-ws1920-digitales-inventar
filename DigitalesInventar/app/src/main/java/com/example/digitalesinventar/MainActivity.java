@@ -18,18 +18,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setContentView(R.layout.add_item);
-                initView();
-            }
-        });
+        setupMainMenu();
     }
 
     @Override
@@ -59,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         cancel.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.activity_main);
+                setupMainMenu();
             }
         });
 
@@ -69,8 +58,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                Snackbar.make(v, "Item is saved", Snackbar.LENGTH_LONG)
                        .setAction("Action", null).show();
-               setContentView(R.layout.activity_main);
+               setupMainMenu();
             }
         });
+    }
+
+    public void setupMainMenu(){
+
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setContentView(R.layout.add_item);
+                initView();
+            }
+        });
+
     }
 }
