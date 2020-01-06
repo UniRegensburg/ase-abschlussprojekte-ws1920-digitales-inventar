@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -17,97 +18,29 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     // Access a Cloud Firestore instance from your Activity
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    public List<List<String>> itemArray = new ArrayList<List<String>>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupMainMenu();
-
-        /* //https://firebase.google.com/docs/firestore/quickstart
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setContentView(R.layout.add_item);
-                initView();
-            }
-        });
-
-        // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("first", "Ada");
-        user.put("last", "Lovelace");
-        user.put("born", 1815);
-
-        // Add a new document with a generated ID
-        db.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        System.out.println("success1");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        System.out.println("fail1");
-                    }
-                });
-
-        // Create a new user with a first, middle, and last name
-        Map<String, Object> user2 = new HashMap<>();
-        user.put("first", "Alan");
-        user.put("middle", "Mathison");
-        user.put("last", "Turing");
-        user.put("born", 1912);
-
-        // Add a new document with a generated ID
-        db.collection("users")
-                .add(user2)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        System.out.println("success2");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        System.out.println("fail2");
-                    }
-                });
-
-        db.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                System.out.println("success3");
-                            }
-                        } else {
-                            System.out.println("fail3");
-                        }
-                    }
-                });
-        */
     }
 
     @Override
@@ -147,12 +80,36 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                Snackbar.make(v, "Item is saved", Snackbar.LENGTH_LONG)
                        .setAction("Action", null).show();
-               //create Database entry
-                getEntry();
-               setupMainMenu();
+               //create Database entry();
+                getNewItem();
+                getDataFromDatabase();
+                //setupMainMenu();
             }
         });
     }
+
+    private void getDataFromDatabase() {
+        db.collection("items")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ArrayList<String> entry = new ArrayList<String>();
+                                entry.add(document.get("name").toString());
+                                entry.add(document.get("ts").toString());
+                                itemArray.add(entry);
+                                setupMainMenu();
+                                Log.i("loadEntry", "item loaded from db");
+                            }
+                        } else {
+                            Log.i("loadEntry", "item not loaded from db");
+                        }
+                    }
+                });
+    }
+
 
     public void setupMainMenu(){
 
@@ -173,8 +130,8 @@ public class MainActivity extends AppCompatActivity {
 
     //for database entry
 
-    public void getEntry() {
+    public void getNewItem() {
         EditText itemName = (EditText)findViewById(R.id.itemName);
-        DatabaseActivity.addEntry(itemName.toString());
+        DatabaseActivity.addEntry(itemName.getText().toString());
     }
 }
