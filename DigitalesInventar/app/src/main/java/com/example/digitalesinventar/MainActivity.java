@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -172,9 +173,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //for database entry
-
     public void getEntry() {
         EditText itemName = (EditText)findViewById(R.id.itemName);
-        DatabaseActivity.addEntry(itemName.toString());
+        float time = (float) (System.currentTimeMillis());
+        DatabaseActivity.addEntry(itemName.getText().toString(), time);
     }
 }
