@@ -36,7 +36,11 @@ public class MainActivity extends AppCompatActivity {
     // Access a Cloud Firestore instance from your Activity
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public List<List<String>> itemArray = new ArrayList<List<String>>();
+    public static List<List<String>> itemArray = new ArrayList<List<String>>();
+
+    public static List<List<String>> getItemArray() {
+        return itemArray;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,8 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //for database entry
-
+    //get new item from EditText to add new database entry
     public void getNewItem() {
         EditText itemName = (EditText)findViewById(R.id.itemName);
         DatabaseActivity.addEntry(itemName.getText().toString());

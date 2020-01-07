@@ -11,9 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-
     </com.google.android.material.appbar.AppBarLayout>
-
 
     layout="@layout/content_main" />
 
@@ -54,6 +52,7 @@
                 android:text="@string/categories"
                 android:textStyle="bold"/>
         </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/firstCates"
             android:layout_width="match_parent"
@@ -84,8 +83,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat3"
                 android:text="\n3. \n Kategorie"/>
-
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/secondCates"
             android:layout_width="match_parent"
@@ -115,8 +114,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat6"
                 android:text="\n6. \n Kategorie"/>
-
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/thirdCates"
             android:layout_width="match_parent"
@@ -146,8 +145,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat9"
                 android:text="\n9. \n Kategorie"/>
-
         </LinearLayout>
+
         <RelativeLayout
             android:id="@+id/heading2"
             android:layout_width="fill_parent"
@@ -159,9 +158,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@android:dimen/app_icon_size"
-                android:text="Benutzte Gegenstände: "
+                android:text="Zuletzt hinzugefügt: "
                 android:textStyle="bold" />
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/itemlist"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/thirdCates">
+            <fragment
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:id="@+id/fragment"
+                    android:name="com.example.digitalesinventar.MainActivityFragment"
+                    tools:layout="@layout/fragment_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+        </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/heading3"
             android:layout_width="fill_parent"
@@ -184,6 +199,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
         </LinearLayout>
+
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
