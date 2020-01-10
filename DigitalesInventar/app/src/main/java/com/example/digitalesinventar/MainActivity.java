@@ -1,5 +1,6 @@
 package com.example.digitalesinventar;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,6 +19,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.ListFragment;
 
 import android.util.Log;
 import android.view.View;
@@ -33,14 +37,6 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    // Access a Cloud Firestore instance from your Activity
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-    public static List<List<String>> itemArray = new ArrayList<List<String>>();
-
-    public static List<List<String>> getItemArray() {
-        return itemArray;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,55 +62,8 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
-    public void initView(){
-        Button cancel = findViewById(R.id.addItemCancel);
-        cancel.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                setupMainMenu();
-            }
-        });
-
-        Button save = findViewById(R.id.addItemSave);
-        save.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-               Snackbar.make(v, "Item is saved", Snackbar.LENGTH_LONG)
-                       .setAction("Action", null).show();
-               //create Database entry();
-                getNewItem();
-                getDataFromDatabase();
-                //setupMainMenu();
-            }
-        });
-    }
-
-    private void getDataFromDatabase() {
-        db.collection("items")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                ArrayList<String> entry = new ArrayList<String>();
-                                entry.add(document.get("name").toString());
-                                entry.add(document.get("ts").toString());
-                                itemArray.add(entry);
-                                setupMainMenu();
-                                Log.i("loadEntry", "item loaded from db");
-                            }
-                        } else {
-                            Log.i("loadEntry", "item not loaded from db");
-                        }
-                    }
-                });
-    }
-
 
     public void setupMainMenu(){
 
@@ -122,20 +71,22 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton plusButton = findViewById(R.id.plusButton);
+        plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setContentView(R.layout.add_item);
-                initView();
+                Log.i("MainActivity", "plusButton clicked");
+                launchNewItemActivity();
             }
         });
-
     }
 
-    //get new item from EditText to add new database entry
-    public void getNewItem() {
-        EditText itemName = (EditText)findViewById(R.id.itemName);
-        DatabaseActivity.addEntry(itemName.getText().toString());
+    private void launchNewItemActivity() {
+        Log.i("MainActivity", "launchNewItemActivity called");
+        Intent intent = new Intent(this, NewItemActivity.class);
+        Log.i("MainActivity", "intent to start newItemActivity created");
+        startActivity(intent);
     }
+
+
 }

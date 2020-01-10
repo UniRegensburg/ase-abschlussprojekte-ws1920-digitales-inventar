@@ -13,10 +13,9 @@
         android:theme="@style/AppTheme.AppBarOverlay">
     </com.google.android.material.appbar.AppBarLayout>
 
-    layout="@layout/content_main" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/plusButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -147,41 +146,13 @@
                 android:text="\n9. \n Kategorie"/>
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/heading2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/thirdCates">
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@android:dimen/app_icon_size"
-                android:text="Zuletzt hinzugefügt: "
-                android:textStyle="bold" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/itemlist"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/thirdCates">
-            <fragment
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:id="@+id/fragment"
-                    android:name="com.example.digitalesinventar.MainActivityFragment"
-                    tools:layout="@layout/fragment_main"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/heading3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/heading2"
+            android:layout_below="@+id/thirdCates"
             android:weightSum="3">
 
             <Space
@@ -191,7 +162,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sortieren nach: "
+                android:text="@string/sort_items"
                 android:gravity="right"
                 android:layout_weight="1"/>
             <Spinner
@@ -200,15 +171,20 @@
                 android:layout_weight="1"/>
         </LinearLayout>
 
-        <ListView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/heading2"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/heading3"/>
+            android:layout_below="@+id/thirdCates">
+
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/fragment"
+                android:name="com.example.digitalesinventar.MainActivityFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_main" />
+        </LinearLayout>
     </RelativeLayout>
-    <![CDATA[
 
-    />
-
-
-]]>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
