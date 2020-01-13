@@ -1,10 +1,12 @@
 package com.example.digitalesinventar;
 
+import android.content.Intent;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -70,7 +72,7 @@ public class DatabaseActivity {
                                 entry.add(document.get("name").toString());
                                 entry.add(document.get("ts").toString());
                                 itemArray.add(entry);
-                                //MainActivity.updateView();
+                                MainActivityFragment.updateList();
                                 Log.i("loadEntry", "item loaded from db");
                                 //Log.i("getDatafromDatabase()", "currentDatabase: " + itemArray.toString());
                             }

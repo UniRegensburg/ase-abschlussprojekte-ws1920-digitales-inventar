@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
@@ -18,7 +19,8 @@ import java.util.List;
 public class MainActivityFragment extends Fragment {
 
     ArrayList<DataModelItemList> dataModels;
-    ItemListAdapter adapter;
+    //ItemListAdapter adapter;
+    public static ArrayAdapter arrayAdapter;
     ListView listView;
 
     public MainActivityFragment()  {
@@ -59,9 +61,15 @@ public class MainActivityFragment extends Fragment {
             Log.i("MainActivityFragment", "dataModels: " + dataModels.toString());
         }
 
-        adapter = new ItemListAdapter(dataModels, this.getContext());
+        //adapter = new ItemListAdapter(dataModels, this.getContext());
+        arrayAdapter = new ArrayAdapter(getActivity(), R.layout.list_item_itemlist, R.id.item_name, DatabaseActivity.getItemArray());
         Log.i("MainActivityFragment", "listAdapter created");
-        listView.setAdapter(adapter);
+        listView.setAdapter(arrayAdapter);
         Log.i("MainActivityFragment", "listAdapter set");
+    }
+
+    public static void updateList() {
+        Log.i("MainActivityFragment", "adapter datset changed");
+        arrayAdapter.notifyDataSetChanged();
     }
 }
