@@ -1,6 +1,7 @@
 package com.example.digitalesinventar;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,10 +28,14 @@ public class DatabaseActivity {
     // Access a Cloud Firestore instance from your Activity
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public static List<List<String>> itemArray = new ArrayList<List<String>>();
+    public static List<String> itemArray = new ArrayList<String>();
+    public static List<String> timeArray = new ArrayList<String>();
 
-    public static List<List<String>> getItemArray() {
+    public static List<String> getItemArray() {
         return itemArray;
+    }
+    public static List<String> getTimeArray() {
+        return timeArray;
     }
 
     //add an entry to database
@@ -48,8 +53,9 @@ public class DatabaseActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.i("addEntry", "item added to database");
-                        Log.i("addEntry", "current database: " + itemArray.toString());
+                        //Log.i("addEntry", "current database: " + itemArray.toString());
                         //HIER MainActiviyFragent aktualisieren
+                        getDataFromDatabase(); //or add manually and call updateList
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -61,6 +67,8 @@ public class DatabaseActivity {
     }
 
     public static void getDataFromDatabase() {
+        itemArray.clear(); //clear array to avoid multiple entries of single entry
+        timeArray.clear();
         db.collection("items")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -68,10 +76,12 @@ public class DatabaseActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                ArrayList<String> entry = new ArrayList<String>();
-                                entry.add(document.get("name").toString());
-                                entry.add(document.get("ts").toString());
-                                itemArray.add(entry);
+                                //ArrayList<String> entry = new ArrayList<String>();
+                                //entry.add(document.get("name").toString());
+                                //entry.add(document.get("ts").toString());
+                                //itemArray.add(entry);
+                                itemArray.add(document.get("name").toString());
+                                timeArray.add(document.get("ts").toString());
                                 MainActivityFragment.updateList();
                                 Log.i("loadEntry", "item loaded from db");
                                 //Log.i("getDatafromDatabase()", "currentDatabase: " + itemArray.toString());

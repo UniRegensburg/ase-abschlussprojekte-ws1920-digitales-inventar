@@ -20,8 +20,10 @@ public class MainActivityFragment extends Fragment {
 
     ArrayList<DataModelItemList> dataModels;
     //ItemListAdapter adapter;
-    public static ArrayAdapter arrayAdapter;
-    ListView listView;
+    public static ArrayAdapter itemArrayAdapter;
+    public static ArrayAdapter timeArrayAdapter;
+    static ListView itemListView;
+    static ListView timeListView;
 
     public MainActivityFragment()  {
     }
@@ -33,7 +35,8 @@ public class MainActivityFragment extends Fragment {
         Log.i("MainActivityFragment", "inflater called");
         rootView.findViewById(R.id.fragment);
 
-        listView = (ListView) rootView.findViewById(R.id.fragment_list);
+        itemListView = (ListView) rootView.findViewById(R.id.fragment_list);
+        timeListView = (ListView) rootView.findViewById(R.id.fragment_list);
         Log.i("MainActivityFragment", "listView: ");
 
         setupList();
@@ -45,31 +48,22 @@ public class MainActivityFragment extends Fragment {
 
 
     public void setupList() {
-        dataModels = new ArrayList<>();
-        Log.i("MainActivityFragment", "dataModels created");
+        Log.i("MainActivityFragment", "setupList called");
+        DatabaseActivity.getDataFromDatabase();
         //Log.i("MainActivityFragment", "itemArray: " + DatabaseActivity.getItemArray().toString());
 
-        if (DatabaseActivity.itemArray.size() > 0) {
-            Log.i("MainActivityFragment", "itemArray is not null");
-            for (int i = 0; i < DatabaseActivity.itemArray.size(); i++) {
-                Log.i("MainActivityFragment", "itemArray.get(i).get(0): " + DatabaseActivity.itemArray.get(0).get(0));
-                dataModels.add(new DataModelItemList(DatabaseActivity.itemArray.get(i).get(0), DatabaseActivity.itemArray.get(i).get(1)));
-            }
-
-        }else{
-            dataModels.add(new DataModelItemList("Dummy", "TEST"));
-            Log.i("MainActivityFragment", "dataModels: " + dataModels.toString());
-        }
-
-        //adapter = new ItemListAdapter(dataModels, this.getContext());
-        arrayAdapter = new ArrayAdapter(getActivity(), R.layout.list_item_itemlist, R.id.item_name, DatabaseActivity.getItemArray());
+        itemArrayAdapter = new ArrayAdapter(getActivity(), R.layout.list_item_itemlist, R.id.item_name, DatabaseActivity.itemArray);
+        itemListView.setAdapter(itemArrayAdapter);
         Log.i("MainActivityFragment", "listAdapter created");
-        listView.setAdapter(arrayAdapter);
+        //timeArrayAdapter = new ArrayAdapter(getActivity(), R.layout.list_item_itemlist, R.id.item_ts, DatabaseActivity.getTimeArray());
+        //timeListView.setAdapter(timeArrayAdapter);
+
         Log.i("MainActivityFragment", "listAdapter set");
     }
 
     public static void updateList() {
         Log.i("MainActivityFragment", "adapter datset changed");
-        arrayAdapter.notifyDataSetChanged();
+        itemArrayAdapter.notifyDataSetChanged();
+        //timeArrayAdapter.notifyDataSetChanged();
     }
 }
