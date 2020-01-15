@@ -59,7 +59,7 @@ public class DatabaseActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //format date
-                                long currentTs = Long.parseLong(document.get("ts").toString());
+                                long currentTs = Long.parseLong(document.get("ts").toString()); //System.currentTimeMillis() works;
                                 SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
                                 Date resultdate = new Date(currentTs);
                                 //add entry as DataModelItemList object to be able to reference different attribute of the object later on
