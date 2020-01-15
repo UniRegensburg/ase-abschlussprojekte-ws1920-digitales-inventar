@@ -52,7 +52,9 @@ public class MainActivityFragment extends Fragment {
         DatabaseActivity.getDataFromDatabase();
         //Log.i("MainActivityFragment", "itemArray: " + DatabaseActivity.getItemArray().toString());
 
-        itemArrayAdapter = new ArrayAdapter(getActivity(), R.layout.list_item_itemlist, R.id.item_name, DatabaseActivity.itemArray);
+        //itemArrayAdapter = new ArrayAdapter(getActivity(), R.layout.list_item_itemlist, R.id.item_name, DatabaseActivity.itemArray);
+        //itemListView.setAdapter(itemArrayAdapter);
+        itemArrayAdapter =new ItemListAdapter(DatabaseActivity.itemArray,getActivity());
         itemListView.setAdapter(itemArrayAdapter);
         Log.i("MainActivityFragment", "listAdapter created");
         //timeArrayAdapter = new ArrayAdapter(getActivity(), R.layout.list_item_itemlist, R.id.item_ts, DatabaseActivity.getTimeArray());

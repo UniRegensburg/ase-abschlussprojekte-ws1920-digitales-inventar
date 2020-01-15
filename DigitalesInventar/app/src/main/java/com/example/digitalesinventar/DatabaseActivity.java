@@ -28,7 +28,9 @@ public class DatabaseActivity {
     // Access a Cloud Firestore instance from your Activity
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public static List<String> itemArray = new ArrayList<String>();
+    public static ArrayList<DataModelItemList> itemArray = new ArrayList<DataModelItemList>();
+
+    /*public static List<String> itemArray = new ArrayList<String>();
     public static List<String> timeArray = new ArrayList<String>();
 
     public static List<String> getItemArray() {
@@ -36,7 +38,7 @@ public class DatabaseActivity {
     }
     public static List<String> getTimeArray() {
         return timeArray;
-    }
+    }*/
 
     //add an entry to database
     public static void addEntry(String name) {
@@ -53,8 +55,6 @@ public class DatabaseActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.i("addEntry", "item added to database");
-                        //Log.i("addEntry", "current database: " + itemArray.toString());
-                        //HIER MainActiviyFragent aktualisieren
                         getDataFromDatabase(); //or add manually and call updateList
                     }
                 })
@@ -68,7 +68,7 @@ public class DatabaseActivity {
 
     public static void getDataFromDatabase() {
         itemArray.clear(); //clear array to avoid multiple entries of single entry
-        timeArray.clear();
+        //timeArray.clear();
         db.collection("items")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -80,8 +80,8 @@ public class DatabaseActivity {
                                 //entry.add(document.get("name").toString());
                                 //entry.add(document.get("ts").toString());
                                 //itemArray.add(entry);
-                                itemArray.add(document.get("name").toString());
-                                timeArray.add(document.get("ts").toString());
+                                itemArray.add(new DataModelItemList(document.get("name").toString(), document.get("ts").toString()));
+                                //timeArray.add(document.get("ts").toString());
                                 MainActivityFragment.updateList();
                                 Log.i("loadEntry", "item loaded from db");
                                 //Log.i("getDatafromDatabase()", "currentDatabase: " + itemArray.toString());
