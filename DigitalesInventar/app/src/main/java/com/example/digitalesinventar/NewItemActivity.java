@@ -1,6 +1,8 @@
 package com.example.digitalesinventar;
 
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,8 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.io.Console;
 
 //Activity for adding a new entry to the inventar/database
 public class NewItemActivity extends AppCompatActivity {
@@ -71,6 +71,8 @@ public class NewItemActivity extends AppCompatActivity {
         Log.i("NewItemActivity", "setupView called");
         setContentView(R.layout.add_item);
         Log.i("NewItemActivity", "xml file linked");
+        EditText itemName = (EditText)findViewById(R.id.itemName);
+        itemName.setFilters(new InputFilter[] { filter });
         initView();
     }
 
@@ -79,5 +81,22 @@ public class NewItemActivity extends AppCompatActivity {
         EditText itemName = (EditText)findViewById(R.id.itemName);
         DatabaseActivity.addEntry(itemName.getText().toString());
     }
+
+
+    //these inpputs are not allowed in editText for ItemName
+    String blockCharacterSet = "\n";
+
+    //input filter to avoid userinput problems
+    private InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
+        }
+    };
 
 }

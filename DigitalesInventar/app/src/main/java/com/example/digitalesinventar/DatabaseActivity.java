@@ -11,7 +11,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,8 +26,8 @@ public class DatabaseActivity {
     //add an entry to database
     public static void addEntry(String name) {
         Log.i("addEntry", "item added");
-        Long tsLong = System.currentTimeMillis()/1000;
-        String ts = tsLong.toString();
+        long tsLong = System.currentTimeMillis();
+        String ts = Long.toString(tsLong);
         Map<String, Object> entry = new HashMap<>();
         entry.put("name", name);
         entry.put("ts", ts);
@@ -56,8 +58,12 @@ public class DatabaseActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                //format date
+                                long currentTs = Long.parseLong(document.get("ts").toString());
+                                SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+                                Date resultdate = new Date(currentTs);
                                 //add entry as DataModelItemList object to be able to reference different attribute of the object later on
-                                itemArray.add(new DataModelItemList(document.get("name").toString(), document.get("ts").toString()));
+                                itemArray.add(new DataModelItemList(document.get("name").toString(), sdf.format(resultdate)));
                                 MainActivityFragment.updateList(); //update view in fragment
                                 Log.i("loadEntry", "item loaded from db");
                             }
