@@ -10,23 +10,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-
         <TextView
             android:id="@+id/textView_itemTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5sp"
             android:text="@string/item_title"
-            android:textStyle="bold"
-            android:gravity="center"/>
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name_des_Item"
-            android:textStyle="bold"
-            android:gravity="center"/>
-
+            android:layout_marginLeft="5sp"
+            android:text="Name_des_Item"/>
     </LinearLayout>
 
     <LinearLayout
@@ -39,19 +36,16 @@
             android:id="@+id/TextView_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5sp"
             android:text="@string/item_ts"
-            android:textStyle="bold"
-            android:gravity="center"/>
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/item_ts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Time_des_Item"
-            android:textStyle="bold"
-            android:gravity="center"/>
-
+            android:layout_marginLeft="5sp"
+            android:text="Time_des_Item"/>
     </LinearLayout>
-
 
 </LinearLayout>

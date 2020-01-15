@@ -7,11 +7,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary" />
-        //app:layout_anchorGravity="center"
-        //app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <LinearLayout
-        android:id="@+id/KategorySpinner"
+        android:id="@+id/spinnerCategory"
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,45 +17,42 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/Name_Kategorie"
+            android:id="@+id/textViewCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kategorie"
-            android:gravity="center"
-            android:layout_weight="1"/>
+            android:text="@string/category"
+            android:layout_weight="1"
+            android:layout_marginLeft="5sp"/>
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:layout_weight="2"/>
-
+            android:layout_weight="2  "/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/NameGiving"
-        android:layout_below="@+id/KategorySpinner"
+        android:id="@+id/addName"
+        android:layout_below="@+id/spinnerCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="3"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/Name"
-            android:gravity="center"
+            android:id="@+id/textView3Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name :"
-            android:layout_weight="1"/>
+            android:text="@string/item_title"
+            android:layout_weight="1"
+            android:layout_marginLeft="5sp"/>
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/Name"
             android:id="@+id/itemName"
             android:layout_weight="2"/>
-
     </LinearLayout>
+
     <LinearLayout
-        android:layout_below="@+id/NameGiving"
+        android:layout_below="@+id/addName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2"
@@ -75,8 +70,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="save"/>
-
-
     </LinearLayout>
 
 </RelativeLayout>

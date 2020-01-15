@@ -34,7 +34,6 @@
             android:background="?attr/colorPrimary"
             app:layout_anchorGravity="center"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
-        <!-- app:layout_anchor="@+id/appBarLayout"-->
 
         <RelativeLayout
             android:id="@+id/heading1"
@@ -43,12 +42,12 @@
             android:layout_below="@+id/toolbar">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textViewHeadingCategories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fab_margin"
-                android:layout_marginLeft="@android:dimen/app_icon_size"
+                android:layout_centerHorizontal="true"
                 android:text="@string/categories"
+                android:textSize="20sp"
                 android:textStyle="bold"/>
         </RelativeLayout>
 
@@ -57,7 +56,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/heading1"
-
             android:weightSum="3"
             android:orientation="horizontal">
 
@@ -67,21 +65,21 @@
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat1"
-                android:text="\n1. \n Kategorie" />
+                android:text="@string/cat1" />
             <Button
                 android:id="@+id/cat2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat2"
-                android:text="\n2. \n Kategorie"/>
+                android:text="@string/cat2"/>
             <Button
                 android:id="@+id/cat3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat3"
-                android:text="\n3. \n Kategorie"/>
+                android:text="@string/cat3"/>
         </LinearLayout>
 
         <LinearLayout
@@ -98,21 +96,21 @@
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat4"
-                android:text="\n4. \n Kategorie" />
+                android:text="@string/cat4" />
             <Button
                 android:id="@+id/cat5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat5"
-                android:text="\n5. \n Kategorie"/>
+                android:text="@string/cat5"/>
             <Button
                 android:id="@+id/cat6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat6"
-                android:text="\n6. \n Kategorie"/>
+                android:text="@string/cat6"/>
         </LinearLayout>
 
         <LinearLayout
@@ -129,24 +127,22 @@
                 android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat7"
-                android:text="\n7. \n Kategorie" />
+                android:text="@string/cat7"/>
             <Button
                 android:id="@+id/cat8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat8"
-                android:text="\n8. \n Kategorie"/>
+                android:text="@string/cat8"/>
             <Button
                 android:id="@+id/cat9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat9"
-                android:text="\n9. \n Kategorie"/>
+                android:text="@string/cat9"/>
         </LinearLayout>
-
-
 
         <LinearLayout
             android:id="@+id/heading3"
@@ -156,19 +152,20 @@
             android:weightSum="3">
 
             <Space
+                android:id="@+id/spacer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
             <TextView
+                android:id="@+id/textViewSortItems"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sort_items"
-                android:gravity="right"
-                android:layout_weight="1"/>
+                android:layout_marginLeft="265sp"/>
             <Spinner
+                android:id="@+id/spinnerSortBy"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -186,5 +183,4 @@
                 tools:layout="@layout/fragment_main" />
         </LinearLayout>
     </RelativeLayout>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

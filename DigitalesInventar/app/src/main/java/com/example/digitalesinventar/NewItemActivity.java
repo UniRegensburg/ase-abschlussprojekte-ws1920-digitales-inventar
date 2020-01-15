@@ -1,6 +1,5 @@
 package com.example.digitalesinventar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,10 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.Console;
 
+//Activity for adding a new entry to the inventar/database
 public class NewItemActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,7 @@ public class NewItemActivity extends AppCompatActivity {
                 DatabaseActivity.getDataFromDatabase();
                 Snackbar.make(v, "Item is saved", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                //NOTE: Snackbar does currently not work!
                 finish();
             }
         });

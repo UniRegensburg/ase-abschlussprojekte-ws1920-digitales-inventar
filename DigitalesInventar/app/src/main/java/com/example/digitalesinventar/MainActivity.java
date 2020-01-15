@@ -3,10 +3,10 @@ package com.example.digitalesinventar;
 import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.View;
@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    //sets and initializes UI for MainActivity
     public void setupMainMenu(){
-
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,16 +59,12 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    //onClick action for plusButton --> launches newItemActivity
     private void launchNewItemActivity() {
         Log.i("MainActivity", "launchNewItemActivity called");
         Intent intent = new Intent(this, NewItemActivity.class);
         Log.i("MainActivity", "intent to start newItemActivity created");
         startActivity(intent);
-    }
-
-
-    public static void updateList() {
-
     }
 
 }

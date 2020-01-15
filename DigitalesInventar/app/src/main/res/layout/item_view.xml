@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary" />
-    //app:layout_anchorGravity="center"
-    //app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <LinearLayout
-        android:id="@+id/KategorySpinner"
+        android:id="@+id/layoutItemName"
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,16 +34,16 @@
             android:text="Name_des_Item"
             android:layout_below="@+id/toolbar"
             android:textStyle="bold"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"/>
-
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/TimeInfo"
-        android:layout_below="@+id/KategorySpinner"
+        android:layout_below="@+id/layoutItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="3"
+        android:weightSum="4"
         android:orientation="horizontal">
 
         <TextView
@@ -64,10 +63,8 @@
             android:text="Time_des_Item"
             android:layout_below="@+id/toolbar"
             android:textStyle="bold"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:gravity="center"/>
-
     </LinearLayout>
-
 
 </RelativeLayout>

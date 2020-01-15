@@ -1,21 +1,17 @@
 package com.example.digitalesinventar;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import androidx.fragment.app.FragmentActivity;
-
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 
+//custom ListAdapter to display an object of type "DataModelItemList" which holds a database entry
 public class ItemListAdapter extends ArrayAdapter<DataModelItemList> {
     ArrayList<DataModelItemList> dataSet;
-    FragmentActivity fragActivity;
+    FragmentActivity fragActivity;//functions as "context"
 
     private static class ViewHolder {
         TextView txtItemName;
