@@ -1,12 +1,16 @@
 package com.example.digitalesinventar;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import androidx.fragment.app.FragmentActivity;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 //custom ListAdapter to display an object of type "DataModelItemList" which holds a database entry
 public class ItemListAdapter extends ArrayAdapter<DataModelItemList> {
@@ -38,6 +42,8 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.list_item_itemlist, parent, false);
+            convertView.setTag(dataModel.getTimestamp());
+            Log.i("MainActivityFraglong", ""+dataModel.getTimestamp());
             viewHolder.txtItemName = (TextView) convertView.findViewById(R.id.item_name);
             viewHolder.txtTimestamp = (TextView) convertView.findViewById(R.id.item_ts);
 
@@ -48,9 +54,13 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> {
             viewHolder = (ViewHolder) convertView.getTag();
             result=convertView;
         }
+        //format date
+        long itemTs = Long.parseLong(String.valueOf(dataModel.getTimestamp())); //System.currentTimeMillis() works;
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+        Date resultdate = new Date(itemTs);
 
         viewHolder.txtItemName.setText(dataModel.getItemName());
-        viewHolder.txtTimestamp.setText(dataModel.getTimestamp());
+        viewHolder.txtTimestamp.setText(sdf.format(resultdate));
 
         // Return the completed view to render on screen
         return convertView;

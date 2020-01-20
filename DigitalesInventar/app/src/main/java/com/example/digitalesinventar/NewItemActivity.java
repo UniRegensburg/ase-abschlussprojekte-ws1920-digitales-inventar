@@ -79,7 +79,19 @@ public class NewItemActivity extends AppCompatActivity {
     //get new item from EditText to add new database entry
     public void getNewItem() {
         EditText itemName = (EditText)findViewById(R.id.itemName);
-        DatabaseActivity.addEntry(itemName.getText().toString());
+        if (checkEmptyInput(itemName.getText().toString())) {
+            DatabaseActivity.addEntry(itemName.getText().toString());
+        } else {
+            //show toast
+        }
+    }
+
+    private boolean checkEmptyInput(String input) {
+        if (input.equals("")) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -29,6 +30,14 @@ public class MainActivityFragment extends Fragment {
         //set layout for ListView for data from db
         itemListView = (ListView) rootView.findViewById(R.id.fragment_list);
         Log.i("MainActivityFragment", "listView: ");
+        itemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("MainActivityFraglong", ""+view.getTag().toString());
+                DatabaseActivity.deleteItemFromDatabase(view.getTag().toString());
+                return true;
+            }
+        });
         setupList();
         Log.i("MainActivityFragment", "setupList called");
         return rootView;

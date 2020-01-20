@@ -58,18 +58,32 @@ public class DatabaseActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                //format date
-                                long currentTs = Long.parseLong(document.get("ts").toString()); //System.currentTimeMillis() works;
-                                SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
-                                Date resultdate = new Date(currentTs);
                                 //add entry as DataModelItemList object to be able to reference different attribute of the object later on
-                                itemArray.add(new DataModelItemList(document.get("name").toString(), sdf.format(resultdate)));
+                                itemArray.add(new DataModelItemList(document.get("name").toString(), Long.parseLong(document.get("ts").toString())));
                                 MainActivityFragment.updateList(); //update view in fragment
                                 Log.i("loadEntry", "item loaded from db");
                             }
                         } else {
                             Log.i("loadEntry", "item not loaded from db");
                         }
+                    }
+                });
+    }
+
+    public static void deleteItemFromDatabase(String id) {
+        db.collection("items").document(id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("del Entry", "DocumentSnapshot successfully deleted!");
+                        getDataFromDatabase();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("del Entry", "Error deleting document", e);
                     }
                 });
     }
