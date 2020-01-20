@@ -43,7 +43,7 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.list_item_itemlist, parent, false);
             convertView.setTag(dataModel.getTimestamp());
-            Log.i("MainActivityFraglong", ""+dataModel.getTimestamp());
+            Log.i("itemListAdapter", ""+dataModel.getTimestamp());
             viewHolder.txtItemName = (TextView) convertView.findViewById(R.id.item_name);
             viewHolder.txtTimestamp = (TextView) convertView.findViewById(R.id.item_ts);
 

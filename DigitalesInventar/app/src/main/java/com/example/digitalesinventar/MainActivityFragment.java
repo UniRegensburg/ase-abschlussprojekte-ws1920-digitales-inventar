@@ -33,8 +33,9 @@ public class MainActivityFragment extends Fragment {
         itemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("MainActivityFraglong", ""+view.getTag().toString());
-                DatabaseActivity.deleteItemFromDatabase(view.getTag().toString());
+                DataModelItemList itemTs = (DataModelItemList) parent.getItemAtPosition(position);
+                Log.i("MainActivityFraglong", ""+itemTs.getTimestamp());
+                DatabaseActivity.deleteItemFromDatabase(String.valueOf(itemTs.getTimestamp()));
                 return true;
             }
         });

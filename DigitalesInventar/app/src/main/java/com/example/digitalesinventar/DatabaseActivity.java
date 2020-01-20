@@ -71,6 +71,7 @@ public class DatabaseActivity {
     }
 
     public static void deleteItemFromDatabase(String id) {
+        Log.d("del Entry", "id"+id);
         db.collection("items").document(id)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
