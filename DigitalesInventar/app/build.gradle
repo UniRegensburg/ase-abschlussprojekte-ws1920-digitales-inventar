@@ -32,3 +32,12 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'checkstyle'
+check.dependsOn 'checkstyle'
+
+task checkstyle(type: Checkstyle) {
+    source 'src/main'
+    include '**/*.java'
+    exclude '**/gen/**'
+    classpath = files()
+}
