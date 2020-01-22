@@ -4,7 +4,8 @@
 Nutzer sucht bestimmten Gegenstand aus seinem Inventar und möchte ihn in der App angezeigt bekommen.
 ### Scope & Level
 
-### Precondition Nutzer hat Gegenstände in seinem Inventar
+### Precondition 
+Nutzer hat Gegenstände in seinem Inventar
 ### Success
 Suche findet Gegenstand und zeigt ihn richtig an
 ### Fail
