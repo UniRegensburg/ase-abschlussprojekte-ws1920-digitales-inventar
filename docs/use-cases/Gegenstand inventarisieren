@@ -21,5 +21,6 @@ Plus Button
   *	(Nutzer gibt weitere Eigenschaften des Gegenstandes an)
   * Nutzer bestätigt seine Eingaben
 Extensions
-  *	 Nutzer hat Möglichkeit weitere Eigenschaften zum Gegenstand hinzuzufügen, wie etwa Häufigkeit der Verwendung, Kategorie, Kaufdatum, etc..
-  * der zentrale Use-Case erfordert vorerst nur die Eingabe des Namens
+  *	Nutzer hat Möglichkeit weitere Eigenschaften zum Gegenstand hinzuzufügen, wie etwa Häufigkeit der Verwendung, Kategorie, Kaufdatum, etc.. (der zentrale Use-Case erfordert vorerst nur die Eingabe des Namens)
+  * Nutzer kann den Gegenstand wieder entfernen
+  
