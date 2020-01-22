@@ -1,0 +1,25 @@
+# Use-Case Gegenstand inventarisieren
+
+### Ziel
+Nutzer möchte einen Gegenstand in seinem digitalen Inventar speichern.
+### Scope & Level
+
+### Precondition 
+Keine
+### Success
+Gegenstand wurde gespeichert und wird nun im Inventar aufgelistet.
+### Fail
+Gegenstand konnte nicht hinzugefügt werden, wird nicht korrekt dargestellt oder kann in der Datenbank nicht gefunden werden.
+Nutzer bricht Aktion ab.
+### Primary, Secondary Actors
+P Nutzer, S App (Datenbank)
+### Trigger
+Plus Button
+### Description
+* Nutzer geht auf "Gegenstand hinzufügen" (Plus-Button)
+  *	Nutzer gibt Namen des Gegenstands ein
+  *	(Nutzer gibt weitere Eigenschaften des Gegenstandes an)
+  * Nutzer bestätigt seine Eingaben
+Extensions
+  *	 Nutzer hat Möglichkeit weitere Eigenschaften zum Gegenstand hinzuzufügen, wie etwa Häufigkeit der Verwendung, Kategorie, Kaufdatum, etc..
+  * der zentrale Use-Case erfordert vorerst nur die Eingabe des Namens
