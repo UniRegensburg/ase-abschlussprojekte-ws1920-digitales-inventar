@@ -1,4 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'checkstyle'
+
+preBuild.dependsOn('checkstyle')
+assemble.dependsOn('lint')
+check.dependsOn('checkstyle')
 
 android {
     compileSdkVersion 29
@@ -31,13 +37,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
 
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'checkstyle'
-check.dependsOn 'checkstyle'
 
-task checkstyle(type: Checkstyle) {
-    source 'src/main'
-    include '**/*.java'
-    exclude '**/gen/**'
-    classpath = files()
-}
+

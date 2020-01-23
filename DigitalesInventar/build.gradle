@@ -25,6 +25,27 @@ allprojects {
     }
 }
 
+task checkstyle(type: Checkstyle) {
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/R.java'
+    exclude '**/BuildConfig.java'
+
+    def configProps = ['proj.module.dir': projectDir.absolutePath]
+    configProperties configProps
+
+    // empty classpath
+    classpath = files()
+
+    showViolations true
+
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
