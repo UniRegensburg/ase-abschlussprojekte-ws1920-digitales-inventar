@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'checkstyle'
+apply plugin: 'com.google.gms.google-services'
+
+preBuild.dependsOn('checkstyle')
 
 android {
     compileSdkVersion 29
@@ -53,5 +55,4 @@ task checkstyle(type: Checkstyle) {
         html.enabled true
     }
 }
-
 
