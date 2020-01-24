@@ -60,9 +60,9 @@ public class DatabaseActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //add entry as DataModelItemList object to be able to reference different attribute of the object later on
                                 itemArray.add(new DataModelItemList(document.get("name").toString(), Long.parseLong(document.get("ts").toString())));
-                                MainActivityFragment.updateList(); //update view in fragment
                                 Log.i("loadEntry", "item loaded from db");
                             }
+                          MainActivityFragment.updateList(); //update view in fragment
                         } else {
                             Log.i("loadEntry", "item not loaded from db");
                         }
@@ -89,7 +89,4 @@ public class DatabaseActivity {
                 });
     }
 
-    public void WwqfuqwjifewijfjijwkebqjeBFIWBFIEWNGJWEGKJSGKJGgbw() {
-
-    }
 }
