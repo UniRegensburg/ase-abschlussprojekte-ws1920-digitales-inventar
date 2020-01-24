@@ -18,5 +18,4 @@ public class DataModelItemList {
     public long getTimestamp() {
         return timestamp;
     }
-
 }
