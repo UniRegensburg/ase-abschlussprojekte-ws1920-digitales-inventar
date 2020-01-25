@@ -25,7 +25,7 @@ public class DatabaseActivity {
 
     //add an entry to database
     public static void addEntry(String name) {
-        Log.i("addEntry", "item added");
+        Log.d("DB addEntry", "item added");
         long tsLong = System.currentTimeMillis();
         String ts = Long.toString(tsLong);
         Map<String, Object> entry = new HashMap<>();
@@ -37,14 +37,14 @@ public class DatabaseActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.i("addEntry", "item added to database");
+                        Log.d("DB addEntry", "item added to database");
                         getDataFromDatabase(); //or add manually and call updateList
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.i("addEntry", "item not added to database");
+                        Log.d("DB addEntry", "item not added to database");
                     }
                 });
     }
@@ -60,31 +60,31 @@ public class DatabaseActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //add entry as DataModelItemList object to be able to reference different attribute of the object later on
                                 itemArray.add(new DataModelItemList(document.get("name").toString(), Long.parseLong(document.get("ts").toString())));
-                                Log.i("loadEntry", "item loaded from db");
                             }
-                          MainActivityFragment.updateList(); //update view in fragment
+                            Log.d("DB loadEntry", "items loaded from db");
+                            MainActivityFragment.updateList(); //update view in fragment
                         } else {
-                            Log.i("loadEntry", "item not loaded from db");
+                            Log.d("DB loadEntry", "item not loaded from db");
                         }
                     }
                 });
     }
 
     public static void deleteItemFromDatabase(String id) {
-        Log.d("del Entry", "id"+id);
+        Log.d("DB del Entry", "id"+id);
         db.collection("items").document(id)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("del Entry", "DocumentSnapshot successfully deleted!");
+                        Log.d("DB del Entry", "DocumentSnapshot successfully deleted!");
                         getDataFromDatabase();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("del Entry", "Error deleting document", e);
+                        Log.d("DB del Entry", "Error deleting document", e);
                     }
                 });
     }

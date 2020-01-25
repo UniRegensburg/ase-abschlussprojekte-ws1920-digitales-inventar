@@ -58,7 +58,7 @@ public class NewItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getNewItem();
-                DatabaseActivity.getDataFromDatabase();
+                //DatabaseActivity.getDataFromDatabase(); //data loads itself after added entry
                 Snackbar.make(v, "Item is saved", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 //NOTE: Snackbar does currently not work!
