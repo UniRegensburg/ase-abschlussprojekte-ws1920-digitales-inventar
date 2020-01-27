@@ -1,6 +1,14 @@
-# Projektname	
+# Digitales Inventar
 
-[Beschreiben Sie hier in einer kurzen Zusammenfassung Hintergrund, Ziele und Funktionen Ihrer Anwendung. Fügen Sie einen sinnvollen Screenshot ein. Geben Sie eine Link zur aktuellsten Veröffentlichung an.]
+Das Digitale Inventar ist eine Anwendung, welche die Orgnanisation und Verwaltung eines Haushalts vereinfachen und übersichtlicher gestalten soll.
+Mit Hilfe des Digitalen Inventars soll es möglich sein, jegliche Art Gegenstände zu erfassen, diese zu kategorisieren und besser verwalten zu können.
+Der/Die Nutzer/in kann seine/ihre Gegenstände erfassen, benennen und verschieden annotieren.
+Der/Die Nutzer/in kann verschiedene Kategorien erstellen, benennen und verwalten.
+Änderungen des Bestands können über Löschungen und Editierungen an den Gegenständen und Kategorien nachvollzogen werden.
+
+![Screenshot](./docs/images/Screenshot.png)
+
+[erste Veröffentlichung]()
 
 Technische Informationen zur dieser Anwendung finden sich [hier](./docs/Setup.md), eine detaillierte Übersicht über den Anforderungskontext findet sich [hier](./docs/Overview.md).
 
@@ -31,4 +39,11 @@ laura.zeilbeck@stud.uni-regensburg.de\
 
 ## Beschreibung
 
-[Dokumentieren Sie alle aktuell implementierten Funktionen der Anwendung. Verwenden Sie Screenshots und ggf. auch Gif-Dateien um zentrale Elemente und Abläufe zu beschreiben.]
+Das Digitale Inventar erlaubt es zum derzeitigen Standpunkt dem Nutzer/in Gegenstände zu seinem/ihrem Inventar
+hinzuzufügen und diese wieder zu entfernen.\
+Dabei kann ein Name für den Gegenstand vergeben werden.\
+Der/Die Nutzer/in kann seine/ihre Gegenstände nach dem Erstellungsdatum aufgelistet einsehen.
+Das Erstelldatum wird automatisch vom System hinzugefügt.\
+Der/Die Nutzer/in kann die Gegenstände aus dem System löschen.
+
+![Demo-Video](./docs/demo/ASE1stRelease.gif)
