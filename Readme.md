@@ -7,24 +7,24 @@ Technische Informationen zur dieser Anwendung finden sich [hier](./docs/Setup.md
 ## Team
 
 #### Fabian Feldmeier
-[Foto]\
+<img src="./docs/images/FabianFeldmeier.jpeg" width="300" height="300">\
 fabian.feldmeier@stud.uni-regensburg.de\
-FabianFeldmeier
+[FabianFeldmeier](https://github.com/FabianFeldmeier)
 
 #### Lucas Haberl
-[Foto]\
+<img src="./docs/images/LucasHaberl.png" width="300" height="300">\
 lucas.haberl@stud.uni-regensburg.de\
-HaberlPre
+[HaberlPre](https://github.com/HaberlPre)
 
 #### Tanja Gehr
-![alt text](./docs/Images/IMG_20190227_045113_096.jpg "Tanja Gehr")\
+<img src="./docs/images/TanjaGehr.jpg" width="300" height="300">\
 tanja.gehr@stud.uni-regensburg.de\
-tangeh
+[tangeh](https://github.com/tangeh)
 
 #### Laura Zeilbeck
-[Foto]\
+<img src="./docs/images/LauraZeilbeck.jpg" width="300" height="300">\
 laura.zeilbeck@stud.uni-regensburg.de\
-LadyViolet
+[ladyViolet](https://github.com/ladyViolet)
 
 
 
