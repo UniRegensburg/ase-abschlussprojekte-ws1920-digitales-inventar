@@ -15,12 +15,12 @@ Technische Informationen zur dieser Anwendung finden sich [hier](./docs/Setup.md
 ## Team
 
 #### Fabian Feldmeier
-<img src="./docs/images/FabianFeldmeier.jpeg" width="300" height="300">\
+<img src="./docs/images/FabianFeldmeier.jpg" width="300" height="300">\
 fabian.feldmeier@stud.uni-regensburg.de\
 [FabianFeldmeier](https://github.com/FabianFeldmeier)
 
 #### Lucas Haberl
-<img src="./docs/images/LucasHaberl.png" width="300" height="300">\
+<img src="./docs/images/LucasHaberl.jpg" width="300" height="300">\
 lucas.haberl@stud.uni-regensburg.de\
 [HaberlPre](https://github.com/HaberlPre)
 
