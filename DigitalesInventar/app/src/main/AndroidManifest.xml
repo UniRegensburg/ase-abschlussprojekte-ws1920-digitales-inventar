@@ -19,6 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".NewItemActivity"></activity>
+        <activity android:name=".DatabaseActivity"></activity>
+        <activity android:name=".DataModelItemList"></activity>
+        <activity android:name=".ItemListAdapter"></activity>
+
     </application>
+
 
 </manifest>

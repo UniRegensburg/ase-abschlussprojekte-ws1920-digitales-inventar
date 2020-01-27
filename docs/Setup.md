@@ -1,7 +1,9 @@
 # Setup 
 
-[Beschreiben Sie in diesem Dokument alle technischen Details, die im Rahmen des CI/CD-Workflows eingerichtet wurden oder für die Inbetriebnahme der Anwendung notwendig sind.]
+Für die Datenbank ist eine Internetverbindung notwendig. Ansonsten greift die App gegebenenfalls auf gecachete Daten zurück. Änderungen in der App sind dann nicht möglich.\
+Wenn wieder eine Internetverbindung vorhanden ist, aktualisiert sich die App inklusive der Offline getätigten Änderungen.
 
 # Abhängigkeiten
 
-[Dokumentieren Sie hier in Form einer vollständigen Liste alle Bibliotheken, APIs, Frameworks, etc. die im Rahmen der Entwicklung eingesetzt werden.]
+- Minimal SDK: 21 (Android 5.0)
+- Datenbank: Google Firebase

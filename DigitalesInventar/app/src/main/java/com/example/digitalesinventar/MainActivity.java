@@ -1,34 +1,25 @@
 package com.example.digitalesinventar;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        setupMainMenu();
     }
 
     @Override
@@ -49,7 +40,32 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
+
+    //sets and initializes UI for MainActivity
+    public void setupMainMenu() {
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        DatabaseActivity.getDataFromDatabase();
+
+        FloatingActionButton plusButton = findViewById(R.id.plusButton);
+        plusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("MainActivity", "plusButton clicked");
+                launchNewItemActivity();
+            }
+        });
+    }
+
+    //onClick action for plusButton --> launches newItemActivity
+    private void launchNewItemActivity() {
+        Log.i("MainActivity", "launchNewItemActivity called");
+        Intent intent = new Intent(this, NewItemActivity.class);
+        Log.i("MainActivity", "intent to start newItemActivity created");
+        startActivity(intent);
+    }
+
 }

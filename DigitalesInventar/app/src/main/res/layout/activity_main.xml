@@ -7,27 +7,180 @@
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/plusButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/all">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:layout_anchorGravity="center"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <RelativeLayout
+            android:id="@+id/heading1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar">
 
-    <include layout="@layout/content_main" />
+            <TextView
+                android:id="@+id/textViewHeadingCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/categories"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+        </RelativeLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        <LinearLayout
+            android:id="@+id/firstCates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/heading1"
+            android:weightSum="3"
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/cat1"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/cat1"
+                android:text="@string/cat1" />
+            <Button
+                android:id="@+id/cat2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/cat2"
+                android:text="@string/cat2"/>
+            <Button
+                android:id="@+id/cat3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/cat3"
+                android:text="@string/cat3"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/secondCates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/firstCates"
+            android:weightSum="3"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cat4"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/cat4"
+                android:text="@string/cat4" />
+            <Button
+                android:id="@+id/cat5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/cat5"
+                android:text="@string/cat5"/>
+            <Button
+                android:id="@+id/cat6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/cat6"
+                android:text="@string/cat6"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/thirdCates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/secondCates"
+            android:weightSum="3"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cat7"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/cat7"
+                android:text="@string/cat7"/>
+            <Button
+                android:id="@+id/cat8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/cat8"
+                android:text="@string/cat8"/>
+            <Button
+                android:id="@+id/cat9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/cat9"
+                android:text="@string/cat9"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/heading3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/thirdCates"
+            android:weightSum="3">
+
+            <Space
+                android:id="@+id/spacer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/textViewSortItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sort_items"
+                android:layout_marginLeft="265sp"/>
+            <Spinner
+                android:id="@+id/spinnerSortBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/heading2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/thirdCates">
+
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/fragment"
+                android:name="com.example.digitalesinventar.MainActivityFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_main" />
+        </LinearLayout>
+    </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
