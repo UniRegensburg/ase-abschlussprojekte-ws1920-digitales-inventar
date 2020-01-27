@@ -5,7 +5,7 @@ public class DataModelItemList {
     String itemName;
     long timestamp;
 
-    public DataModelItemList (String itemName, long timestamp) {
+    public DataModelItemList(String itemName, long timestamp) {
         this.itemName = itemName;
         this.timestamp = timestamp;
         //to be extended with other attributes in upcoming releases..

@@ -22,7 +22,7 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> {
         TextView txtTimestamp;
     }
 
-    public ItemListAdapter (ArrayList<DataModelItemList> data, FragmentActivity fragActivity) {
+    public ItemListAdapter(ArrayList<DataModelItemList> data, FragmentActivity fragActivity) {
         super(fragActivity, R.layout.list_item_itemlist, data);
         this.dataSet = data;
         this.fragActivity = fragActivity;
@@ -43,19 +43,19 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.list_item_itemlist, parent, false);
             convertView.setTag(dataModel.getTimestamp());
-            Log.i("itemListAdapter", ""+dataModel.getTimestamp());
+            Log.i("itemListAdapter", "" + dataModel.getTimestamp());
             viewHolder.txtItemName = (TextView) convertView.findViewById(R.id.item_name);
             viewHolder.txtTimestamp = (TextView) convertView.findViewById(R.id.item_ts);
 
-            result=convertView;
+            result = convertView;
             convertView.setTag(viewHolder);
 
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
-            result=convertView;
+            result = convertView;
         }
         //format date
-        long itemTs = Long.parseLong(String.valueOf(dataModel.getTimestamp())); //System.currentTimeMillis() works;
+        long itemTs = Long.parseLong(String.valueOf(dataModel.getTimestamp()));
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
         Date resultdate = new Date(itemTs);
 

@@ -17,6 +17,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *Handles all background activity from the firebase db.
+ *entrys can be added and removed.
+ *provides access for information to be displayed.
+ */
+
 public class DatabaseActivity {
     // Access a Cloud Firestore instance from your Activity
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -36,7 +42,7 @@ public class DatabaseActivity {
                 .set(entry)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
+                    public void onSuccess(Void avoid) {
                         Log.d("DB addEntry", "item added to database");
                         getDataFromDatabase(); //or add manually and call updateList
                     }
@@ -58,8 +64,10 @@ public class DatabaseActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                //add entry as DataModelItemList object to be able to reference different attribute of the object later on
-                                itemArray.add(new DataModelItemList(document.get("name").toString(), Long.parseLong(document.get("ts").toString())));
+                                //add entry as DataModelItemList object
+                                //to be able to reference different attribute of the object later on
+                                itemArray.add(new DataModelItemList(document.get("name").toString(),
+                                  Long.parseLong(document.get("ts").toString())));
                             }
                             Log.d("DB loadEntry", "items loaded from db");
                             MainActivityFragment.updateList(); //update view in fragment
@@ -71,12 +79,12 @@ public class DatabaseActivity {
     }
 
     public static void deleteItemFromDatabase(String id) {
-        Log.d("DB del Entry", "id"+id);
+        Log.d("DB del Entry", "id" + id);
         db.collection("items").document(id)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(Void aVoid) {
+                    public void onSuccess(Void avoid) {
                         Log.d("DB del Entry", "DocumentSnapshot successfully deleted!");
                         getDataFromDatabase();
                     }

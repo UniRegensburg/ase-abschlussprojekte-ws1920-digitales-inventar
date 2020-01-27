@@ -22,7 +22,8 @@ public class MainActivityFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         //set content-view for fragment
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         Log.i("MainActivityFragment", "inflater called");
@@ -32,9 +33,10 @@ public class MainActivityFragment extends Fragment {
         Log.i("MainActivityFragment", "listView: ");
         itemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onItemLongClick(AdapterView<?> parent,
+                View view, int position, long id) {
                 DataModelItemList itemTs = (DataModelItemList) parent.getItemAtPosition(position);
-                Log.i("MainActivityFraglong", ""+itemTs.getTimestamp());
+                Log.i("MainActivityFraglong", "" + itemTs.getTimestamp());
                 DatabaseActivity.deleteItemFromDatabase(String.valueOf(itemTs.getTimestamp()));
                 return true;
             }
@@ -48,7 +50,8 @@ public class MainActivityFragment extends Fragment {
     //link custom adapter with ListView for db entries
     public void setupList() {
         Log.i("MainActivityFragment", "setupList called");
-        //DatabaseActivity.getDataFromDatabase(); //data now loaded with app launch and new entry/deletion
+        //DatabaseActivity.getDataFromDatabase();
+        // data now loaded with app launch and new entry/deletion
         itemArrayAdapter = new ItemListAdapter(DatabaseActivity.itemArray,getActivity());
         itemListView.setAdapter(itemArrayAdapter);
         Log.i("MainActivityFragment", "listAdapter created");

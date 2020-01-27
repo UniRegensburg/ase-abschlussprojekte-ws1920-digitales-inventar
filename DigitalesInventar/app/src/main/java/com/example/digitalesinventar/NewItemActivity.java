@@ -43,10 +43,10 @@ public class NewItemActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void initView(){
+    public void initView() {
         Log.i("NewItemActivity", "initView called");
         Button cancel = findViewById(R.id.addItemCancel);
-        cancel.setOnClickListener(new View.OnClickListener(){
+        cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -54,7 +54,7 @@ public class NewItemActivity extends AppCompatActivity {
         });
 
         Button save = findViewById(R.id.addItemSave);
-        save.setOnClickListener(new View.OnClickListener(){
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getNewItem();
@@ -67,7 +67,7 @@ public class NewItemActivity extends AppCompatActivity {
         });
     }
 
-    public void setupView(){
+    public void setupView() {
         Log.i("NewItemActivity", "setupView called");
         setContentView(R.layout.add_item);
         Log.i("NewItemActivity", "xml file linked");
@@ -102,7 +102,8 @@ public class NewItemActivity extends AppCompatActivity {
     private InputFilter filter = new InputFilter() {
 
         @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+        public CharSequence filter(CharSequence source, int start, int end,
+                                   Spanned dest, int dstart, int dend) {
 
             if (source != null && blockCharacterSet.contains(("" + source))) {
                 return "";
