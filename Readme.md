@@ -7,10 +7,10 @@ Technische Informationen zur dieser Anwendung finden sich [hier](./docs/Setup.md
 ## Team
 
 [Beschreiben Sie hier die einzelnen Teammitglieder mit Namen, E-Mail-Adresse, Github-Nutzer und Foto.]
-Fabian Feldmeier, fabian.feldmeier@stud.uni-regensburg.de, FabianFeldmeier
-Tanja Gehr, tanja.gehr@stud.uni-regensburg.de, tangeh
-Lucas Haberl, lucas.haberl@stud.uni-regensburg.de, HaberlPre
-Laura Zeilbeck, laura.zeilbeck@stud.uni-regensburg.de, LadyViolet
+Fabian Feldmeier, fabian.feldmeier@stud.uni-regensburg.de, FabianFeldmeier  
+Tanja Gehr, tanja.gehr@stud.uni-regensburg.de, tangeh  
+Lucas Haberl, lucas.haberl@stud.uni-regensburg.de, HaberlPre  
+Laura Zeilbeck, laura.zeilbeck@stud.uni-regensburg.de, LadyViolet  
 
 ## Beschreibung
 
