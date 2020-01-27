@@ -8,19 +8,19 @@ Der/Die Nutzer/in kann verschiedene Kategorien erstellen, benennen und verwalten
 
 ![Screenshot](./docs/images/Screenshot.PNG)
 
-[erste Veröffentlichung](./docs/APK/Digitales Inventar V01.apk)
+[erste Veröffentlichung](./docs/APK/DigitalesInventarV01.apk)
 
 Technische Informationen zur dieser Anwendung finden sich [hier](./docs/Setup.md), eine detaillierte Übersicht über den Anforderungskontext findet sich [hier](./docs/Overview.md).
 
 ## Team
 
 #### Fabian Feldmeier
-<img src="./docs/images/FabianFeldmeier.jpg" width="300" height="300">\
+<img src="./docs/images/FabianFeldmeier.JPG" width="300" height="300">\
 fabian.feldmeier@stud.uni-regensburg.de\
 [FabianFeldmeier](https://github.com/FabianFeldmeier)
 
 #### Lucas Haberl
-<img src="./docs/images/LucasHaberl.jpg" width="300" height="300">\
+<img src="./docs/images/LucasHaberl.jpeg" width="300" height="300">\
 lucas.haberl@stud.uni-regensburg.de\
 [HaberlPre](https://github.com/HaberlPre)
 
