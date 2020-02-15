@@ -38,7 +38,8 @@ public class DatabaseActivity {
         entry.put("name", name);
         entry.put("ts", ts);
 
-        db.collection("items").document(ts)
+        //db.collection("items").document(ts)
+        db.collection("users").document(MainActivity.userID).collection("items").document(ts)
                 .set(entry)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -57,8 +58,9 @@ public class DatabaseActivity {
 
     public static void getDataFromDatabase() {
         itemArray.clear(); //clear array first to avoid multiple entries of single entry
-        db.collection("items")
-                .get()
+        //db.collection("items")
+        db.collection("users").document(MainActivity.userID).collection("items")
+        .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -80,8 +82,9 @@ public class DatabaseActivity {
 
     public static void deleteItemFromDatabase(String id) {
         Log.d("DB del Entry", "id" + id);
-        db.collection("items").document(id)
-                .delete()
+        //db.collection("items").document(id)
+        db.collection("users").document(MainActivity.userID).collection("items").document(id)
+        .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void avoid) {
