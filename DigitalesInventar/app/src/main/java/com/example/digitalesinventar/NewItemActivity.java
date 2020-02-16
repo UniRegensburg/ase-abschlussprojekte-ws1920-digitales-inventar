@@ -11,10 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.snackbar.Snackbar;
 
 //Activity for adding a new entry to the inventar/database
 public class NewItemActivity extends AppCompatActivity {
@@ -85,12 +84,13 @@ public class NewItemActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getNewItem();
-                //DatabaseActivity.getDataFromDatabase(); //data loads itself after added entry
-                Snackbar.make(v, "Item is saved", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                //NOTE: Snackbar does currently not work!
-                finish();
+                if (getNewItem()) {
+                    Toast.makeText(getApplicationContext(), "new Item added!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+                    //show toast
+                    Toast.makeText(getApplicationContext(),"Please name your item!",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -105,12 +105,13 @@ public class NewItemActivity extends AppCompatActivity {
     }
 
     //get new item from EditText to add new database entry
-    public void getNewItem() {
+    public boolean getNewItem() {
         EditText itemName = (EditText)findViewById(R.id.itemName);
         if (checkEmptyInput(itemName.getText().toString())) {
             DatabaseActivity.addEntry(itemName.getText().toString());
+            return true;
         } else {
-            //show toast
+            return false;
         }
     }
 
