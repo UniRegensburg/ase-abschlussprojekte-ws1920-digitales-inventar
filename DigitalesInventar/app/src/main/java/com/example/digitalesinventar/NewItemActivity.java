@@ -17,6 +17,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 //Activity for adding a new entry to the inventar/database
 public class NewItemActivity extends AppCompatActivity {
+    //UI-ELEMENTS
+    //TEXT-VIEWS
+    TextView textViewCategory = findViewById(R.id.textViewCategory);
+    TextView textViewName = findViewById(R.id.textViewName);
+    TextView textViewLocation = findViewById(R.id.textViewLocation);
+    //EDIT-TEXTS
+    EditText editTextName = findViewById(R.id.itemName);
+    EditText editTextLocation = findViewById(R.id.itemLocation);
+    //BUTTONS
+    Button cancel = findViewById(R.id.addItemCancel);
+    Button save = findViewById(R.id.addItemSave);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("NewItemActivity", "onCreate");
@@ -55,22 +67,15 @@ public class NewItemActivity extends AppCompatActivity {
         Log.i("displayMetrics", "width: " + width);
         int halfWidth = width/2;
 
-        TextView textViewCategory = findViewById(R.id.textViewCategory);
         textViewCategory.setWidth(halfWidth);
-        TextView textViewName = findViewById(R.id.textViewName);
         textViewName.setWidth(halfWidth);
-        TextView textViewLocation = findViewById(R.id.textViewLocation);
         textViewLocation.setWidth(halfWidth);
-
         //Spinner categorySpinner = findViewById(R.id.spinnerCategory);
         //categorySpinner.setWidth(halfWidth);
-        EditText editTextName = findViewById(R.id.itemName);
+
         editTextName.setWidth(halfWidth);
-        EditText editTextLocation = findViewById(R.id.itemLocation);
         editTextLocation.setWidth(halfWidth);
 
-
-        Button cancel = findViewById(R.id.addItemCancel);
         cancel.setWidth(halfWidth);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,13 +84,13 @@ public class NewItemActivity extends AppCompatActivity {
             }
         });
 
-        Button save = findViewById(R.id.addItemSave);
         save.setWidth(halfWidth);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getNewItem()) {
                     Toast.makeText(getApplicationContext(), "new Item added!", Toast.LENGTH_SHORT).show();
+                    Log.i("current database", "db: " + DatabaseActivity.itemArray.toString());
                     finish();
                 }else{
                     //show toast
@@ -106,9 +111,9 @@ public class NewItemActivity extends AppCompatActivity {
 
     //get new item from EditText to add new database entry
     public boolean getNewItem() {
-        EditText itemName = (EditText)findViewById(R.id.itemName);
-        if (checkEmptyInput(itemName.getText().toString())) {
-            DatabaseActivity.addEntry(itemName.getText().toString());
+
+        if (checkEmptyInput(editTextName.getText().toString())) {
+            DatabaseActivity.addEntry(editTextName.getText().toString(), editTextLocation.getText().toString());
             return true;
         } else {
             return false;
@@ -124,7 +129,7 @@ public class NewItemActivity extends AppCompatActivity {
     }
 
 
-    //these inpputs are not allowed in editText for ItemName
+    //these inputs are not allowed in editText for ItemName
     String blockCharacterSet = "\n";
 
     //input filter to avoid userinput problems

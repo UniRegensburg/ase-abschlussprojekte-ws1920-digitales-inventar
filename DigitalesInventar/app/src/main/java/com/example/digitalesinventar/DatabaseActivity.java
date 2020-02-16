@@ -1,6 +1,7 @@
 package com.example.digitalesinventar;
 
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -11,9 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,12 +29,13 @@ public class DatabaseActivity {
     public static ArrayList<DataModelItemList> itemArray = new ArrayList<DataModelItemList>();
 
     //add an entry to database
-    public static void addEntry(String name) {
+    public static void addEntry(String name, String location) {
         Log.d("DB addEntry", "item added");
         long tsLong = System.currentTimeMillis();
         String ts = Long.toString(tsLong);
         Map<String, Object> entry = new HashMap<>();
         entry.put("name", name);
+        entry.put("location", location);
         entry.put("ts", ts);
 
         //db.collection("items").document(ts)
@@ -51,7 +51,7 @@ public class DatabaseActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("DB addEntry", "item not added to database");
+                        Log.d("DB addEntry", "item NOT added to database");
                     }
                 });
     }
@@ -68,7 +68,7 @@ public class DatabaseActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //add entry as DataModelItemList object
                                 //to be able to reference different attribute of the object later on
-                                itemArray.add(new DataModelItemList(document.get("name").toString(),
+                                itemArray.add(new DataModelItemList(document.get("name").toString(), document.get("location").toString(),
                                   Long.parseLong(document.get("ts").toString())));
                             }
                             Log.d("DB loadEntry", "items loaded from db");
