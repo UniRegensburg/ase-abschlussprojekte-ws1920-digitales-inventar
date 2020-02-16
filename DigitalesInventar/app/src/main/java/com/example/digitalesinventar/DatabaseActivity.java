@@ -72,6 +72,7 @@ public class DatabaseActivity {
                                   Long.parseLong(document.get("ts").toString())));
                             }
                             Log.d("DB loadEntry", "items loaded from db");
+                            Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString());
                             MainActivityFragment.updateList(); //update view in fragment
                         } else {
                             Log.d("DB loadEntry", "item not loaded from db");

@@ -17,17 +17,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 //Activity for adding a new entry to the inventar/database
 public class NewItemActivity extends AppCompatActivity {
+
     //UI-ELEMENTS
     //TEXT-VIEWS
-    TextView textViewCategory = findViewById(R.id.textViewCategory);
-    TextView textViewName = findViewById(R.id.textViewName);
-    TextView textViewLocation = findViewById(R.id.textViewLocation);
+    TextView textViewCategory;
+    TextView textViewName;
+    TextView textViewLocation;
     //EDIT-TEXTS
-    EditText editTextName = findViewById(R.id.itemName);
-    EditText editTextLocation = findViewById(R.id.itemLocation);
+    EditText editTextName;
+    EditText editTextLocation;
     //BUTTONS
-    Button cancel = findViewById(R.id.addItemCancel);
-    Button save = findViewById(R.id.addItemSave);
+    Button save;
+    Button cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,18 @@ public class NewItemActivity extends AppCompatActivity {
     }
 
     public void initView() {
+        //UI-ELEMENTS
+        //TEXT-VIEWS
+        textViewCategory = findViewById(R.id.textViewCategory);
+        textViewName = findViewById(R.id.textViewName);
+        textViewLocation = findViewById(R.id.textViewLocation);
+        //EDIT-TEXTS
+        editTextName = findViewById(R.id.itemName);
+        editTextLocation = findViewById(R.id.itemLocation);
+        //BUTTONS
+        save = findViewById(R.id.addItemSave);
+        cancel = findViewById(R.id.addItemCancel);
+
         Log.i("NewItemActivity", "initView called");
         //adjust item-layouts to fit 1/2 of the screen dynamically
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -90,7 +103,6 @@ public class NewItemActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (getNewItem()) {
                     Toast.makeText(getApplicationContext(), "new Item added!", Toast.LENGTH_SHORT).show();
-                    Log.i("current database", "db: " + DatabaseActivity.itemArray.toString());
                     finish();
                 }else{
                     //show toast
@@ -104,9 +116,11 @@ public class NewItemActivity extends AppCompatActivity {
         Log.i("NewItemActivity", "setupView called");
         setContentView(R.layout.add_item);
         Log.i("NewItemActivity", "xml file linked");
-        EditText itemName = (EditText)findViewById(R.id.itemName);
-        itemName.setFilters(new InputFilter[] { filter });
         initView();
+        //setting input filters
+        editTextName.setFilters(new InputFilter[] { filter });
+        editTextLocation.setFilters(new InputFilter[] { filter });
+
     }
 
     //get new item from EditText to add new database entry

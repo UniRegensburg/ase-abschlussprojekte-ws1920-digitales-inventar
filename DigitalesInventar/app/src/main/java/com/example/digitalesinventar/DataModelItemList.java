@@ -24,4 +24,8 @@ public class DataModelItemList {
     public long getTimestamp() {
         return timestamp;
     }
+
+    public String itemToString() {
+        return "Item: " + getItemName() + ", hinzugefügt am: " + getTimestamp() + ", abgelegt an diesem Ort: " + getItemLocation() + ".";
+    }
 }

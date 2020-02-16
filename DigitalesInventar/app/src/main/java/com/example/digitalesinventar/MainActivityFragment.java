@@ -59,7 +59,7 @@ public class MainActivityFragment extends Fragment {
     }
 
     public static void updateList() {
-        Log.i("MainActivityFragment", "adapter datset changed");
+        Log.i("MainActivityFragment", "adapter dataset changed");
         itemArrayAdapter.notifyDataSetChanged();
     }
 }
