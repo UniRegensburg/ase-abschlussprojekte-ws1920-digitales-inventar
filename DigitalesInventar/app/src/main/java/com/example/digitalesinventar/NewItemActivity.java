@@ -139,10 +139,11 @@ public class NewItemActivity extends AppCompatActivity {
 
         if (checkEmptyInput(editTextName.getText().toString())) {
             //get spinner input
-            TextView selectedItem = (TextView)categorySpinner.getSelectedView();
-            //add item to database
-            DatabaseActivity.addEntry(editTextName.getText().toString(), selectedItem.getText().toString(), editTextLocation.getText().toString());
-            return true;
+                String selectedCategory = categorySpinner.getSelectedItem().toString();
+                Log.i("selectedCategory: ", " " + selectedCategory);
+                //add item to database
+                DatabaseActivity.addEntry(editTextName.getText().toString(), selectedCategory, editTextLocation.getText().toString());
+                return true;
         } else {
             return false;
         }

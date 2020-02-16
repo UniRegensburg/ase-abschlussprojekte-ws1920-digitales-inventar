@@ -35,7 +35,7 @@ public class DatabaseActivity {
         String ts = Long.toString(tsLong);
         Map<String, Object> entry = new HashMap<>();
         entry.put("name", name);
-        entry.put("category:", category);
+        entry.put("category", category);
         entry.put("location", location);
         entry.put("ts", ts);
 

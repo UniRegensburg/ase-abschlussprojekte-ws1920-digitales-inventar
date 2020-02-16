@@ -7,16 +7,11 @@ public class DataModelItemList {
     String itemCategory;
     long timestamp;
 
-    public DataModelItemList(String itemName, String itemLocation, String itemCategory, long timestamp) {
+    public DataModelItemList(String itemName, String itemCategory, String itemLocation, long timestamp) {
         this.itemName = itemName;
-        this.itemLocation = itemLocation;
         this.itemCategory = itemCategory;
+        this.itemLocation = itemLocation;
         this.timestamp = timestamp;
-        //to be extended with other attributes in upcoming releases..
-    }
-
-    public String getItemLocation() {
-        return itemLocation;
     }
 
     public String getItemName() {
@@ -25,6 +20,10 @@ public class DataModelItemList {
 
     public String getItemCategory() {
         return itemCategory;
+    }
+
+    public String getItemLocation() {
+        return itemLocation;
     }
 
     public long getTimestamp() {
