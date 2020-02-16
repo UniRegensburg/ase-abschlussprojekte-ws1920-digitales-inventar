@@ -29,12 +29,13 @@ public class DatabaseActivity {
     public static ArrayList<DataModelItemList> itemArray = new ArrayList<DataModelItemList>();
 
     //add an entry to database
-    public static void addEntry(String name, String location) {
+    public static void addEntry(String name, String category ,String location) {
         Log.d("DB addEntry", "item added");
         long tsLong = System.currentTimeMillis();
         String ts = Long.toString(tsLong);
         Map<String, Object> entry = new HashMap<>();
         entry.put("name", name);
+        entry.put("category:", category);
         entry.put("location", location);
         entry.put("ts", ts);
 
@@ -68,11 +69,11 @@ public class DatabaseActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //add entry as DataModelItemList object
                                 //to be able to reference different attribute of the object later on
-                                itemArray.add(new DataModelItemList(document.get("name").toString(), document.get("location").toString(),
-                                  Long.parseLong(document.get("ts").toString())));
+                                DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), Long.parseLong(document.get("ts").toString()));
+                                itemArray.add(newItem);
                             }
                             Log.d("DB loadEntry", "items loaded from db");
-                            Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString());
+                            //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString());
                             MainActivityFragment.updateList(); //update view in fragment
                         } else {
                             Log.d("DB loadEntry", "item not loaded from db");

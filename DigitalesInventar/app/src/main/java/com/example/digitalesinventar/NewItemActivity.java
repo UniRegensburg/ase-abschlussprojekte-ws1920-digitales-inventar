@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,8 @@ public class NewItemActivity extends AppCompatActivity {
     //EDIT-TEXTS
     EditText editTextName;
     EditText editTextLocation;
+    //SPINNER
+    Spinner categorySpinner;
     //BUTTONS
     Button save;
     Button cancel;
@@ -68,6 +72,8 @@ public class NewItemActivity extends AppCompatActivity {
         //EDIT-TEXTS
         editTextName = findViewById(R.id.itemName);
         editTextLocation = findViewById(R.id.itemLocation);
+        //SPINNER
+        categorySpinner = (Spinner) findViewById(R.id.spinnerCategory);
         //BUTTONS
         save = findViewById(R.id.addItemSave);
         cancel = findViewById(R.id.addItemCancel);
@@ -83,8 +89,14 @@ public class NewItemActivity extends AppCompatActivity {
         textViewCategory.setWidth(halfWidth);
         textViewName.setWidth(halfWidth);
         textViewLocation.setWidth(halfWidth);
-        //Spinner categorySpinner = findViewById(R.id.spinnerCategory);
-        //categorySpinner.setWidth(halfWidth);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+          R.array.categories_spinner, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        categorySpinner.setAdapter(adapter);
 
         editTextName.setWidth(halfWidth);
         editTextLocation.setWidth(halfWidth);
@@ -120,14 +132,16 @@ public class NewItemActivity extends AppCompatActivity {
         //setting input filters
         editTextName.setFilters(new InputFilter[] { filter });
         editTextLocation.setFilters(new InputFilter[] { filter });
-
     }
 
     //get new item from EditText to add new database entry
     public boolean getNewItem() {
 
         if (checkEmptyInput(editTextName.getText().toString())) {
-            DatabaseActivity.addEntry(editTextName.getText().toString(), editTextLocation.getText().toString());
+            //get spinner input
+            TextView selectedItem = (TextView)categorySpinner.getSelectedView();
+            //add item to database
+            DatabaseActivity.addEntry(editTextName.getText().toString(), selectedItem.getText().toString(), editTextLocation.getText().toString());
             return true;
         } else {
             return false;
