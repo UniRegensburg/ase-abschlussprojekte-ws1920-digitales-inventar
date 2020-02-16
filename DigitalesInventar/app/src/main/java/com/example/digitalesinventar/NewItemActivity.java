@@ -3,13 +3,17 @@ package com.example.digitalesinventar;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.snackbar.Snackbar;
 
 //Activity for adding a new entry to the inventar/database
@@ -45,7 +49,30 @@ public class NewItemActivity extends AppCompatActivity {
 
     public void initView() {
         Log.i("NewItemActivity", "initView called");
+        //adjust item-layouts to fit 1/2 of the screen dynamically
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int width = displaymetrics.widthPixels;
+        Log.i("displayMetrics", "width: " + width);
+        int halfWidth = width/2;
+
+        TextView textViewCategory = findViewById(R.id.textViewCategory);
+        textViewCategory.setWidth(halfWidth);
+        TextView textViewName = findViewById(R.id.textViewName);
+        textViewName.setWidth(halfWidth);
+        TextView textViewLocation = findViewById(R.id.textViewLocation);
+        textViewLocation.setWidth(halfWidth);
+
+        //Spinner categorySpinner = findViewById(R.id.spinnerCategory);
+        //categorySpinner.setWidth(halfWidth);
+        EditText editTextName = findViewById(R.id.itemName);
+        editTextName.setWidth(halfWidth);
+        EditText editTextLocation = findViewById(R.id.itemLocation);
+        editTextLocation.setWidth(halfWidth);
+
+
         Button cancel = findViewById(R.id.addItemCancel);
+        cancel.setWidth(halfWidth);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +81,7 @@ public class NewItemActivity extends AppCompatActivity {
         });
 
         Button save = findViewById(R.id.addItemSave);
+        save.setWidth(halfWidth);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
