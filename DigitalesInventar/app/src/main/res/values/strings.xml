@@ -18,6 +18,10 @@
     <string name="cat8">\n8. \n Kategorie</string>
     <string name="cat9">\n9. \n Kategorie</string>
     <string name="item_location">Ort des Gegenstands:</string>
+    <string name="save">save</string>
+    <string name="edit">edit</string>
+    <string name="cancel">cancel</string>
+    <string name="back">back</string>
     <string-array name="categories_spinner">
         <item>Unterhaltungselektronik</item>
         <item>Haushaltsgegenstände</item>

@@ -24,6 +24,7 @@
         <activity android:name=".DataModelItemList"></activity>
         <activity android:name=".ItemListAdapter"></activity>
         <activity android:name=".SignInFailedActivity"></activity>
+        <activity android:name=".ViewItem"></activity>
 
     </application>
 

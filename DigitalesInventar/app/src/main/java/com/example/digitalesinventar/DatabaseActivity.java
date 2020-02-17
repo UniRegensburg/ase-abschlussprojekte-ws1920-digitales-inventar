@@ -102,4 +102,15 @@ public class DatabaseActivity {
                 });
     }
 
+    public static DataModelItemList getItemFromDatabase(Long id) {
+      //return itemArray.get(Long.parseLong(id.toString()));
+      //return db.collection("users").document(MainActivity.userID).collection("items").document(id.toString());
+      for (int i=0; i < itemArray.size(); i++) {
+        if(itemArray.get(i).getTimestamp() == id) {
+          return itemArray.get(i);
+        }
+      }
+      return null;
+    }
+
 }

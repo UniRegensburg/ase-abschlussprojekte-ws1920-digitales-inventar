@@ -10,11 +10,10 @@
         android:background="?attr/colorPrimary" />
 
     <LinearLayout
-        android:id="@+id/layoutItemName"
+        android:id="@+id/NameInfo"
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="3"
         android:orientation="horizontal">
 
         <TextView
@@ -22,28 +21,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/item_title"
-            android:layout_below="@+id/toolbar"
-            android:textStyle="bold"
-            android:layout_weight="1"
-            android:gravity="center"/>
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name_des_Item"
-            android:layout_below="@+id/toolbar"
-            android:textStyle="bold"
-            android:layout_weight="2"
-            android:gravity="center"/>
+            android:text="Name_des_Item"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/TimeInfo"
-        android:layout_below="@+id/layoutItemName"
+        android:layout_below="@+id/NameInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="4"
         android:orientation="horizontal">
 
         <TextView
@@ -51,19 +42,75 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/item_ts"
-            android:layout_below="@+id/toolbar"
-            android:textStyle="bold"
-            android:layout_weight="1"
-            android:gravity="center"/>
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/Time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Time_des_Item"
-            android:layout_below="@+id/toolbar"
-            android:textStyle="bold"
-            android:layout_weight="3"
+            android:text="Time_des_Item"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/CategoryInfo"
+        android:layout_below="@+id/TimeInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/Category_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/category"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/Category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kategorie_des_Item"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LocationInfo"
+        android:layout_below="@+id/CategoryInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/Location_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_location"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/Location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ort_des_Item"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/Buttons"
+        android:layout_below="@+id/LocationInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/editItemButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/back"
             android:gravity="center"/>
     </LinearLayout>
 

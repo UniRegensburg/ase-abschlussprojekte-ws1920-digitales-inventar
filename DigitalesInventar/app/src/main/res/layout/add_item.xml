@@ -2,6 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" />
+
     <LinearLayout
         android:id="@+id/addName"
         android:layout_below="@+id/addCategory"
@@ -47,12 +53,6 @@
             android:layout_weight="2"/>
     </LinearLayout>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary" />
-
     <LinearLayout
         android:id="@+id/addCategory"
         android:layout_below="@+id/toolbar"
@@ -82,18 +82,18 @@
         android:weightSum="2"
         android:orientation="horizontal">
 
-       <Button
-           android:id="@+id/addItemCancel"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_weight="1"
-           android:text="cancel"/>
         <Button
             android:id="@+id/addItemSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="save"/>
+        <Button
+            android:id="@+id/addItemCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="cancel"/>
     </LinearLayout>
 
 </RelativeLayout>
