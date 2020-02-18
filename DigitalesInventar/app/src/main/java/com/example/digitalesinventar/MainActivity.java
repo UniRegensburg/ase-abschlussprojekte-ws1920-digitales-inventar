@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123; //wieso
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static String userID = "defaultEmptyID";
+    public static ArrayList<String> categories = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,14 @@ public class MainActivity extends AppCompatActivity {
             .setAvailableProviders(providers)
             .build(),
           RC_SIGN_IN);
+
+
+        //Set default values for categories
+        categories.add("Unterhaltungselektronik");
+        categories.add("Haushaltsgegenstände");
+        categories.add("Einrichtung");
+        categories.add("Hobby");
+        categories.add("Werkzeug");
     }
 
     @Override

@@ -27,6 +27,7 @@ public class DatabaseActivity {
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
     //ArrayList to store firebase data for displaying later
     public static ArrayList<DataModelItemList> itemArray = new ArrayList<DataModelItemList>();
+    //public static ArrayList<String> categoryArray = new ArrayList<>();
 
     //add an entry to database
     public static void addEntry(String name, String category ,String location) {
@@ -113,4 +114,24 @@ public class DatabaseActivity {
       return null;
     }
 
+  /* //Store Users Categories
+   public static void addCategory(String name) {
+     Log.d("DB addCategory", "category added");
+     Map<String, Object> entry = new HashMap<>();
+     entry.put("categoryName", name);
+     db.collection("users").document(MainActivity.userID).collection("items").document(name)
+       .set(entry)
+       .addOnSuccessListener(new OnSuccessListener<Void>() {
+         @Override
+         public void onSuccess(Void avoid) {
+           Log.d("DB addCategory", "category added to database");
+         }
+       })
+       .addOnFailureListener(new OnFailureListener() {
+         @Override
+         public void onFailure(@NonNull Exception e) {
+           Log.d("DB addCategory", "Category NOT added to database");
+         }
+       });
+   }*/
 }

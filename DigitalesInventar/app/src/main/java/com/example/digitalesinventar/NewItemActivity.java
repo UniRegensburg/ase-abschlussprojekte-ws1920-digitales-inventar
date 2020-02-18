@@ -1,6 +1,5 @@
 package com.example.digitalesinventar;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -32,8 +31,10 @@ public class NewItemActivity extends AppCompatActivity {
     EditText editTextLocation;
     //SPINNER
     Spinner categorySpinner;
+    //ADAPTER
+    ArrayAdapter<String> adapter;
     //BUTTONS
-    Button addCategory;
+    Button editCategories;
     Button save;
     Button cancel;
 
@@ -78,7 +79,7 @@ public class NewItemActivity extends AppCompatActivity {
         //SPINNER
         categorySpinner = (Spinner) findViewById(R.id.spinnerCategory);
         //BUTTONS
-        addCategory = findViewById(R.id.addCatButton);
+        editCategories = findViewById(R.id.addCatButton);
         save = findViewById(R.id.addItemSave);
         cancel = findViewById(R.id.addItemCancel);
 
@@ -95,19 +96,18 @@ public class NewItemActivity extends AppCompatActivity {
         textViewName.setWidth(halfWidth);
         textViewLocation.setWidth(halfWidth);
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-          R.array.categories_spinner, android.R.layout.simple_spinner_item);
+        // Create an ArrayAdapter for the spinner using the string array and a default spinner layout
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, MainActivity.categories);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         categorySpinner.setAdapter(adapter);
         //init catButton
-        addCategory.setWidth(quarterWidth);
-        addCategory.setOnClickListener(new View.OnClickListener() {
+        editCategories.setWidth(quarterWidth);
+        editCategories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //start addCategory activity
+                //start editCategories activity
                 Intent intent = new Intent(getApplicationContext(),NewCategoryActivity.class);
                 startActivityForResult(intent, 69);
             }
@@ -189,20 +189,5 @@ public class NewItemActivity extends AppCompatActivity {
             return null;
         }
     };
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case (69) : {
-                if (resultCode == Activity.RESULT_OK) {
-                    String newCategory = data.getStringExtra("category");
-                    // TODO add category from Extra
-                    Log.i("enteredCat", "category: " + newCategory);
-                }
-                break;
-            }
-        }
-    }
 
 }

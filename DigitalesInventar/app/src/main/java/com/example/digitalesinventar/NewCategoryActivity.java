@@ -1,7 +1,5 @@
 package com.example.digitalesinventar;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -10,9 +8,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,8 +22,13 @@ public class NewCategoryActivity extends AppCompatActivity {
 	TextView textViewOwnCat;
 	//EDIT-TEXTs
 	EditText editTextOwnCat;
+	//SPINNER
+	Spinner categorySpinner;
+	//ADAPTER
+	ArrayAdapter<String> adapter;
 	//BUTTONS
 	Button addCatSave;
+	Button removeCat;
 	Button addCatCancel;
 
 	@Override
@@ -55,43 +61,62 @@ public class NewCategoryActivity extends AppCompatActivity {
 	}
 
 	public void setupView() {
-		setContentView(R.layout.add_category);
+		setContentView(R.layout.edit_categories);
 		//UI-ELEMENTS
 		//TEXT-VIEWS
 		textViewOwnCat = findViewById(R.id.textViewAddCat);
 		//EDIT-TEXTS
 		editTextOwnCat = findViewById(R.id.editTextOwnCat);
 		editTextOwnCat.setFilters(new InputFilter[] { filter });
+		//SPINNER
+		categorySpinner = (Spinner) findViewById(R.id.spinnerCategory);
 		//BUTTONS
 		addCatSave = findViewById(R.id.addCatSave);
+		removeCat = findViewById(R.id.removeCategoryButton);
 		addCatCancel = findViewById(R.id.addCatCancel);
 
-		//adjust item-layouts to fit 1/2 of the screen dynamically
+		//adjust item-layouts to fit 1/3 of the screen dynamically
 		DisplayMetrics displaymetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 		int width = displaymetrics.widthPixels;
 		Log.i("displayMetrics", "width: " + width);
-		int halfWidth = width/2;
+		int thirdWidth = width/3;
 
-		textViewOwnCat.setWidth(halfWidth);
-		editTextOwnCat.setWidth(halfWidth);
-		addCatCancel.setWidth(halfWidth);
-		addCatSave.setWidth(halfWidth);
+		textViewOwnCat.setWidth(thirdWidth);
+		editTextOwnCat.setWidth(thirdWidth);
+		addCatSave.setWidth(thirdWidth);
+		removeCat.setWidth(thirdWidth);
+
+		// Create an ArrayAdapter for spinner using the string array and a default spinner layout
+		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, MainActivity.categories);
+		// Specify the layout to use when the list of choices appears
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		categorySpinner.setAdapter(adapter);
 
 		addCatSave.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent resultIntent = new Intent();
 				String category = editTextOwnCat.getText().toString();
-				resultIntent.putExtra("category", category);
-				setResult(Activity.RESULT_OK, resultIntent);
-				finish();
+				//update spinner
+				if (category != "") {
+					MainActivity.categories.add(category);
+					adapter.notifyDataSetChanged();
+					Toast.makeText(getApplicationContext(),"Category " + category + " was successfully added!",Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 		addCatCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();
+			}
+		});
+
+		removeCat.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//TODO remove category from spinner
 			}
 		});
 	}
