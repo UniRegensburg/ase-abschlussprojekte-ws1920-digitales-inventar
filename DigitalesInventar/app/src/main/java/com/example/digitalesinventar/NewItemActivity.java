@@ -1,5 +1,7 @@
 package com.example.digitalesinventar;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -31,6 +33,7 @@ public class NewItemActivity extends AppCompatActivity {
     //SPINNER
     Spinner categorySpinner;
     //BUTTONS
+    Button addCategory;
     Button save;
     Button cancel;
 
@@ -75,6 +78,7 @@ public class NewItemActivity extends AppCompatActivity {
         //SPINNER
         categorySpinner = (Spinner) findViewById(R.id.spinnerCategory);
         //BUTTONS
+        addCategory = findViewById(R.id.addCatButton);
         save = findViewById(R.id.addItemSave);
         cancel = findViewById(R.id.addItemCancel);
 
@@ -85,6 +89,7 @@ public class NewItemActivity extends AppCompatActivity {
         int width = displaymetrics.widthPixels;
         Log.i("displayMetrics", "width: " + width);
         int halfWidth = width/2;
+        int quarterWidth = halfWidth/2;
 
         textViewCategory.setWidth(halfWidth);
         textViewName.setWidth(halfWidth);
@@ -97,6 +102,16 @@ public class NewItemActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         categorySpinner.setAdapter(adapter);
+        //init catButton
+        addCategory.setWidth(quarterWidth);
+        addCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //start addCategory activity
+                Intent intent = new Intent(getApplicationContext(),NewCategoryActivity.class);
+                startActivityForResult(intent, 69);
+            }
+        });
 
         editTextName.setWidth(halfWidth);
         editTextLocation.setWidth(halfWidth);
@@ -158,7 +173,7 @@ public class NewItemActivity extends AppCompatActivity {
     }
 
 
-    //these inputs are not allowed in editText for ItemName
+    //these inputs are not allowed in editText for ItemName, location,
     String blockCharacterSet = "\n";
 
     //input filter to avoid userinput problems
@@ -174,5 +189,20 @@ public class NewItemActivity extends AppCompatActivity {
             return null;
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (69) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    String newCategory = data.getStringExtra("category");
+                    // TODO add category from Extra
+                    Log.i("enteredCat", "category: " + newCategory);
+                }
+                break;
+            }
+        }
+    }
 
 }

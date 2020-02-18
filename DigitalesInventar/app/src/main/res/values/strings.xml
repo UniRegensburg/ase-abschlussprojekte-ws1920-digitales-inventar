@@ -4,6 +4,8 @@
     <string name="headingDI">Digitales Inventar</string>
     <string name="categories">Kategorien </string>
     <string name="category">Kategorie: </string>
+    <string name="ownCategory">eigene..</string>
+    <string name="addOwnCategory">eigene Kategorie erstellen: </string>
     <string name="item_title">Name des Gegenstands: </string>
     <string name="item_ts">Hinzugefügt am: </string>
     <string name="least_items">Zuletzt hinzugefügt: </string>
