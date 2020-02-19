@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 
@@ -38,7 +39,13 @@ public class MainActivityFragment extends Fragment {
                 View view, int position, long id) {
                 DataModelItemList itemTs = (DataModelItemList) parent.getItemAtPosition(position);
                 Log.i("MainActivityFraglong", "" + itemTs.getTimestamp());
-                DatabaseActivity.deleteItemFromDatabase(String.valueOf(itemTs.getTimestamp()));
+                //Create Dialog
+                Bundle args = new Bundle();
+                args.putString(ConfirmationDialogFragment.ARG_TIMESTAMP, String.valueOf(itemTs.getTimestamp()));
+                DialogFragment dialog = new ConfirmationDialogFragment();
+                dialog.setArguments(args);
+                dialog.show(getFragmentManager(),"tag");
+                //DatabaseActivity.deleteItemFromDatabase(String.valueOf(itemTs.getTimestamp()));
                 return true;
             }
         });
