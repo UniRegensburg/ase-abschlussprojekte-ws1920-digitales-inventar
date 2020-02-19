@@ -25,7 +25,7 @@ public class NewCategoryActivity extends AppCompatActivity {
 	//SPINNER
 	Spinner categorySpinner;
 	//ADAPTER
-	ArrayAdapter<String> adapter;
+	static ArrayAdapter<String> adapter;
 	//BUTTONS
 	Button addCatSave;
 	Button removeCat;
@@ -88,7 +88,7 @@ public class NewCategoryActivity extends AppCompatActivity {
 		removeCat.setWidth(thirdWidth);
 
 		// Create an ArrayAdapter for spinner using the string array and a default spinner layout
-		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, MainActivity.categories);
+		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, DatabaseActivity.categoryArray);
 		// Specify the layout to use when the list of choices appears
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
@@ -97,13 +97,27 @@ public class NewCategoryActivity extends AppCompatActivity {
 		addCatSave.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Log.i("addCat", "add Button clicked");
 				String category = editTextOwnCat.getText().toString();
 				//update spinner
-				if (category != "") {
-					MainActivity.categories.add(category);
-					adapter.notifyDataSetChanged();
-					Toast.makeText(getApplicationContext(),"Category " + category + " was successfully added!",Toast.LENGTH_SHORT).show();
+				//avoid empty input
+				if (!category.equals("")) {
+					Log.i("addCat", "input not empty");
+					for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
+						//avoid multiple entries
+						if (category.equals(DatabaseActivity.categoryArray.get(i))) {
+							Toast.makeText(getApplicationContext(), "Category " + category + " already exists!", Toast.LENGTH_SHORT).show();
+							return;
+						}
+					}
+					Log.i("addCat", "input not twice");
+					DatabaseActivity.addCategory(category);
+					editTextOwnCat.setText("");
+					Toast.makeText(getApplicationContext(), "Category " + category + " was successfully added!", Toast.LENGTH_SHORT).show();
+				}else{
+					Toast.makeText(getApplicationContext(), "please enter a category", Toast.LENGTH_SHORT).show();
 				}
+
 			}
 		});
 		addCatCancel.setOnClickListener(new View.OnClickListener() {

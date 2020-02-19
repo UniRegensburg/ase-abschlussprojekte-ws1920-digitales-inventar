@@ -32,7 +32,7 @@ public class NewItemActivity extends AppCompatActivity {
     //SPINNER
     Spinner categorySpinner;
     //ADAPTER
-    ArrayAdapter<String> adapter;
+    static ArrayAdapter<String> adapter;
     //BUTTONS
     Button editCategories;
     Button save;
@@ -97,7 +97,7 @@ public class NewItemActivity extends AppCompatActivity {
         textViewLocation.setWidth(halfWidth);
 
         // Create an ArrayAdapter for the spinner using the string array and a default spinner layout
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, MainActivity.categories);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, DatabaseActivity.categoryArray);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner

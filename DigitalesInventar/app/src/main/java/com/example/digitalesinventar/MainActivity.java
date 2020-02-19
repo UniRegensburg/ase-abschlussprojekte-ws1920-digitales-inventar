@@ -2,7 +2,6 @@ package com.example.digitalesinventar;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123; //wieso
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static String userID = "defaultEmptyID";
-    public static ArrayList<String> categories = new ArrayList<String>();
 
 
     @Override
@@ -53,14 +50,6 @@ public class MainActivity extends AppCompatActivity {
             .setAvailableProviders(providers)
             .build(),
           RC_SIGN_IN);
-
-
-        //Set default values for categories
-        categories.add("Unterhaltungselektronik");
-        categories.add("Haushaltsgegenstände");
-        categories.add("Einrichtung");
-        categories.add("Hobby");
-        categories.add("Werkzeug");
     }
 
     @Override
@@ -143,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DatabaseActivity.getDataFromDatabase();
+        DatabaseActivity.getCategoriesFromDatabase();
 
         FloatingActionButton plusButton = findViewById(R.id.plusButton);
         plusButton.setOnClickListener(new View.OnClickListener() {

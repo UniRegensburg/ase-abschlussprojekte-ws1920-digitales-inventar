@@ -62,11 +62,8 @@ public class MainActivityFragment extends Fragment {
     //link custom adapter with ListView for db entries
     public void setupList() {
         Log.i("MainActivityFragment", "setupList called");
-        //DatabaseActivity.getDataFromDatabase();
-        // data now loaded with app launch and new entry/deletion
         itemArrayAdapter = new ItemListAdapter(DatabaseActivity.itemArray,getActivity());
         itemListView.setAdapter(itemArrayAdapter);
-        Log.i("MainActivityFragment", "listAdapter created");
         Log.i("MainActivityFragment", "listAdapter set");
     }
 

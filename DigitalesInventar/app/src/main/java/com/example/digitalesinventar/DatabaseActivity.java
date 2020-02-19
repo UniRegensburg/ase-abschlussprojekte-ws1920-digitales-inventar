@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  *Handles all background activity from the firebase db.
- *entrys can be added and removed.
+ *entries can be added and removed.
  *provides access for information to be displayed.
  */
 
@@ -27,9 +27,11 @@ public class DatabaseActivity {
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
     //ArrayList to store firebase data for displaying later
     public static ArrayList<DataModelItemList> itemArray = new ArrayList<DataModelItemList>();
-    //public static ArrayList<String> categoryArray = new ArrayList<>();
+    public static ArrayList<String> categoryArray = new ArrayList<>();
 
-    //add an entry to database
+    //ITEMS
+
+    //ADD ITEM TO DB
     public static void addEntry(String name, String category ,String location) {
         Log.d("DB addEntry", "item added");
         long tsLong = System.currentTimeMillis();
@@ -58,6 +60,7 @@ public class DatabaseActivity {
                 });
     }
 
+    //GET ITEM-DATA FROM DB
     public static void getDataFromDatabase() {
         itemArray.clear(); //clear array first to avoid multiple entries of single entry
         //db.collection("items")
@@ -69,7 +72,7 @@ public class DatabaseActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //add entry as DataModelItemList object
-                                //to be able to reference different attribute of the object later on
+                                //to be able to reference different attributes of the object later on
                                 DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), Long.parseLong(document.get("ts").toString()));
                                 itemArray.add(newItem);
                             }
@@ -83,9 +86,9 @@ public class DatabaseActivity {
                 });
     }
 
+    //DELETE ITEM FROM DB
     public static void deleteItemFromDatabase(String id) {
         Log.d("DB del Entry", "id" + id);
-        //db.collection("items").document(id)
         db.collection("users").document(MainActivity.userID).collection("items").document(id)
         .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -103,9 +106,8 @@ public class DatabaseActivity {
                 });
     }
 
+  //GET ITEM FROM DB
     public static DataModelItemList getItemFromDatabase(Long id) {
-      //return itemArray.get(Long.parseLong(id.toString()));
-      //return db.collection("users").document(MainActivity.userID).collection("items").document(id.toString());
       for (int i=0; i < itemArray.size(); i++) {
         if(itemArray.get(i).getTimestamp() == id) {
           return itemArray.get(i);
@@ -114,17 +116,20 @@ public class DatabaseActivity {
       return null;
     }
 
-  /* //Store Users Categories
-   public static void addCategory(String name) {
+    //CATEGORIES
+
+    //ADD CATEGORY TO DB
+    public static void addCategory(String catName) {
      Log.d("DB addCategory", "category added");
-     Map<String, Object> entry = new HashMap<>();
-     entry.put("categoryName", name);
-     db.collection("users").document(MainActivity.userID).collection("items").document(name)
-       .set(entry)
+     Map<String, Object> catEntry = new HashMap<>();
+     catEntry.put("categoryName", catName);
+     db.collection("users").document(MainActivity.userID).collection("categories").document(catName)
+       .set(catEntry)
        .addOnSuccessListener(new OnSuccessListener<Void>() {
          @Override
          public void onSuccess(Void avoid) {
            Log.d("DB addCategory", "category added to database");
+           getCategoriesFromDatabase();
          }
        })
        .addOnFailureListener(new OnFailureListener() {
@@ -133,5 +138,64 @@ public class DatabaseActivity {
            Log.d("DB addCategory", "Category NOT added to database");
          }
        });
-   }*/
+     }
+
+    //DELETE CATEGORY FROM DB
+    public static void deleteCategoryFromDatabase(String catName) {
+      Log.d("DB del Category", "Catname" + catName);
+      db.collection("users").document(MainActivity.userID).collection("categories").document(catName)
+        .delete()
+        .addOnSuccessListener(new OnSuccessListener<Void>() {
+          @Override
+          public void onSuccess(Void avoid) {
+            Log.d("DB del category", "DocumentSnapshot successfully deleted!");
+            getCategoriesFromDatabase();
+          }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+          @Override
+          public void onFailure(@NonNull Exception e) {
+            Log.d("DB del category", "Error deleting document", e);
+          }
+        });
+    }
+
+    //GET CATEGORY FROM DB
+    public static String getCategoryFromDatabase(String catName) {
+      for (int i=0; i < categoryArray.size(); i++) {
+        if(categoryArray.get(i).equals(catName)) {
+          return categoryArray.get(i);
+        }
+      }
+      return null;
+    }
+
+  //GET CATEGORY-DATA FROM DB
+  public static void getCategoriesFromDatabase() {
+    categoryArray.clear(); //clear array first to avoid multiple entries of single entry
+    //Set default values for categories
+    /*addCategory("Unterhaltungselektronik");
+    addCategory("Haushaltsgegenstände");
+    addCategory("Einrichtung");
+    addCategory("Hobby");
+    addCategory("Werkzeug");*/
+    Log.d("dbCollection" , "current: " + db.collection("users").document(MainActivity.userID).collection("categories")
+      .get());
+    db.collection("users").document(MainActivity.userID).collection("categories")
+      .get()
+      .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        @Override
+        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+          if (task.isSuccessful()) {
+            for (QueryDocumentSnapshot document : task.getResult()) {
+              String newItem = document.get("categoryName").toString();
+              categoryArray.add(newItem);
+            }
+            Log.d("DB loadCategories", "categories loaded from db");
+          } else {
+            Log.d("DB loadCategories", "categories not loaded from db");
+          }
+        }
+      });
+  }
 }
