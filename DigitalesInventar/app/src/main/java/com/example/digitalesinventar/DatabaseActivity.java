@@ -173,12 +173,6 @@ public class DatabaseActivity {
   //GET CATEGORY-DATA FROM DB
   public static void getCategoriesFromDatabase() {
     categoryArray.clear(); //clear array first to avoid multiple entries of single entry
-    //Set default values for categories
-    /*addCategory("Unterhaltungselektronik");
-    addCategory("Haushaltsgegenstände");
-    addCategory("Einrichtung");
-    addCategory("Hobby");
-    addCategory("Werkzeug");*/
     Log.d("dbCollection" , "current: " + db.collection("users").document(MainActivity.userID).collection("categories")
       .get());
     db.collection("users").document(MainActivity.userID).collection("categories")
@@ -187,6 +181,13 @@ public class DatabaseActivity {
         @Override
         public void onComplete(@NonNull Task<QuerySnapshot> task) {
           if (task.isSuccessful()) {
+            //Set default values for categories
+            categoryArray.add("Unterhaltungselektronik");
+            categoryArray.add("Haushaltsgegenstände");
+            categoryArray.add("Einrichtung");
+            categoryArray.add("Hobby");
+            categoryArray.add("Werkzeug");
+            //add user's categories
             for (QueryDocumentSnapshot document : task.getResult()) {
               String newItem = document.get("categoryName").toString();
               categoryArray.add(newItem);

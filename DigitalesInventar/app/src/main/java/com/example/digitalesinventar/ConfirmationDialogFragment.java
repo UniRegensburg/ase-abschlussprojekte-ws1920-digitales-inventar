@@ -19,7 +19,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
 		final String timestamp = args.getString(ARG_TIMESTAMP);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setMessage("Do you really want to delete it?")
+		builder.setMessage("Do you really want to delete this item?")
 			.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					// The item gets deleted

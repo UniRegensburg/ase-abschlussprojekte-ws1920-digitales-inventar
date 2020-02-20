@@ -1,5 +1,6 @@
 package com.example.digitalesinventar;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -112,7 +114,11 @@ public class NewCategoryActivity extends AppCompatActivity {
 					}
 					Log.i("addCat", "input not twice");
 					DatabaseActivity.addCategory(category);
+					//TODO set spinner selection to added category
+					//clear input
 					editTextOwnCat.setText("");
+					//hide keyboard
+					hideKeyboard(NewCategoryActivity.this);
 					Toast.makeText(getApplicationContext(), "Category " + category + " was successfully added!", Toast.LENGTH_SHORT).show();
 				}else{
 					Toast.makeText(getApplicationContext(), "please enter a category", Toast.LENGTH_SHORT).show();
@@ -131,7 +137,18 @@ public class NewCategoryActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				//TODO remove category from spinner
-			}
+				String selectedCategory = categorySpinner.getSelectedItem().toString();
+				//make sure user does not try to delete predefined categories
+				if (selectedCategory.equals("Unterhaltungselektronik") || selectedCategory.equals("Haushaltsgegenstände")
+					|| selectedCategory.equals("Einrichtung") || selectedCategory.equals("Hobby") || selectedCategory.equals("Werkzeug")) {
+					Toast.makeText(getApplicationContext(), "Default category " + selectedCategory + " can't be removed!", Toast.LENGTH_SHORT).show();
+				}else {
+					DatabaseActivity.deleteCategoryFromDatabase(selectedCategory);
+					categorySpinner.setSelection(0);
+					Toast.makeText(getApplicationContext(), "Category " + selectedCategory + " removed!", Toast.LENGTH_SHORT).show();
+
+				}
+		}
 		});
 	}
 
@@ -149,5 +166,16 @@ public class NewCategoryActivity extends AppCompatActivity {
 			return null;
 		}
 	};
+
+	public static void hideKeyboard(Activity activity) {
+		InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+		//Find the currently focused view, so we can grab the correct window token from it.
+		View view = activity.getCurrentFocus();
+		//If no view currently has focus, create a new one, just so we can grab a window token from it
+		if (view == null) {
+			view = new View(activity);
+		}
+		imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+	}
 
 }
