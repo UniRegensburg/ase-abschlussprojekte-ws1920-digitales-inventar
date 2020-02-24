@@ -39,6 +39,7 @@ public class EditItemActivity extends AppCompatActivity {
 	Button cancel;
 	//SCREEN WIDTH
 	int screenWidth;
+	DataModelItemList currentItem;
 
 
 	@Override
@@ -138,8 +139,11 @@ public class EditItemActivity extends AppCompatActivity {
 		save.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TODO edit changes in DB
-				Toast.makeText(getApplicationContext(), "Item successfully edited!", Toast.LENGTH_SHORT).show();
+				//TODO UPDATE ITEM
+				//DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), editCategories.getText().toString(), editTextLocation.getText().toString(), currentItem.getTimestamp());
+				//Toast.makeText(getApplicationContext(), "Item successfully edited!", Toast.LENGTH_SHORT).show();
+
+				Toast.makeText(getApplicationContext(), "Currently not working please check", Toast.LENGTH_SHORT).show();
 				finish();
 			}
 		});
@@ -160,7 +164,7 @@ public class EditItemActivity extends AppCompatActivity {
 		Bundle extras = intent.getExtras();
 		long itemID = extras.getLong("itemTs");
 		//retrieve data from db
-		DataModelItemList currentItem = DatabaseActivity.getItemFromDatabase(itemID);
+		currentItem = DatabaseActivity.getItemFromDatabase(itemID);
 		editTextName.setText(currentItem.getItemName());
 		editTextLocation.setText(currentItem.getItemLocation());
 //format and set date

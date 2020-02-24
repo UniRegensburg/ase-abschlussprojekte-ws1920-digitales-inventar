@@ -60,6 +60,27 @@ public class DatabaseActivity {
                 });
     }
 
+    //UPDATE EDITED ITEM IN DB
+  //TODO UPDATE ITEM
+    public static void updateEntry(String id, String name, String category, String location, Long timestamp) {
+      db.collection("users").document(MainActivity.userID).collection("items").document(id)
+        .update(name, category, location, timestamp)
+          .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void avoid) {
+              Log.d("DB updateEntry", "item updated");
+              getDataFromDatabase(); //or add manually and call updateList
+              Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString());
+            }
+          })
+          .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+              Log.d("DB updateEntry", "item NOT updated");
+            }
+          });
+    }
+
     //GET ITEM-DATA FROM DB
     public static void getDataFromDatabase() {
         itemArray.clear(); //clear array first to avoid multiple entries of single entry
