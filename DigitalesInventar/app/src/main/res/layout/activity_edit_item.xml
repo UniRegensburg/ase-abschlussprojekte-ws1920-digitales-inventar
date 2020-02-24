@@ -1,117 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary" />
+        android:background="#F44336" />
 
     <LinearLayout
-        android:id="@+id/NameInfo"
+        android:id="@+id/addName"
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:weightSum="3"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/Name_Item"
+            android:id="@+id/textViewName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/item_title"
+            android:layout_weight="1"
+            android:layout_marginStart="5sp"
             android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/Name"
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name_des_Item"/>
+            android:id="@+id/itemName"
+            android:layout_weight="2"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/TimeInfo"
-        android:layout_below="@+id/NameInfo"
+        android:layout_below="@+id/addName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:weightSum="3"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/Time_Item"
+            android:id="@+id/textViewTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/item_ts"
+            android:layout_weight="1"
+            android:layout_marginStart="5sp"
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/Time"
+            android:id="@+id/itemTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Time_des_Item"/>
+            android:layout_weight="2"/>
     </LinearLayout>
+
     <LinearLayout
-        android:id="@+id/CategoryInfo"
+        android:id="@+id/CategoryHeading"
         android:layout_below="@+id/TimeInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:weightSum="3"
         android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/Category_Item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/category"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/Category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kategorie_des_Item"/>
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/category"
+        android:layout_weight="1"
+        android:layout_marginStart="5sp"
+        android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/LocationInfo"
-        android:layout_below="@+id/CategoryInfo"
+        android:id="@+id/addCategory"
+        android:layout_below="@+id/CategoryHeading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2  "/>
+        <Button
+            android:id="@+id/addCatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/edit"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ownCategory"
+        android:layout_below="@+id/addCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/addLocation"
+        android:layout_below="@+id/ownCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/Location_Item"
+            android:id="@+id/textViewLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/item_location"
+            android:layout_weight="1"
+            android:layout_marginStart="5sp"
             android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/Location"
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ort_des_Item"/>
+            android:id="@+id/itemLocation"
+            android:layout_weight="2"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/Buttons"
-        android:layout_below="@+id/LocationInfo"
+        android:layout_below="@+id/addLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:weightSum="2"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/editItemButton"
+            android:id="@+id/addItemSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/edit"
-            android:gravity="center"/>
-
+            android:layout_weight="1"
+            android:text="@string/save"/>
         <Button
-            android:id="@+id/backButton"
+            android:id="@+id/addItemCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/back"
-            android:gravity="center"/>
+            android:layout_weight="1"
+            android:text="@string/cancel"/>
     </LinearLayout>
-
 </RelativeLayout>

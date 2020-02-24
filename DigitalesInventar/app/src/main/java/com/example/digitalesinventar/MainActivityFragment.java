@@ -82,7 +82,7 @@ public class MainActivityFragment extends Fragment {
     //onClick action for plusButton --> launches newItemActivity
     private void launchViewItem() {
         Log.i("MainActivity", "launchNewItemActivity called");
-        Intent intent = new Intent(getActivity(), ViewItem.class);
+        Intent intent = new Intent(getActivity(), ViewItemActivity.class);
         Bundle extras = new Bundle();
         extras.putLong("itemTs",timestamp);
         intent.putExtras(extras);
