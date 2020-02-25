@@ -10,11 +10,11 @@
     <string name="least_items">Zuletzt hinzugefügt: </string>
     <string name="sort_items">Sortieren nach: </string>
     <string name="editCategories">Kategorien bearbeiten</string>
-    <string name="cat1">\n1. \n Kategorie </string>
-    <string name="cat2">\n2. \n Kategorie</string>
-    <string name="cat3">\n3. \n Kategorie</string>
-    <string name="cat4">\n4. \n Kategorie</string>
-    <string name="cat5">\n5. \n Kategorie</string>
+    <string name="cat1">Unterhaltungseletronik </string>
+    <string name="cat2">Haushaltsgegenstände</string>
+    <string name="cat3">Einrichtung</string>
+    <string name="cat4">Hobby</string>
+    <string name="cat5">Werkzeug</string>
     <string name="cat6">\n6. \n Kategorie</string>
     <string name="cat7">\n7. \n Kategorie</string>
     <string name="cat8">\n8. \n Kategorie</string>

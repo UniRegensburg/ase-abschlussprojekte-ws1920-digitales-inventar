@@ -61,25 +61,25 @@
 
             <Button
                 android:id="@+id/cat1"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_height="100sp"
+                android:layout_width="100sp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat1"
                 android:text="@string/cat1" />
             <Button
                 android:id="@+id/cat2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100sp"
+                android:layout_height="100sp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat2"
                 android:text="@string/cat2"/>
             <Button
                 android:id="@+id/cat3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100sp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat3"
-                android:text="@string/cat3"/>
+                android:text="@string/cat3" />
         </LinearLayout>
 
         <LinearLayout
@@ -92,25 +92,25 @@
 
             <Button
                 android:id="@+id/cat4"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
+                android:layout_height="100sp"
+                android:layout_width="100sp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat4"
                 android:text="@string/cat4" />
             <Button
                 android:id="@+id/cat5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100sp"
+                android:layout_height="100sp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat5"
                 android:text="@string/cat5"/>
             <Button
                 android:id="@+id/cat6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100sp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="@color/cat6"
-                android:text="@string/cat6"/>
+                android:text="@string/cat6" />
         </LinearLayout>
 
         <LinearLayout
