@@ -2,7 +2,6 @@ package com.example.digitalesinventar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,10 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-public class ViewItem extends AppCompatActivity {
+public class ViewItemActivity extends AppCompatActivity {
 	//UI-ELEMENTS
 	//TEXT-VIEWS
 	TextView textViewName;
@@ -29,12 +25,14 @@ public class ViewItem extends AppCompatActivity {
 	//BUTTONS
 	Button edit;
 	Button back;
+	//SCREEN WIDTH
+	int screenWidth;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.i("NewItemActivity", "onCreate");
 		super.onCreate(savedInstanceState);
-		initView();
+		setupView();
 	}
 
 	@Override
@@ -55,13 +53,18 @@ public class ViewItem extends AppCompatActivity {
 		if (id == R.id.action_settings) {
 			return true;
 		}
-
 		return super.onOptionsItemSelected(item);
 	}
 
+	public void setupView() {
+		setContentView(R.layout.activity_view_item);
+		initView();
+		setWidths();
+		setupButtons();
+		assignDataFromIntent();
+	}
 
 	public void initView() {
-		setContentView(R.layout.item_view);
 		//UI-ELEMENTS
 		//TEXT-VIEWS
 		textViewName = findViewById(R.id.Name);
@@ -75,25 +78,23 @@ public class ViewItem extends AppCompatActivity {
 		//BUTTONS
 		edit = findViewById(R.id.editItemButton);
 		back = findViewById(R.id.backButton);
+	}
 
-		Log.i("NewItemActivity", "initView called");
-		//adjust item-layouts to fit 1/2 of the screen dynamically
-		DisplayMetrics displaymetrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-		int width = displaymetrics.widthPixels;
-		Log.i("displayMetrics", "width: " + width);
-		int halfWidth = width/2;
+	public void setWidths() {
+		screenWidth = UIhelper.screenWidth(getWindowManager());
+		textViewName.setWidth(screenWidth/2);
+		textViewCategory.setWidth(screenWidth/2);
+		textViewTime.setWidth(screenWidth/2);
+		textViewLocation.setWidth(screenWidth/2);
+		infoViewName.setWidth(screenWidth/2);
+		infoViewCategory.setWidth(screenWidth/2);
+		infoViewTime.setWidth(screenWidth/2);
+		infoViewLocation.setWidth(screenWidth/2);
+		back.setWidth(screenWidth/2);
+		edit.setWidth(screenWidth/2);
+	}
 
-		textViewName.setWidth(halfWidth);
-		textViewCategory.setWidth(halfWidth);
-		textViewTime.setWidth(halfWidth);
-		textViewLocation.setWidth(halfWidth);
-		infoViewName.setWidth(halfWidth);
-		infoViewCategory.setWidth(halfWidth);
-		infoViewTime.setWidth(halfWidth);
-		infoViewLocation.setWidth(halfWidth);
-
-		back.setWidth(halfWidth);
+	public void setupButtons() {
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -102,14 +103,22 @@ public class ViewItem extends AppCompatActivity {
 			}
 		});
 
-		edit.setWidth(halfWidth);
 		edit.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-					//start editView
-					finish();
+				//start editView
+				Intent intentA = getIntent();
+				Bundle extras = intentA.getExtras();
+				Intent intentB = new Intent(getApplicationContext(),EditItemActivity.class);
+				//get bundle from MainActivity and pass the timestamp to EditItemActivity
+				Log.d("extras","extras: " + extras.toString());
+				intentB.putExtras(extras);
+				startActivity(intentB);
 			}
 		});
+	}
+
+	public void assignDataFromIntent() {
 		//set inputs
 		//get data from intent
 		Intent intent = getIntent();
@@ -119,13 +128,8 @@ public class ViewItem extends AppCompatActivity {
 		DataModelItemList currentItem = DatabaseActivity.getItemFromDatabase(itemID);
 		textViewName.setText(currentItem.getItemName());
 		textViewCategory.setText(currentItem.getItemCategory());
-		//format date
-		long itemTs = Long.parseLong(String.valueOf(currentItem.getTimestamp()));
-		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
-		Date resultdate = new Date(itemTs);
-		//set date
-		textViewTime.setText(resultdate.toString());
+		//format and set date
+		textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 		textViewLocation.setText(currentItem.getItemLocation());
-
 	}
 }

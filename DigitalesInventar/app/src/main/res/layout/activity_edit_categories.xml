@@ -70,7 +70,9 @@
             android:id="@+id/textViewAddCat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/addOwnCategory" />
+            android:layout_marginStart="5sp"
+            android:text="@string/addOwnCategory"
+            android:textStyle="bold"/>
         <EditText
             android:id="@+id/editTextOwnCat"
             android:layout_width="wrap_content"

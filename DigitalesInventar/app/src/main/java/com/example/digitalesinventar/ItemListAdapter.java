@@ -6,11 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import androidx.fragment.app.FragmentActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 //custom ListAdapter to display an object of type "DataModelItemList" which holds a database entry
 public class ItemListAdapter extends ArrayAdapter<DataModelItemList> {
@@ -54,13 +53,8 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> {
             viewHolder = (ViewHolder) convertView.getTag();
             result = convertView;
         }
-        //format date
-        long itemTs = Long.parseLong(String.valueOf(dataModel.getTimestamp()));
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
-        Date resultdate = new Date(itemTs);
-
         viewHolder.txtItemName.setText(dataModel.getItemName());
-        viewHolder.txtTimestamp.setText(sdf.format(resultdate));
+        viewHolder.txtTimestamp.setText(InputChecker.formattedDate(dataModel).toString());
 
         // Return the completed view to render on screen
         return convertView;

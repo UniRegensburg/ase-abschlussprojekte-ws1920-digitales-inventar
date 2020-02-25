@@ -24,8 +24,9 @@
         <activity android:name=".DataModelItemList"></activity>
         <activity android:name=".ItemListAdapter"></activity>
         <activity android:name=".SignInFailedActivity"></activity>
-        <activity android:name=".ViewItem"></activity>
+        <activity android:name=".ViewItemActivity"></activity>
         <activity android:name=".NewCategoryActivity"></activity>
+        <activity android:name=".EditItemActivity"></activity>
 
     </application>
 
