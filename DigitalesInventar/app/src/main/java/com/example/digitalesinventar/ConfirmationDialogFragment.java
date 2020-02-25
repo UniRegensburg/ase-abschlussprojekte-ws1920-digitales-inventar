@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment;
 
 public class ConfirmationDialogFragment extends DialogFragment {
 
-	public static final String ARG_TIMESTAMP = "YesNoDialog.Title";
+	public static final String ARG_TIMESTAMP = "timestamp";
 
 
 	@Override
@@ -20,7 +20,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setMessage("Do you really want to delete this item?")
-			.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+			.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					// The item gets deleted
 					DatabaseActivity.deleteItemFromDatabase(timestamp);

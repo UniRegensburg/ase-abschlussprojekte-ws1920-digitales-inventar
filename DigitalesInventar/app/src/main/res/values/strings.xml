@@ -23,6 +23,7 @@
     <string name="save">save</string>
     <string name="edit">edit</string>
     <string name="cancel">cancel</string>
+    <string name="delete">delete</string>
     <string name="back">back</string>
     <string name="add">add</string>
     <string name="remove">remove</string>
