@@ -13,6 +13,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -96,6 +97,7 @@ public class DatabaseActivity {
                                 //to be able to reference different attributes of the object later on
                                 DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), Long.parseLong(document.get("ts").toString()));
                                 itemArray.add(newItem);
+																Collections.reverse(itemArray);
                             }
                             Log.d("DB loadEntry", "items loaded from db");
                             //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString());
