@@ -1,11 +1,15 @@
 package com.example.digitalesinventar;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -56,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        // Get SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search_bar).getActionView();
+        ComponentName componentName = new ComponentName(this, SearchActivity.class);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
         return true;
     }
 

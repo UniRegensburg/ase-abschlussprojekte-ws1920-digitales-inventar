@@ -27,6 +27,8 @@
     <string name="back">back</string>
     <string name="add">add</string>
     <string name="remove">remove</string>
+    <string name="search">Suche</string>
+    <string name="search_hint">Eintippen...</string>
     <string-array name="categories_spinner">
         <item>Unterhaltungselektronik</item>
         <item>Haushaltsgegenstände</item>

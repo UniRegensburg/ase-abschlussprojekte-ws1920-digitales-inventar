@@ -45,7 +45,7 @@ public class MainActivityFragment extends Fragment {
         //set layout for ListView for data from db
         itemListView = (ListView) rootView.findViewById(R.id.fragment_list);
         Log.i("MainActivityFragment", "listView: ");
-
+        
         // Multiple Items can be selected - works with longClick
         itemListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         launchMultipleItemSelection();
@@ -111,7 +111,7 @@ public class MainActivityFragment extends Fragment {
     }
 
     private void launchMultipleItemSelection(){
-        Log.i("MainActivity", "launchMultipleItemSelected called");
+        Log.i("MainActivityFragment", "launchMultipleItemSelected called");
         count = 0;
 
         itemListView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
