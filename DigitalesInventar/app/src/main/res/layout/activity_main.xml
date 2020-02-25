@@ -56,30 +56,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/heading1"
-            android:weightSum="3"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/cat1"
-                android:layout_height="100sp"
-                android:layout_width="100sp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:backgroundTint="@color/cat1"
-                android:text="@string/cat1" />
+                android:drawableTop="@drawable/fui_ic_anonymous_white_24dp"
+                android:text="@string/cat1"
+                android:textSize="12sp"/>
+
             <Button
                 android:id="@+id/cat2"
-                android:layout_width="100sp"
-                android:layout_height="100sp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:backgroundTint="@color/cat2"
-                android:text="@string/cat2"/>
+                android:drawableTop="@drawable/fui_ic_anonymous_white_24dp"
+                android:text="@string/cat2"
+                android:textSize="12sp"/>
+
             <Button
                 android:id="@+id/cat3"
-                android:layout_width="100sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:backgroundTint="@color/cat3"
-                android:text="@string/cat3" />
+                android:drawableTop="@drawable/fui_ic_anonymous_white_24dp"
+                android:text="@string/cat3"
+                android:textSize="12sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -87,69 +91,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/firstCates"
-            android:weightSum="3"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/cat4"
-                android:layout_height="100sp"
-                android:layout_width="100sp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
                 android:backgroundTint="@color/cat4"
-                android:text="@string/cat4" />
+                android:drawableTop="@drawable/fui_ic_anonymous_white_24dp"
+                android:text="@string/cat4"
+                android:textSize="12sp"/>
             <Button
                 android:id="@+id/cat5"
-                android:layout_width="100sp"
-                android:layout_height="100sp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
                 android:backgroundTint="@color/cat5"
-                android:text="@string/cat5"/>
+                android:drawableTop="@drawable/fui_ic_anonymous_white_24dp"
+                android:text="@string/cat5"
+                android:textSize="12sp"/>
             <Button
                 android:id="@+id/cat6"
-                android:layout_width="100sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
                 android:backgroundTint="@color/cat6"
-                android:text="@string/cat6" />
+                android:drawableTop="@drawable/fui_ic_anonymous_white_24dp"
+                android:text="@string/cat6"
+                android:textSize="12sp"/>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/thirdCates"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/secondCates"
-            android:weightSum="3"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/cat7"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/cat7"
-                android:text="@string/cat7"/>
-            <Button
-                android:id="@+id/cat8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/cat8"
-                android:text="@string/cat8"/>
-            <Button
-                android:id="@+id/cat9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/cat9"
-                android:text="@string/cat9"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/heading3"
+            android:id="@+id/heading2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/thirdCates"
-            android:weightSum="3">
+            android:layout_below="@+id/secondCates">
 
             <Space
                 android:id="@+id/spacer"
@@ -169,10 +143,10 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/heading2"
+            android:id="@+id/heading3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/thirdCates">
+            android:layout_below="@+id/heading2">
 
             <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"

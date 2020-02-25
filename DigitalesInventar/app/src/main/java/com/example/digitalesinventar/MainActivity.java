@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,11 +37,21 @@ public class MainActivity extends AppCompatActivity {
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static String userID = "defaultEmptyID";
 
+    //UI-ELEMENTS --- NOTE: wird später dann noch ausgelagert in eigenstaendiges Fragment
+    Button firstCat;
+    Button secondCat;
+    Button thirdCat;
+    Button fourthCat;
+    Button fifthCat;
+    Button sixthCat;
+    Toolbar toolbar;
+    FloatingActionButton plusButton;
+    //HELPERS
+    int screenWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setupMainMenu();
 
         // Choose authentication providers //v1
         List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -129,22 +140,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void launchSignInFailedActivity() {
-        Log.i("MainActivity", "launchNewItemActivity called");
-        Intent intent = new Intent(this, SignInFailedActivity.class);
-        Log.i("MainActivity", "intent to start newItemActivity created");
-        startActivity(intent);
-    }
-
     //sets and initializes UI for MainActivity
     public void setupMainMenu() {
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DatabaseActivity.getDataFromDatabase();
         DatabaseActivity.getCategoriesFromDatabase();
 
-        FloatingActionButton plusButton = findViewById(R.id.plusButton);
+        plusButton = findViewById(R.id.plusButton);
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,6 +156,30 @@ public class MainActivity extends AppCompatActivity {
                 launchNewItemActivity();
             }
         });
+        setupCategories();
+    }
+
+    private void setupCategories() {
+        firstCat = findViewById(R.id.cat1);
+        secondCat = findViewById(R.id.cat2);
+        thirdCat = findViewById(R.id.cat3);
+        fourthCat = findViewById(R.id.cat4);
+        fifthCat= findViewById(R.id.cat5);
+        sixthCat = findViewById(R.id.cat6);
+        //set width of Buttons
+        screenWidth = UIhelper.screenWidth(getWindowManager());
+        //firstCat.setHeight(screenWidth/3);
+        secondCat.setWidth(screenWidth/3);
+        //secondCat.setHeight(screenWidth/3);
+        firstCat.setWidth(screenWidth/3);
+        //thirdCat.setHeight(screenWidth/3);
+        thirdCat.setWidth(screenWidth/3);
+        //fourthCat.setHeight(screenWidth/3);
+        fourthCat.setWidth(screenWidth/3);
+        //fifthCat.setHeight(screenWidth/3);
+        fifthCat.setWidth(screenWidth/3);
+        //sixthCat.setHeight(screenWidth/3);
+        sixthCat.setWidth(screenWidth/3);
     }
 
     //onClick action for plusButton --> launches newItemActivity
@@ -161,5 +189,13 @@ public class MainActivity extends AppCompatActivity {
         Log.i("MainActivity", "intent to start newItemActivity created");
         startActivity(intent);
     }
+
+    private void launchSignInFailedActivity() {
+        Log.i("MainActivity", "launchNewItemActivity called");
+        Intent intent = new Intent(this, SignInFailedActivity.class);
+        Log.i("MainActivity", "intent to start newItemActivity created");
+        startActivity(intent);
+    }
+
 
 }
