@@ -3,9 +3,7 @@ package com.example.digitalesinventar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.ActionMode;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -49,17 +47,6 @@ public class MainActivityFragment extends Fragment {
         // Multiple Items can be selected - works with longClick
         itemListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         launchMultipleItemSelection();
-        /**itemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent,
-                View view, int position, long id) {
-
-                itemListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-                // Multiple Items can be selected
-                launchMultipleItemSelection(parent, position);
-                return true;
-            }
-        });**/
 
         itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

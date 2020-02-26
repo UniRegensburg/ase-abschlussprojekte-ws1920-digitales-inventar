@@ -1,5 +1,6 @@
 package com.example.digitalesinventar;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -142,9 +143,14 @@ public class EditItemActivity extends AppCompatActivity {
 		save.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TODO UPDATE ITEM
 				context = getApplicationContext();
 				DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), editCategories.getText().toString(), editTextLocation.getText().toString(), currentItem.getTimestamp());
+				Intent returnIntent = new Intent(context, ViewItemActivity.class);
+				Bundle extras = new Bundle();
+				extras.putLong("itemTs",currentItem.getTimestamp());
+				Log.d("editedItem", ":" + editTextName.getText());
+				returnIntent.putExtras(extras);
+				setResult(Activity.RESULT_OK, returnIntent);
 				finish();
 			}
 		});
@@ -201,6 +207,4 @@ public class EditItemActivity extends AppCompatActivity {
 			return false;
 		}
 	}
-
-
 }

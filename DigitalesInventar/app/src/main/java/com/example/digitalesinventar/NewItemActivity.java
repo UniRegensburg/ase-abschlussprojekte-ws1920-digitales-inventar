@@ -103,7 +103,7 @@ public class NewItemActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //start editCategories activity
                 Intent intent = new Intent(getApplicationContext(),NewCategoryActivity.class);
-                startActivityForResult(intent, 69);
+                startActivity(intent);
             }
         });
 

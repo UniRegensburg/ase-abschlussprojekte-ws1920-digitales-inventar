@@ -1,5 +1,6 @@
 package com.example.digitalesinventar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,7 +62,7 @@ public class ViewItemActivity extends AppCompatActivity {
 		initView();
 		setWidths();
 		setupButtons();
-		assignDataFromIntent();
+		assignDataFromIntent(getIntent());
 	}
 
 	public void initView() {
@@ -113,15 +114,14 @@ public class ViewItemActivity extends AppCompatActivity {
 				//get bundle from MainActivity and pass the timestamp to EditItemActivity
 				Log.d("extras","extras: " + extras.toString());
 				intentB.putExtras(extras);
-				startActivity(intentB);
+				startActivityForResult(intentB, 666);
 			}
 		});
 	}
 
-	public void assignDataFromIntent() {
+	public void assignDataFromIntent(Intent intent) {
 		//set inputs
 		//get data from intent
-		Intent intent = getIntent();
 		Bundle extras = intent.getExtras();
 		long itemID = extras.getLong("itemTs");
 		//retrieve data from db
@@ -131,5 +131,20 @@ public class ViewItemActivity extends AppCompatActivity {
 		//format and set date
 		textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 		textViewLocation.setText(currentItem.getItemLocation());
+		Log.d("Intent data: ",  "" + currentItem.getItemName());
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.d("onActivityResult", "called");
+		// Check which request we're responding to
+		if (requestCode == 666) {
+			// Make sure the request was successful
+			if (resultCode == Activity.RESULT_OK) {
+				Bundle extras = data.getExtras();
+				Log.d("onActivityResult", "Intent data" + extras.toString());
+				assignDataFromIntent(data);
+			}
+		}
 	}
 }
