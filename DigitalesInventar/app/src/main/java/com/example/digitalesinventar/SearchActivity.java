@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +16,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
 	ArrayList<DataModelItemList> dataSet;
-	ArrayList<DataModelItemList> filteredList;
+	ArrayList<DataModelItemList> filteredList = new ArrayList<>();
 	ArrayAdapter adapter;
 	ListView itemListView;
 
@@ -50,24 +48,23 @@ public class SearchActivity extends AppCompatActivity {
 
 	private void search(String query){
 		Log.i("SearchActivity", "query: "+ query);
-		adapter = new ItemListAdapter(DatabaseActivity.itemArray,this);
-		//adapter.getFilter().filter(query);
+		adapter = new ItemListAdapter(filteredList,this);
+		itemListView.setAdapter(adapter);
 		dataSet = DatabaseActivity.itemArray;
 		Log.i("doMySearch", "dataset: " + dataSet);
 
 		if (query.isEmpty()){
 			filteredList = dataSet;
 		} else {
+			filteredList.clear();
 			ArrayList<DataModelItemList> filteredData = new ArrayList<>();
 			for (DataModelItemList row : dataSet) {
 				if (row.getItemName().toLowerCase().contains(query.toLowerCase())) {
-					filteredData.add(row);
+					filteredList.add(row);
 				}
 			}
-			filteredList = filteredData;
 		}
-
-		Log.i("DoMySearch", "filteredList: " + filteredList.toString());
+		Log.i("DoMySearch", "filteredList: " + filteredList);
 		adapter.notifyDataSetChanged();
 	}
 
