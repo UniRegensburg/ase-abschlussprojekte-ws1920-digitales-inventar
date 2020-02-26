@@ -13,8 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-
-public class SearchActivity extends AppCompatActivity {
+public class CategorySearchActivity extends AppCompatActivity {
 
 
 	ArrayList<DataModelItemList> dataSet;
@@ -40,28 +39,29 @@ public class SearchActivity extends AppCompatActivity {
 	}
 
 	private void handleIntent(Intent intent) {
-		Log.i("SearchActivity", "handleIntent");
-		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			String query = intent.getStringExtra(SearchManager.QUERY);
-			Log.i("handleIntent", "query: " + query);
-			search(query);
-		}
+		Log.i("CategoryActivity", "handleIntent");
+		String catName = getIntent().getStringExtra("catName");
+		Log.i("handleIntent", "catName: " + catName);
+		search(catName);
 	}
 
 
-	private void search(String query){
-		Log.i("SearchActivity", "query: "+ query);
+	private void search(String catName){
+		Log.i("SearchActivity", "catName: "+ catName);
 		adapter = new ItemListAdapter(filteredList,this);
 		itemListView.setAdapter(adapter);
 		dataSet = DatabaseActivity.itemArray;
-		Log.i("DdoMySearch", "dataset: " + dataSet);
+		Log.i("DoMySearch", "dataset: " + dataSet);
 
-		if (query.isEmpty()){
-			filteredList = dataSet; //search doesn't get called on empty input
+		if (catName.isEmpty()){
+			filteredList = dataSet; //no empty cats
 		} else {
 			filteredList.clear();
+			//Log.i("DoMySearch", "catName: "+catName);
 			for (DataModelItemList row : dataSet) {
-				if (row.getItemName().toLowerCase().contains(query.toLowerCase())) {
+				//Log.i("DoMySearch", "all rows: " + row.getItemCategory());
+				if (row.getItemCategory().toLowerCase().contains(catName.toLowerCase())) { //maybe equals better but cat names longer than buttons
+				//Log.i("DoMySearch", "hit row: " + row.getItemCategory());
 					filteredList.add(row);
 				}
 			}
@@ -90,5 +90,4 @@ public class SearchActivity extends AppCompatActivity {
 		Log.i("SearchActivity", "intent to start viewItem created");
 		startActivity(intent);
 	}
-
 }

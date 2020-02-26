@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     Button sixthCat;
     Toolbar toolbar;
     FloatingActionButton plusButton;
+    Button[] catButtonArray = new Button[6];//will need to be reworked for custom category buttons
     //HELPERS
     int screenWidth;
 
@@ -182,6 +183,13 @@ public class MainActivity extends AppCompatActivity {
         fourthCat = findViewById(R.id.cat4);
         fifthCat= findViewById(R.id.cat5);
         sixthCat = findViewById(R.id.cat6);
+        //Log.i("MainActivity", "btn.add: "+firstCat.toString());
+        catButtonArray[0] = firstCat;
+        catButtonArray[1] = secondCat;
+        catButtonArray[2] = thirdCat;
+        catButtonArray[3] = fourthCat;
+        catButtonArray[4] = fifthCat;
+        catButtonArray[5] = sixthCat;
         //set width of Buttons
         screenWidth = UIhelper.screenWidth(getWindowManager());
         //firstCat.setHeight(screenWidth/3);
@@ -196,6 +204,15 @@ public class MainActivity extends AppCompatActivity {
         fifthCat.setWidth(screenWidth/3);
         //sixthCat.setHeight(screenWidth/3);
         sixthCat.setWidth(screenWidth/3);
+
+        for (final Button cat : catButtonArray){
+            cat.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    //Log.i("CatMainActivity", "btn: "+cat.getText().toString());
+                    launchCategorySearchActivity(cat.getText().toString());
+                }
+            });
+        }
     }
 
     //onClick action for plusButton --> launches newItemActivity
@@ -210,6 +227,14 @@ public class MainActivity extends AppCompatActivity {
         Log.i("MainActivity", "launchNewItemActivity called");
         Intent intent = new Intent(this, SignInFailedActivity.class);
         Log.i("MainActivity", "intent to start newItemActivity created");
+        startActivity(intent);
+    }
+
+    private void launchCategorySearchActivity(String catName) {
+        Log.i("MainActivity", "launchCategorySearchActivity called w/: "+catName);
+        Intent intent = new Intent(this, CategorySearchActivity.class);
+        intent.putExtra("catName", catName);
+        Log.i("MainActivity", "intent to start CategorySearchActivity created");
         startActivity(intent);
     }
 
