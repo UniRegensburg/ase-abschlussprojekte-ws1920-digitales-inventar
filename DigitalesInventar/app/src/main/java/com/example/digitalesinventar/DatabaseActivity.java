@@ -65,18 +65,20 @@ public class DatabaseActivity {
   //TODO UPDATE ITEM
     public static void updateEntry(String id, String name, String category, String location, Long timestamp) {
       db.collection("users").document(MainActivity.userID).collection("items").document(id)
-        .update(name, category, location, timestamp)
+        .update("name", name, "category", category, "location", location, "ts", timestamp)
           .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void avoid) {
+              EditItemActivity.showToast(true);
               Log.d("DB updateEntry", "item updated");
               getDataFromDatabase(); //or add manually and call updateList
-              Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString());
+              //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString()); //crashed app
             }
           })
           .addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+              EditItemActivity.showToast(false);
               Log.d("DB updateEntry", "item NOT updated");
             }
           });
