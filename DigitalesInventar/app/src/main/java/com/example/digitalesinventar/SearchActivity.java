@@ -4,6 +4,8 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -19,6 +21,7 @@ public class SearchActivity extends AppCompatActivity {
 	ArrayList<DataModelItemList> filteredList = new ArrayList<>();
 	ArrayAdapter adapter;
 	ListView itemListView;
+	long timestamp;
 
 
 	//Important to handle Intent in onCreate AND onNewIntent!!
@@ -66,6 +69,26 @@ public class SearchActivity extends AppCompatActivity {
 		}
 		Log.i("DoMySearch", "filteredList: " + filteredList);
 		adapter.notifyDataSetChanged();
+		itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent,
+															View view, int position, long id) {
+				DataModelItemList itemTs = (DataModelItemList) parent.getItemAtPosition(position);
+				timestamp = itemTs.getTimestamp();
+				Log.i("MainActivityItemOnClick", "" + timestamp);
+				launchViewItem();
+			}
+		});
+	}
+
+	private void launchViewItem() {
+		Log.i("MainActivity", "launchNewItemActivity called");
+		Intent intent = new Intent(this, ViewItemActivity.class);
+		Bundle extras = new Bundle();
+		extras.putLong("itemTs",timestamp);
+		intent.putExtras(extras);
+		Log.i("MainActivity", "intent to start viewItem created");
+		startActivity(intent);
 	}
 
 }
