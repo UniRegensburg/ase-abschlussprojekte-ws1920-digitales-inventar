@@ -64,6 +64,7 @@ public class DatabaseActivity {
     //UPDATE EDITED ITEM IN DB
   //TODO UPDATE ITEM
     public static void updateEntry(String id, String name, String category, String location, Long timestamp) {
+      //Log.d("DB updateEntry", "data:"+id+" ;"+name+" ;"+category+" ;"+location+" ;"+timestamp);
       db.collection("users").document(MainActivity.userID).collection("items").document(id)
         .update("name", name, "category", category, "location", location, "ts", timestamp)
           .addOnSuccessListener(new OnSuccessListener<Void>() {

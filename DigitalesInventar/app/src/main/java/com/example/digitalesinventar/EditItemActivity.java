@@ -144,7 +144,7 @@ public class EditItemActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				//TODO UPDATE ITEM
 				context = getApplicationContext();
-				DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), editCategories.getText().toString(), editTextLocation.getText().toString(), currentItem.getTimestamp());
+				DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), currentItem.getTimestamp());
 				finish();
 			}
 		});
