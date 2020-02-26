@@ -63,6 +63,10 @@ public class SearchActivity extends AppCompatActivity {
 			for (DataModelItemList row : dataSet) {
 				if (row.getItemName().toLowerCase().contains(query.toLowerCase())) {
 					filteredList.add(row);
+				} else if (row.getItemCategory().toLowerCase().contains(query.toLowerCase())) {
+					filteredList.add(row);
+				} else if (row.getItemLocation().toLowerCase().contains(query.toLowerCase())) {
+					filteredList.add(row);
 				}
 			}
 		}
