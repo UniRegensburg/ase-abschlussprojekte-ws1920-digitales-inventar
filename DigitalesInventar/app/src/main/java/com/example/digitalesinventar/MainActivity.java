@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123; //wieso
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static String userID = "defaultEmptyID";
+    private SearchView searchView;
 
     //UI-ELEMENTS --- NOTE: wird später dann noch ausgelagert in eigenstaendiges Fragment
     Button firstCat;
@@ -74,10 +75,25 @@ public class MainActivity extends AppCompatActivity {
 
         // Get SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search_bar).getActionView();
+        searchView = (SearchView) menu.findItem(R.id.search_bar).getActionView();
         ComponentName componentName = new ComponentName(this, SearchActivity.class);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+
+        // setupSearchListener in Fragment class
+        MainActivityFragment fragment = new MainActivityFragment();
+        fragment.setupSearchListener(searchView);
+
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        // close search view on back button pressed
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override
