@@ -16,6 +16,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -172,6 +173,25 @@ public class MainActivityFragment extends Fragment {
                     child.setBackgroundColor(0x00999999);
                 }
                 count = 0;
+            }
+        });
+    }
+
+    public void setupSearchListener(SearchView searchView){
+        Log.i("MainActivityFragment", "setupSearchListener");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i("SetupSearchListener", "onQueryTextSubmit");
+                itemArrayAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.i("SetupSearchListener", "onQueryTextChange");
+                itemArrayAdapter.getFilter().filter(newText);
+                return false;
             }
         });
     }

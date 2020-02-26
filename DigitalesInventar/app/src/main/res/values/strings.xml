@@ -26,6 +26,7 @@
     <string name="remove">remove</string>
     <string name="search">Suche</string>
     <string name="search_hint">Eintippen...</string>
+    <string name="searchresult">Suchergebnis:</string>
     <string-array name="categories_spinner">
         <item>Unterhaltungselektronik</item>
         <item>Haushaltsgegenstände</item>
