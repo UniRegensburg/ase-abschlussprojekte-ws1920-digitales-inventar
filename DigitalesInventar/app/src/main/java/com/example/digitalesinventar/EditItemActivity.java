@@ -1,5 +1,6 @@
 package com.example.digitalesinventar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -40,6 +41,8 @@ public class EditItemActivity extends AppCompatActivity {
 	//SCREEN WIDTH
 	int screenWidth;
 	DataModelItemList currentItem;
+	//Context
+	public static Context context;
 
 
 	@Override
@@ -140,13 +143,19 @@ public class EditItemActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				//TODO UPDATE ITEM
-				//DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), editCategories.getText().toString(), editTextLocation.getText().toString(), currentItem.getTimestamp());
-				//Toast.makeText(getApplicationContext(), "Item successfully edited!", Toast.LENGTH_SHORT).show();
-
-				Toast.makeText(getApplicationContext(), "Currently not working please check", Toast.LENGTH_SHORT).show();
+				context = getApplicationContext();
+				DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), currentItem.getTimestamp());
 				finish();
 			}
 		});
+	}
+
+	public static void showToast(boolean success) {
+		if (success) {
+			Toast.makeText(context, "Item successfully edited!", Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(context, "Currently not working please check", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	public void setupSpinner() {
