@@ -26,6 +26,7 @@ public class ViewItemActivity extends AppCompatActivity {
 	Button back;
 	//SCREEN WIDTH
 	int screenWidth;
+	String searchquery;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,11 @@ public class ViewItemActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				//finish activity and go back to main
+				if (!searchquery.equals("")) {
+					Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+					intent.putExtra("searchQuery", searchquery);
+					startActivity(intent);
+				}
 				finish();
 			}
 		});
@@ -101,6 +107,7 @@ public class ViewItemActivity extends AppCompatActivity {
 		//get data from intent
 		Bundle extras = intent.getExtras();
 		long itemID = extras.getLong("itemTs");
+		searchquery = extras.getString("searchQuery");
 		//retrieve data from db
 		DataModelItemList currentItem = DatabaseActivity.getItemFromDatabase(itemID);
 		textViewName.setText(currentItem.getItemName());

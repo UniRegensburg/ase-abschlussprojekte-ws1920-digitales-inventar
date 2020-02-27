@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,6 +25,8 @@ public class SearchActivity extends AppCompatActivity {
 	ListView itemListView;
 	Toolbar toolbar;
 	long timestamp;
+	String searchquery;
+	TextView result;
 
 
 	//Important to handle Intent in onCreate AND onNewIntent!!
@@ -32,6 +35,7 @@ public class SearchActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search);
 		toolbar = findViewById(R.id.toolbar);
+		result = findViewById(R.id.searchresult);
 
 		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
 			@Override
@@ -52,15 +56,20 @@ public class SearchActivity extends AppCompatActivity {
 
 	private void handleIntent(Intent intent) {
 		Log.i("SearchActivity", "handleIntent");
-		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+		if (intent.getStringExtra("searchQuery") != null && !intent.getStringExtra("searchQuery").equals("")) {
+			search(intent.getStringExtra("searchQuery"));
+			searchquery = "";
+		} else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			Log.i("handleIntent", "query: " + query);
+			searchquery = query;
 			search(query);
 		}
 	}
 
 
-	private void search(String query){
+	public void search(String query){
+		result.setText("Suchergebnis für '" + query + "'");
 		Log.i("SearchActivity", "query: "+ query);
 		adapter = new ItemListAdapter(filteredList,this);
 		itemListView.setAdapter(adapter);
@@ -101,9 +110,11 @@ public class SearchActivity extends AppCompatActivity {
 		Intent intent = new Intent(this, ViewItemActivity.class);
 		Bundle extras = new Bundle();
 		extras.putLong("itemTs",timestamp);
+		extras.putString("searchQuery", searchquery);
 		intent.putExtras(extras);
 		Log.i("SearchActivity", "intent to start viewItem created");
 		startActivity(intent);
+		finish();
 	}
 
 }

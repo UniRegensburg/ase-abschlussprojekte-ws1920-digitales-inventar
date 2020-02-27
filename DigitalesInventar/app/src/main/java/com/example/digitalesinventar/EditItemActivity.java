@@ -42,6 +42,7 @@ public class EditItemActivity extends AppCompatActivity {
 	DataModelItemList currentItem;
 	//Context
 	public static Context context;
+	String searchquery;
 
 
 	@Override
@@ -124,9 +125,12 @@ public class EditItemActivity extends AppCompatActivity {
 				Intent returnIntent = new Intent(context, ViewItemActivity.class);
 				Bundle extras = new Bundle();
 				extras.putLong("itemTs",currentItem.getTimestamp());
+				extras.putString("searchQuery", searchquery);
 				Log.d("editedItem", ":" + editTextName.getText());
 				returnIntent.putExtras(extras);
 				setResult(Activity.RESULT_OK, returnIntent);
+				//set query back to def
+				searchquery = "";
 				finish();
 			}
 		});
@@ -154,6 +158,8 @@ public class EditItemActivity extends AppCompatActivity {
 		Intent intent = getIntent();
 		Bundle extras = intent.getExtras();
 		long itemID = extras.getLong("itemTs");
+		//set query for search
+		searchquery = extras.getString("searchQuery");
 		//retrieve data from db
 		currentItem = DatabaseActivity.getItemFromDatabase(itemID);
 		editTextName.setText(currentItem.getItemName());
@@ -179,7 +185,7 @@ public class EditItemActivity extends AppCompatActivity {
 			//add item to database
 			DatabaseActivity.addEntry(editTextName.getText().toString(), selectedCategory, editTextLocation.getText().toString());
 			return true;
-		} else {
+			} else {
 			return false;
 		}
 	}
