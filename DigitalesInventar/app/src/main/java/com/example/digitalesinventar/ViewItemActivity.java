@@ -32,6 +32,8 @@ public class ViewItemActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.i("NewItemActivity", "onCreate");
 		super.onCreate(savedInstanceState);
+		//make sure no old values are in searchquery
+		searchquery = "";
 		setupView();
 	}
 
