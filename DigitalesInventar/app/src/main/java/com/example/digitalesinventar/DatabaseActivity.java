@@ -64,6 +64,7 @@ public class DatabaseActivity {
     //UPDATE EDITED ITEM IN DB
   //TODO UPDATE ITEM
     public static void updateEntry(String id, String name, String category, String location, Long timestamp) {
+      final DataModelItemList wipItem = new DataModelItemList(name, category, location, timestamp);
       //Log.d("DB updateEntry", "data:"+id+" ;"+name+" ;"+category+" ;"+location+" ;"+timestamp);
       db.collection("users").document(MainActivity.userID).collection("items").document(id)
         .update("name", name, "category", category, "location", location, "ts", timestamp)
@@ -71,6 +72,7 @@ public class DatabaseActivity {
             @Override
             public void onSuccess(Void avoid) {
               EditItemActivity.showToast(true);
+              ViewItemActivity.updateDataAfterEdit(wipItem);
               Log.d("DB updateEntry", "item updated");
               getDataFromDatabase(); //or add manually and call updateList
               //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString()); //crashed app

@@ -15,10 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 public class ViewItemActivity extends AppCompatActivity {
 	//UI-ELEMENTS
 	//TEXT-VIEWS
-	TextView textViewName;
-	TextView textViewTime;
-	TextView textViewCategory;
-	TextView textViewLocation;
+	static TextView textViewName;
+	static TextView textViewTime;
+	static TextView textViewCategory;
+	static TextView textViewLocation;
 	TextView infoViewName;
 	TextView infoViewTime;
 	TextView infoViewCategory;
@@ -132,6 +132,15 @@ public class ViewItemActivity extends AppCompatActivity {
 		textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 		textViewLocation.setText(currentItem.getItemLocation());
 		Log.d("Intent data: ",  "" + currentItem.getItemName());
+	}
+
+	public static void updateDataAfterEdit(DataModelItemList currentItem) {
+		//name & cat
+		textViewName.setText(currentItem.getItemName());
+		textViewCategory.setText(currentItem.getItemCategory());
+		//format and set date
+		textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
+		textViewLocation.setText(currentItem.getItemLocation());
 	}
 
 	@Override
