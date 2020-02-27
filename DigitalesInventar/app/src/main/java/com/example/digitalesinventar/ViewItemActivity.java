@@ -78,7 +78,7 @@ public class ViewItemActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				//finish activity and go back to main
-				if (!searchquery.equals("")) {
+				if (searchquery != null &&!searchquery.equals("")) {
 					Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
 					intent.putExtra("searchQuery", searchquery);
 					startActivity(intent);
