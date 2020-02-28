@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,6 +23,7 @@ public class CategorySearchActivity extends AppCompatActivity {
 	ListView itemListView;
 	long timestamp;
 	Toolbar toolbar;
+	TextView result;
 
 
 	//Important to handle Intent in onCreate AND onNewIntent!!
@@ -30,6 +32,7 @@ public class CategorySearchActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search);
 		itemListView = findViewById(R.id.fragment_list);
+		result = findViewById(R.id.searchresult);
 		handleIntent(getIntent());
 
 		toolbar = findViewById(R.id.toolbar);
@@ -57,6 +60,7 @@ public class CategorySearchActivity extends AppCompatActivity {
 
 	private void search(String catName){
 		Log.i("SearchActivity", "catName: "+ catName);
+		result.setText("Kategorie '" + catName + "':");
 		adapter = new ItemListAdapter(filteredList,this);
 		itemListView.setAdapter(adapter);
 		dataSet = DatabaseActivity.itemArray;
