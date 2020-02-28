@@ -1,7 +1,7 @@
 package com.example.digitalesinventar;
 
 //DataModel for the Firebase-entries to be set to a custom ListAdapter
-public class DataModelItemList {
+public class DataModelItemList implements Cloneable{
     String itemName;
     String itemLocation;
     String itemCategory;
@@ -33,4 +33,21 @@ public class DataModelItemList {
     public String itemToString() {
         return "Item: " + getItemName() + ", hinzugefügt am: " + getTimestamp() + ", in der Kategorie: " + getItemCategory() + ", abgelegt an diesem Ort: " + getItemLocation() + ".";
     }
+
+    @Override
+    public DataModelItemList clone()
+    {
+        DataModelItemList clone;
+        try
+        {
+            clone = (DataModelItemList) super.clone();
+        }
+        catch (CloneNotSupportedException e)
+        {
+            throw new Error();
+        }
+
+        return clone;
+    }
+
 }

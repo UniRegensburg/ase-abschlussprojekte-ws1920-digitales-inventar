@@ -38,11 +38,11 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         //set content-view for fragment
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View view= inflater.inflate(R.layout.fragment_main, container, false);
         Log.i("MainActivityFragment", "inflater called");
-        rootView.findViewById(R.id.fragment);
+        //rootView.findViewById(R.id.fragment_container);
         //set layout for ListView for data from db
-        itemListView = (ListView) rootView.findViewById(R.id.fragment_list);
+        itemListView = (ListView) view.findViewById(R.id.fragment_list);
         Log.i("MainActivityFragment", "listView: ");
         
         // Multiple Items can be selected - works with longClick
@@ -61,7 +61,7 @@ public class MainActivityFragment extends Fragment {
         });
         setupList();
         Log.i("MainActivityFragment", "setupList called");
-        return rootView;
+        return view;
 
     }
 
@@ -71,6 +71,11 @@ public class MainActivityFragment extends Fragment {
         itemArrayAdapter = new ItemListAdapter(DatabaseActivity.itemArray,getActivity());
         itemListView.setAdapter(itemArrayAdapter);
         Log.i("MainActivityFragment", "listAdapter set");
+    }
+
+    public void setupSearchList(ArrayList<DataModelItemList> filteredList) {
+        itemArrayAdapter = new ItemListAdapter(filteredList,getActivity());
+        itemListView.setAdapter(itemArrayAdapter);
     }
 
     public static void updateList() {
@@ -178,7 +183,7 @@ public class MainActivityFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 Log.i("SetupSearchListener", "onQueryTextChange");
                 itemArrayAdapter.getFilter().filter(newText);
-                return false;
+                return true;
             }
         });
     }

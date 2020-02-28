@@ -20,7 +20,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
 	ArrayList<DataModelItemList> dataSet;
-	ArrayList<DataModelItemList> filteredList = new ArrayList<>();
+	public ArrayList<DataModelItemList> filteredList = new ArrayList<>();
 	ArrayAdapter adapter;
 	ListView itemListView;
 	Toolbar toolbar;
@@ -34,9 +34,9 @@ public class SearchActivity extends AppCompatActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search);
-		toolbar = findViewById(R.id.toolbar);
 		result = findViewById(R.id.searchresult);
 
+		toolbar = findViewById(R.id.toolbar);
 		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

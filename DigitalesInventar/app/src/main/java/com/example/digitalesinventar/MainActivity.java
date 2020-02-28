@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         // setupSearchListener in Fragment class
         MainActivityFragment fragment = new MainActivityFragment();
         fragment.setupSearchListener(searchView);
-
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,fragment).commit();
         return true;
     }
 

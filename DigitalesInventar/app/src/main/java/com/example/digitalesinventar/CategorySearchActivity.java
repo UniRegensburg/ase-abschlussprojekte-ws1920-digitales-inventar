@@ -1,6 +1,5 @@
 package com.example.digitalesinventar;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 
@@ -21,6 +21,7 @@ public class CategorySearchActivity extends AppCompatActivity {
 	ArrayAdapter adapter;
 	ListView itemListView;
 	long timestamp;
+	Toolbar toolbar;
 
 
 	//Important to handle Intent in onCreate AND onNewIntent!!
@@ -30,6 +31,14 @@ public class CategorySearchActivity extends AppCompatActivity {
 		setContentView(R.layout.search);
 		itemListView = findViewById(R.id.fragment_list);
 		handleIntent(getIntent());
+
+		toolbar = findViewById(R.id.toolbar);
+		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 
 	@Override

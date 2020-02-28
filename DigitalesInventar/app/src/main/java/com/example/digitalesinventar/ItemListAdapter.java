@@ -95,6 +95,10 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
                 filteredList = (ArrayList<DataModelItemList>) results.values;
                 Log.i("publishResult", "filteredList: " + filteredList);
                 notifyDataSetChanged();
+                clear();
+                for(int i = 0, l = filteredList.size(); i < l; i++)
+                    add(filteredList.get(i));
+                notifyDataSetInvalidated();
             }
         };
     }
