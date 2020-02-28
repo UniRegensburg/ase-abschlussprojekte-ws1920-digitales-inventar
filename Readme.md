@@ -51,4 +51,4 @@ Der/Die Nutzer/in kann einen oder mehrere Gegenstände aus dem System löschen.\
 Der/Die Nutzer/in kann die Gegenstandsliste nach Name, Ort und Kategorie durchsuchen.\
 Der/ Die Nutzer/in kann seine/ihre Gegenstände nach den Kategorien filtern lassen.
 
-![Demo-Video](./docs/demo/ASE1stRelease.gif)
+![Demo-Video](./docs/demo/2nd-Release.gif)
