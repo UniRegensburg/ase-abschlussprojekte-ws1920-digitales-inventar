@@ -28,6 +28,7 @@ public class DatabaseActivity {
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
     //ArrayList to store firebase data for displaying later
     public static ArrayList<DataModelItemList> itemArray = new ArrayList<DataModelItemList>();
+    private static ArrayList<DataModelItemList> itemArrayBackup = new ArrayList<DataModelItemList>();
     public static ArrayList<String> categoryArray = new ArrayList<>();
 
     //ITEMS
@@ -87,9 +88,15 @@ public class DatabaseActivity {
           });
     }
 
+    public static void loadBackup() {
+      itemArray.clear();
+      itemArray.addAll(itemArrayBackup);
+    }
+
     //GET ITEM-DATA FROM DB
     public static void getDataFromDatabase() {
         itemArray.clear(); //clear array first to avoid multiple entries of single entry
+        itemArrayBackup.clear();
         //db.collection("items")
         db.collection("users").document(MainActivity.userID).collection("items")
         .get()
@@ -102,7 +109,9 @@ public class DatabaseActivity {
                                 //to be able to reference different attributes of the object later on
                                 DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), Long.parseLong(document.get("ts").toString()));
                                 itemArray.add(newItem);
+                                itemArrayBackup.add(newItem);
 																Collections.reverse(itemArray);
+																Collections.reverse(itemArrayBackup);
                             }
                             Log.d("DB loadEntry", "items loaded from db");
                             //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString());

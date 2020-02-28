@@ -30,6 +30,7 @@ public class MainActivityFragment extends Fragment {
     long timestamp;
     int count;
     ArrayList<String> selected_items = new ArrayList<>();
+    ArrayList<DataModelItemList> filteredList;// = new ArrayList<>();
 
     public MainActivityFragment()  {
     }
@@ -68,15 +69,16 @@ public class MainActivityFragment extends Fragment {
     //link custom adapter with ListView for db entries
     public void setupList() {
         Log.i("MainActivityFragment", "setupList called");
-        itemArrayAdapter = new ItemListAdapter(DatabaseActivity.itemArray,getActivity());
+        filteredList = DatabaseActivity.itemArray;
+        itemArrayAdapter = new ItemListAdapter(filteredList,getActivity());
         itemListView.setAdapter(itemArrayAdapter);
         Log.i("MainActivityFragment", "listAdapter set");
     }
 
-    public void setupSearchList(ArrayList<DataModelItemList> filteredList) {
+    /*public void setupSearchList(ArrayList<DataModelItemList> filteredList) {
         itemArrayAdapter = new ItemListAdapter(filteredList,getActivity());
         itemListView.setAdapter(itemArrayAdapter);
-    }
+    }*/
 
     public static void updateList() {
         Log.i("MainActivityFragment", "adapter dataset changed");
@@ -174,17 +176,40 @@ public class MainActivityFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.i("SetupSearchListener", "onQueryTextSubmit");
-                itemArrayAdapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.i("SetupSearchListener", "onQueryTextChange");
-                itemArrayAdapter.getFilter().filter(newText);
+                //itemArrayAdapter.getFilter().filter(newText);
+                doLiveUpdates(newText);
                 return true;
             }
         });
+    }
+
+    private void doLiveUpdates(String query) {
+        DatabaseActivity.loadBackup();
+        ArrayList<DataModelItemList> dataSet = new ArrayList<>();
+        dataSet.addAll(DatabaseActivity.itemArray);
+        Log.i("DoMyFilter", "dataset: " + dataSet);
+        filteredList.clear();
+        if (query.isEmpty()){
+            filteredList.addAll(dataSet); //search doesn't get called on empty input
+        } else {
+            for (DataModelItemList row : dataSet) {
+                if (row.getItemName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredList.add(row);
+                }// else if (row.getItemCategory().toLowerCase().contains(query.toLowerCase())) {
+                //    filteredList.add(row);
+                //} else if (row.getItemLocation().toLowerCase().contains(query.toLowerCase())) {
+                //    filteredList.add(row);
+                //}
+            }
+        }
+
+        Log.i("DoMyFilter", "filteredList: " + filteredList);
+        itemArrayAdapter.notifyDataSetChanged();
     }
 }

@@ -74,7 +74,7 @@ public class SearchActivity extends AppCompatActivity {
 		adapter = new ItemListAdapter(filteredList,this);
 		itemListView.setAdapter(adapter);
 		dataSet = DatabaseActivity.itemArray;
-		Log.i("DdoMySearch", "dataset: " + dataSet);
+		Log.i("DoMySearch", "dataset: " + dataSet);
 
 		if (query.isEmpty()){
 			filteredList = dataSet; //search doesn't get called on empty input

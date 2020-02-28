@@ -63,7 +63,7 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
         // Return the completed view to render on screen
         return convertView;
     }
-
+/*
     @Override
     public Filter getFilter(){
         Log.i("ItemListAdapter", "Filter");
@@ -102,5 +102,5 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
             }
         };
     }
-
+*/
 }
