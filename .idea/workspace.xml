@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4cb47d1e-9863-4b3b-b772-f18c1ccc6951" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/ase-abschlussprojekte-ws1920-digitales-inventar.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-    </list>
+    <list default="true" id="4cb47d1e-9863-4b3b-b772-f18c1ccc6951" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DigitalesInventar/app/src/main/java/com/example/digitalesinventar/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
+            <state relative-caret-position="51">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
             </state>
           </provider>
         </entry>
@@ -43,9 +37,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="15" />
-    <option name="y" value="30" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="467" />
+    <option name="y" value="18" />
     <option name="width" value="1890" />
     <option name="height" value="960" />
   </component>
@@ -54,6 +48,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -64,47 +60,19 @@
             <path>
               <item name="ase-abschlussprojekte-ws1920-digitales-inventar" type="b2602c69:ProjectViewProjectNode" />
               <item name="ase-abschlussprojekte-ws1920-digitales-inventar" type="462c0819:PsiDirectoryNode" />
-              <item name=".idea" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ase-abschlussprojekte-ws1920-digitales-inventar" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ase-abschlussprojekte-ws1920-digitales-inventar" type="462c0819:PsiDirectoryNode" />
               <item name="DigitalesInventar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ase-abschlussprojekte-ws1920-digitales-inventar" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ase-abschlussprojekte-ws1920-digitales-inventar" type="462c0819:PsiDirectoryNode" />
-              <item name="DigitalesInventar" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ase-abschlussprojekte-ws1920-digitales-inventar" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ase-abschlussprojekte-ws1920-digitales-inventar" type="462c0819:PsiDirectoryNode" />
-              <item name="DigitalesInventar" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ase-abschlussprojekte-ws1920-digitales-inventar" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ase-abschlussprojekte-ws1920-digitales-inventar" type="462c0819:PsiDirectoryNode" />
-              <item name="DigitalesInventar" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/DigitalesInventar/app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/DigitalesInventar" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -136,10 +104,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <frame x="374" y="15" width="1512" height="768" extended-state="0" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.3263158" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.33471075" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
@@ -170,8 +138,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DigitalesInventar/app/src/main/java/com/example/digitalesinventar/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
+        <state relative-caret-position="51">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
         </state>
       </provider>
     </entry>

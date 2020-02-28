@@ -13,4 +13,6 @@
     <color name="cat7">#f0b96f</color>
     <color name="cat8">#e99e4d</color>
     <color name="cat9">#d37940</color>
+
+    <color name="selection">#ffc442</color>
 </resources>

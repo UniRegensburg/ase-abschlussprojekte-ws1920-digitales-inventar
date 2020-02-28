@@ -8,6 +8,7 @@ Der/Die Nutzer/in kann verschiedene Kategorien erstellen, benennen und verwalten
 
 ![Screenshot](./docs/images/Screenshot.PNG)
 
+[zweite Veröffentlichung](./docs/APK/DigitalesInventarV02.apk)\
 [erste Veröffentlichung](./docs/APK/DigitalesInventarV01.apk)
 
 Technische Informationen zur dieser Anwendung finden sich [hier](./docs/Setup.md), eine detaillierte Übersicht über den Anforderungskontext findet sich [hier](./docs/Overview.md).
@@ -41,9 +42,13 @@ laura.zeilbeck@stud.uni-regensburg.de\
 
 Das Digitale Inventar erlaubt es zum derzeitigen Standpunkt dem Nutzer/in Gegenstände zu seinem/ihrem Inventar
 hinzuzufügen und diese wieder zu entfernen.\
-Dabei kann ein Name für den Gegenstand vergeben werden.\
+Eine individuelle Anmeldung ist durch eine Email-Adresse notwendig.
+Dabei kann ein Name, ein Ort und eine Kategorie für den Gegenstand vergeben werden.\
+Der/Die Nutzer/in kann seine/ihre Gegenstände nach dem Erstellen bearbeiten und Name, Ort und Kategorie ändern.
 Der/Die Nutzer/in kann seine/ihre Gegenstände nach dem Erstellungsdatum aufgelistet einsehen.
 Das Erstelldatum wird automatisch vom System hinzugefügt.\
-Der/Die Nutzer/in kann die Gegenstände aus dem System löschen.
+Der/Die Nutzer/in kann einen oder mehrere Gegenstände aus dem System löschen.\
+Der/Die Nutzer/in kann die Gegenstandsliste nach Name, Ort und Kategorie durchsuchen.\
+Der/ Die Nutzer/in kann seine/ihre Gegenstände nach den Kategorien filtern lassen.
 
-![Demo-Video](./docs/demo/ASE1stRelease.gif)
+![Demo-Video](./docs/demo/2nd-Release.gif)
