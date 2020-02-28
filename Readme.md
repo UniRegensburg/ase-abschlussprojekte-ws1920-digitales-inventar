@@ -47,7 +47,7 @@ Dabei kann ein Name, ein Ort und eine Kategorie für den Gegenstand vergeben wer
 Der/Die Nutzer/in kann seine/ihre Gegenstände nach dem Erstellen bearbeiten und Name, Ort und Kategorie ändern.
 Der/Die Nutzer/in kann seine/ihre Gegenstände nach dem Erstellungsdatum aufgelistet einsehen.
 Das Erstelldatum wird automatisch vom System hinzugefügt.\
-Der/Die Nutzer/in kann einen oder mehrere Gegenstände aus dem System löschen.
+Der/Die Nutzer/in kann einen oder mehrere Gegenstände aus dem System löschen.\
 Der/Die Nutzer/in kann die Gegenstandsliste nach Name, Ort und Kategorie durchsuchen.\
 Der/ Die Nutzer/in kann seine/ihre Gegenstände nach den Kategorien filtern lassen.
 
