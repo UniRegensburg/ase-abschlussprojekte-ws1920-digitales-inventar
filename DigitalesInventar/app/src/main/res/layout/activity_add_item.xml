@@ -12,9 +12,32 @@
         app:layout_anchorGravity="center"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+
+    <LinearLayout
+        android:id="@+id/addImage"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/imgView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/imgHolder"
+        android:layout_marginStart="5sp"/>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/addName"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/addImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="3"
