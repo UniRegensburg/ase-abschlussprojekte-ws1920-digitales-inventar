@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,9 +36,12 @@ public class EditItemActivity extends AppCompatActivity {
 	//ADAPTER
 	static ArrayAdapter<String> adapter;
 	//BUTTONS
+	ImageButton addImage;
 	Button editCategories;
 	Button save;
 	Button cancel;
+	//IMAGE VIEW
+	ImageView imgView;
 	//SCREEN WIDTH
 	int screenWidth;
 	DataModelItemList currentItem;
@@ -69,12 +74,15 @@ public class EditItemActivity extends AppCompatActivity {
 		textViewTimeInfo = findViewById(R.id.textViewTime);
 		textViewLocation = findViewById(R.id.textViewLocation);
 		textViewCategory = findViewById(R.id.textViewCategory);
+		//IMG_VIEW
+		imgView = findViewById(R.id.imgView);
 		//EDIT-TEXTS
 		editTextName = findViewById(R.id.itemName);
 		editTextLocation = findViewById(R.id.itemLocation);
 		//SPINNER
 		categorySpinner = findViewById(R.id.spinnerCategory);
 		//BUTTONS
+		addImage = findViewById(R.id.imageButton);
 		editCategories = findViewById(R.id.addCatButton);
 		save = findViewById(R.id.addItemSave);
 		cancel = findViewById(R.id.addItemCancel);
@@ -134,6 +142,13 @@ public class EditItemActivity extends AppCompatActivity {
 				finish();
 			}
 		});
+
+		addImage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//TODO ADD IMAGE
+			}
+		});
 	}
 
 	public static void showToast(boolean success) {
@@ -173,6 +188,9 @@ public class EditItemActivity extends AppCompatActivity {
 				categorySpinner.setSelection(i);
 			}
 		}
+
+		//TODO: set current img
+		//imgView.setImageBitmap();
 	}
 
 	//get new item from EditText to add new database entry

@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,9 +32,12 @@ public class NewItemActivity extends AppCompatActivity {
     //ADAPTER
     static ArrayAdapter<String> adapter;
     //BUTTONS
+    ImageButton addImage;
     Button editCategories;
     Button save;
     Button cancel;
+    //IMAGE VIEW
+    ImageView imgView;
     //SCREEN WIDTH
     int screenWidth;
 
@@ -59,12 +64,15 @@ public class NewItemActivity extends AppCompatActivity {
         textViewCategory = findViewById(R.id.textViewCategory);
         textViewName = findViewById(R.id.textViewName);
         textViewLocation = findViewById(R.id.textViewLocation);
+        //IMG_VIEW
+        imgView = findViewById(R.id.imgView);
         //EDIT-TEXTS
         editTextName = findViewById(R.id.itemName);
         editTextLocation = findViewById(R.id.itemLocation);
         //SPINNER
         categorySpinner = (Spinner) findViewById(R.id.spinnerCategory);
         //BUTTONS
+        addImage = findViewById(R.id.imageButton);
         editCategories = findViewById(R.id.addCatButton);
         save = findViewById(R.id.addItemSave);
         cancel = findViewById(R.id.addItemCancel);
@@ -101,6 +109,13 @@ public class NewItemActivity extends AppCompatActivity {
                     //show toast
                     Toast.makeText(getApplicationContext(),"Please name your item!",Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        addImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO ADD IMAGE
             }
         });
     }

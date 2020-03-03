@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,8 @@ public class ViewItemActivity extends AppCompatActivity {
 	TextView infoViewTime;
 	TextView infoViewCategory;
 	TextView infoViewLocation;
+	//IMAGE VIEW
+	ImageView imgView;
 	//BUTTONS
 	Button edit;
 	Button back;
@@ -56,6 +59,8 @@ public class ViewItemActivity extends AppCompatActivity {
 		infoViewCategory = findViewById(R.id.Category_Item);
 		infoViewTime = findViewById(R.id.Time_Item);
 		infoViewLocation = findViewById(R.id.Location_Item);
+		//IMG_VIEW
+		imgView = findViewById(R.id.imgView);
 		//BUTTONS
 		edit = findViewById(R.id.editItemButton);
 		back = findViewById(R.id.backButton);
@@ -118,6 +123,8 @@ public class ViewItemActivity extends AppCompatActivity {
 		textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 		textViewLocation.setText(currentItem.getItemLocation());
 		Log.d("Intent data: ",  "" + currentItem.getItemName());
+		//TODO: set current img
+		//imgView.setImageBitmap();
 	}
 
 	public static void updateDataAfterEdit(DataModelItemList currentItem) {
