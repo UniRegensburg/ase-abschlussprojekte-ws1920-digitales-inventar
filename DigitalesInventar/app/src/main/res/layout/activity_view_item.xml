@@ -21,9 +21,11 @@
 
         <ImageView
             android:id="@+id/imgView"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/imgHolder2"
+            android:maxWidth="250dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/imgholder2"
             android:layout_marginTop="@dimen/fui_body_padding_bottom"
             android:layout_marginStart="5sp"/>
     </LinearLayout>

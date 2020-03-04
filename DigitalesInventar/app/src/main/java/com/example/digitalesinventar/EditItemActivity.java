@@ -3,7 +3,10 @@ package com.example.digitalesinventar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
 
 //Activity for editing existing entries in the database
 public class EditItemActivity extends AppCompatActivity {
@@ -36,7 +41,8 @@ public class EditItemActivity extends AppCompatActivity {
 	//ADAPTER
 	static ArrayAdapter<String> adapter;
 	//BUTTONS
-	ImageButton addImage;
+	ImageButton addImageByCamera;
+	ImageButton addImageByPicker;
 	Button editCategories;
 	Button save;
 	Button cancel;
@@ -48,6 +54,8 @@ public class EditItemActivity extends AppCompatActivity {
 	//Context
 	public static Context context;
 	String searchquery;
+
+	boolean newImage = false;
 
 
 	@Override
@@ -82,7 +90,8 @@ public class EditItemActivity extends AppCompatActivity {
 		//SPINNER
 		categorySpinner = findViewById(R.id.spinnerCategory);
 		//BUTTONS
-		addImage = findViewById(R.id.imageButton);
+		addImageByCamera = findViewById(R.id.cameraButton);
+		addImageByPicker = findViewById(R.id.pickerButton);
 		editCategories = findViewById(R.id.addCatButton);
 		save = findViewById(R.id.addItemSave);
 		cancel = findViewById(R.id.addItemCancel);
@@ -129,7 +138,8 @@ public class EditItemActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				context = getApplicationContext();
-				DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), currentItem.getTimestamp());
+				DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), currentItem.getTimestamp(), newImage);
+				newImage = false;
 				Intent returnIntent = new Intent(context, ViewItemActivity.class);
 				Bundle extras = new Bundle();
 				extras.putLong("itemTs",currentItem.getTimestamp());
@@ -143,12 +153,59 @@ public class EditItemActivity extends AppCompatActivity {
 			}
 		});
 
-		addImage.setOnClickListener(new View.OnClickListener() {
+		addImageByCamera.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				//TODO ADD IMAGE
+				Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+				if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+					startActivityForResult(takePictureIntent, 999);
+				}
 			}
 		});
+		addImageByPicker.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//TODO ADD IMAGE
+				Intent intent = new Intent();
+				intent.setType("image/*");
+				intent.setAction(Intent.ACTION_GET_CONTENT);
+				startActivityForResult(Intent.createChooser(intent, "Select Picture"), 42);
+			}
+		});
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == 42) { //image
+			Log.d("loadPicker", "2");
+			if (data != null && data.getData() != null) {
+
+				Uri uri = data.getData();
+				try {
+					Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+					imgView.setImageBitmap(bitmap);
+					//Log.d("loadPicker", "4; ");
+					DatabaseActivity.setCachedBitmap(bitmap);
+					newImage = true;
+					//DatabaseActivity.uploadImage(bitmap, String.valueOf(currentItem.getTimestamp())); //large img
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} else if (requestCode == 999) {
+			try {
+				Bundle extras = data.getExtras();
+				Bitmap imageBitmap = (Bitmap) extras.get("data");
+				imgView.setImageBitmap(imageBitmap);
+				DatabaseActivity.setCachedBitmap(imageBitmap);
+				newImage = true;
+				//DatabaseActivity.uploadImage(imageBitmap, String.valueOf(currentItem.getTimestamp()));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static void showToast(boolean success) {
@@ -191,8 +248,9 @@ public class EditItemActivity extends AppCompatActivity {
 
 		//TODO: set current img
 		//imgView.setImageBitmap();
+		DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
 	}
-
+/*
 	//get new item from EditText to add new database entry
 	public boolean getNewItem() {
 
@@ -207,4 +265,5 @@ public class EditItemActivity extends AppCompatActivity {
 			return false;
 		}
 	}
+ */
 }

@@ -23,7 +23,7 @@ public class ViewItemActivity extends AppCompatActivity {
 	TextView infoViewCategory;
 	TextView infoViewLocation;
 	//IMAGE VIEW
-	ImageView imgView;
+	static ImageView imgView;
 	//BUTTONS
 	Button edit;
 	Button back;
@@ -125,6 +125,7 @@ public class ViewItemActivity extends AppCompatActivity {
 		Log.d("Intent data: ",  "" + currentItem.getItemName());
 		//TODO: set current img
 		//imgView.setImageBitmap();
+		DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
 	}
 
 	public static void updateDataAfterEdit(DataModelItemList currentItem) {
@@ -134,6 +135,7 @@ public class ViewItemActivity extends AppCompatActivity {
 		//format and set date
 		textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 		textViewLocation.setText(currentItem.getItemLocation());
+		DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
 	}
 
 	@Override

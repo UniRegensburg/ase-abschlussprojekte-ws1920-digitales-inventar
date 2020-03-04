@@ -1,7 +1,10 @@
 package com.example.digitalesinventar;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.io.IOException;
 
 //Activity for adding a new entry to the inventar/database
 public class NewItemActivity extends AppCompatActivity {
@@ -32,7 +41,8 @@ public class NewItemActivity extends AppCompatActivity {
     //ADAPTER
     static ArrayAdapter<String> adapter;
     //BUTTONS
-    ImageButton addImage;
+    ImageButton addImageByCamera;
+    ImageButton addImageByPicker;
     Button editCategories;
     Button save;
     Button cancel;
@@ -41,11 +51,43 @@ public class NewItemActivity extends AppCompatActivity {
     //SCREEN WIDTH
     int screenWidth;
 
+    boolean newImage = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("NewItemActivity", "onCreate");
         super.onCreate(savedInstanceState);
         setupView();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 42) { //image
+            Log.d("loadPicker", "2");
+            if (data != null && data.getData() != null) {
+
+                Uri uri = data.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    imgView.setImageBitmap(bitmap);
+										DatabaseActivity.setCachedBitmap(bitmap);
+										newImage = true;
+								} catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else if (requestCode == 999) {
+        	try {
+						Bundle extras = data.getExtras();
+						Bitmap imageBitmap = (Bitmap) extras.get("data");
+						imgView.setImageBitmap(imageBitmap);
+						DatabaseActivity.setCachedBitmap(imageBitmap);
+						newImage = true;
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
     }
 
     public void setupView() {
@@ -72,7 +114,8 @@ public class NewItemActivity extends AppCompatActivity {
         //SPINNER
         categorySpinner = (Spinner) findViewById(R.id.spinnerCategory);
         //BUTTONS
-        addImage = findViewById(R.id.imageButton);
+        addImageByCamera = findViewById(R.id.cameraButton);
+        addImageByPicker = findViewById(R.id.pickerButton);
         editCategories = findViewById(R.id.addCatButton);
         save = findViewById(R.id.addItemSave);
         cancel = findViewById(R.id.addItemCancel);
@@ -112,10 +155,24 @@ public class NewItemActivity extends AppCompatActivity {
             }
         });
 
-        addImage.setOnClickListener(new View.OnClickListener() {
+        addImageByCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO ADD IMAGE
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, 999);
+                }
+            }
+        });
+        addImageByPicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO ADD IMAGE
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 42);
             }
         });
     }
@@ -149,7 +206,8 @@ public class NewItemActivity extends AppCompatActivity {
                 String selectedCategory = categorySpinner.getSelectedItem().toString();
                 Log.i("selectedCategory: ", " " + selectedCategory);
                 //add item to database
-                DatabaseActivity.addEntry(editTextName.getText().toString(), selectedCategory, editTextLocation.getText().toString());
+                DatabaseActivity.addEntry(editTextName.getText().toString(), selectedCategory, editTextLocation.getText().toString(), newImage);
+                newImage = false;
                 return true;
         } else {
             return false;

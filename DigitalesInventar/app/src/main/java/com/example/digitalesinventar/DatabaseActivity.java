@@ -1,6 +1,9 @@
 package com.example.digitalesinventar;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
@@ -11,7 +14,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.google.gson.internal.$Gson$Preconditions;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,18 +34,23 @@ import java.util.Map;
 public class DatabaseActivity {
     // Access a Cloud Firestore instance from your Activity
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    static FirebaseStorage storage = FirebaseStorage.getInstance();
+    static StorageReference storageRef = storage.getReference();
     //ArrayList to store firebase data for displaying later
     public static ArrayList<DataModelItemList> itemArray = new ArrayList<DataModelItemList>();
     private static ArrayList<DataModelItemList> itemArrayBackup = new ArrayList<DataModelItemList>();
     public static ArrayList<String> categoryArray = new ArrayList<>();
-
+    //Bitmap to be cached while Item is created
+    private static Bitmap cachedBitmap;
+    private static Bitmap downloadedBitmap;
+    private static Bitmap emptyBitmap;
     //ITEMS
 
     //ADD ITEM TO DB
-    public static void addEntry(String name, String category ,String location) {
+    public static void addEntry(String name, String category , String location, final boolean newImage) {
         Log.d("DB addEntry", "item added");
         long tsLong = System.currentTimeMillis();
-        String ts = Long.toString(tsLong);
+        final String ts = Long.toString(tsLong);
         Map<String, Object> entry = new HashMap<>();
         entry.put("name", name);
         entry.put("category", category);
@@ -51,7 +64,12 @@ public class DatabaseActivity {
                     @Override
                     public void onSuccess(Void avoid) {
                         Log.d("DB addEntry", "item added to database");
-                        getDataFromDatabase(); //or add manually and call updateList
+                        //getDataFromDatabase(); //or add manually and call updateList -> now after uploadImg
+                        if (newImage) {
+                          uploadImage(cachedBitmap, ts);
+                        } else {
+                          getDataFromDatabase();
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -64,7 +82,7 @@ public class DatabaseActivity {
 
     //UPDATE EDITED ITEM IN DB
   //TODO UPDATE ITEM
-    public static void updateEntry(String id, String name, String category, String location, Long timestamp) {
+    public static void updateEntry(String id, String name, String category, String location, final Long timestamp, final boolean newImage) {
       final DataModelItemList wipItem = new DataModelItemList(name, category, location, timestamp);
       //Log.d("DB updateEntry", "data:"+id+" ;"+name+" ;"+category+" ;"+location+" ;"+timestamp);
       db.collection("users").document(MainActivity.userID).collection("items").document(id)
@@ -75,7 +93,12 @@ public class DatabaseActivity {
               EditItemActivity.showToast(true);
               ViewItemActivity.updateDataAfterEdit(wipItem);
               Log.d("DB updateEntry", "item updated");
-              getDataFromDatabase(); //or add manually and call updateList
+              if (newImage) {
+                uploadImage(cachedBitmap, String.valueOf(timestamp));
+              } else {
+                getDataFromDatabase();
+              }
+              //getDataFromDatabase(); //or add manually and call updateList
               //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString()); //crashed app
             }
           })
@@ -235,5 +258,71 @@ public class DatabaseActivity {
           }
         }
       });
+  }
+
+  //Media
+  public static void setCachedBitmap(Bitmap bitmap) {
+      cachedBitmap = bitmap;
+  }
+
+  public static void uploadImage(Bitmap bitmap, final String itemID) {
+    String pathStr = MainActivity.userID+"/images/"+itemID+".jpg";
+    StorageReference mountainImagesRef = storageRef.child(pathStr);
+    //Log.d("uploadImg", "1.5: "+ pathStr);
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+    byte[] data = baos.toByteArray();
+
+    UploadTask uploadTask = mountainImagesRef.putBytes(data);
+    uploadTask.addOnFailureListener(new OnFailureListener() {
+      @Override
+      public void onFailure(@NonNull Exception exception) {
+        // Handle unsuccessful uploads
+        Log.d("uploadImg", "2 fail");
+
+      }
+    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+      @Override
+      public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+        // ...
+        Log.d("uploadImg", "2 success");
+        DataModelItemList currentItem = getItemFromDatabase(Long.valueOf(itemID)); //to update image in view even without other changes
+        ViewItemActivity.updateDataAfterEdit(currentItem);
+        getDataFromDatabase();
+      }
+    });
+  }
+
+  public static void downloadImage(String itemID, final ImageView view) {
+    String imgPath = MainActivity.userID+"/images/"+itemID+".jpg";
+    StorageReference islandRef = storageRef.child(imgPath);
+
+    final long ONE_MEGABYTE = 1024 * 1024;
+    islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+      @Override
+      public void onSuccess(byte[] bytes) {
+        // Data for "images/island.jpg" is returns, use this as needed
+        Log.d("loadImg", "2 success from db");
+        //ImageView imageView = findViewById(R.id.image_View);
+        //Bitmap bitmap = MediaStore.Images.Media.
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inMutable = true;
+        downloadedBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+        setBitmap(view);
+        ///imageView.setImageBitmap(bitmap);
+      }
+    }).addOnFailureListener(new OnFailureListener() {
+      @Override
+      public void onFailure(@NonNull Exception exception) {
+        // Handle any errors
+        Log.d("loadImg", "2 fail");
+      }
+    });
+  }
+
+  private static void setBitmap(ImageView view) {
+      view.setImageBitmap(downloadedBitmap);
   }
 }
