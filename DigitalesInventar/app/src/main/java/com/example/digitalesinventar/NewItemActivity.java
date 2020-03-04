@@ -158,7 +158,6 @@ public class NewItemActivity extends AppCompatActivity {
         addImageByCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO ADD IMAGE
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(takePictureIntent, 999);
@@ -168,7 +167,6 @@ public class NewItemActivity extends AppCompatActivity {
         addImageByPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO ADD IMAGE
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);

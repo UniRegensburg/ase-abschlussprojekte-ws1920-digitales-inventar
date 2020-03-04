@@ -147,7 +147,7 @@ public class DatabaseActivity {
     }
 
     //DELETE ITEM FROM DB
-    public static void deleteItemFromDatabase(String id) {
+    public static void deleteItemFromDatabase(final String id) {
         Log.d("DB del Entry", "id" + id);
         db.collection("users").document(MainActivity.userID).collection("items").document(id)
         .delete()
@@ -155,6 +155,7 @@ public class DatabaseActivity {
                     @Override
                     public void onSuccess(Void avoid) {
                         Log.d("DB del Entry", "DocumentSnapshot successfully deleted!");
+                        deleteImage(id);
                         getDataFromDatabase();
                     }
                 })
@@ -267,14 +268,14 @@ public class DatabaseActivity {
 
   public static void uploadImage(Bitmap bitmap, final String itemID) {
     String pathStr = MainActivity.userID+"/images/"+itemID+".jpg";
-    StorageReference mountainImagesRef = storageRef.child(pathStr);
+    StorageReference imagesRef = storageRef.child(pathStr);
     //Log.d("uploadImg", "1.5: "+ pathStr);
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
     byte[] data = baos.toByteArray();
 
-    UploadTask uploadTask = mountainImagesRef.putBytes(data);
+    UploadTask uploadTask = imagesRef.putBytes(data);
     uploadTask.addOnFailureListener(new OnFailureListener() {
       @Override
       public void onFailure(@NonNull Exception exception) {
@@ -324,5 +325,26 @@ public class DatabaseActivity {
 
   private static void setBitmap(ImageView view) {
       view.setImageBitmap(downloadedBitmap);
+  }
+
+  public static void deleteImage(String itemID) {
+    Log.d("delItem", "1");
+    String pathStr = MainActivity.userID+"/images/"+itemID+".jpg";
+    StorageReference deleteRef = storageRef.child(pathStr);
+
+    // Delete the file
+    deleteRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+      @Override
+      public void onSuccess(Void aVoid) {
+        // File deleted successfully
+        Log.d("delItem", "2 success");
+      }
+    }).addOnFailureListener(new OnFailureListener() {
+      @Override
+      public void onFailure(@NonNull Exception exception) {
+        // Uh-oh, an error occurred!
+        Log.d("delItem", "2, fail");
+      }
+    });
   }
 }

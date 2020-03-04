@@ -43,6 +43,7 @@ public class EditItemActivity extends AppCompatActivity {
 	//BUTTONS
 	ImageButton addImageByCamera;
 	ImageButton addImageByPicker;
+	ImageButton deleteImage;
 	Button editCategories;
 	Button save;
 	Button cancel;
@@ -92,6 +93,7 @@ public class EditItemActivity extends AppCompatActivity {
 		//BUTTONS
 		addImageByCamera = findViewById(R.id.cameraButton);
 		addImageByPicker = findViewById(R.id.pickerButton);
+		deleteImage = findViewById(R.id.deleteButton);
 		editCategories = findViewById(R.id.addCatButton);
 		save = findViewById(R.id.addItemSave);
 		cancel = findViewById(R.id.addItemCancel);
@@ -156,7 +158,6 @@ public class EditItemActivity extends AppCompatActivity {
 		addImageByCamera.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TODO ADD IMAGE
 				Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 					startActivityForResult(takePictureIntent, 999);
@@ -166,11 +167,17 @@ public class EditItemActivity extends AppCompatActivity {
 		addImageByPicker.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//TODO ADD IMAGE
 				Intent intent = new Intent();
 				intent.setType("image/*");
 				intent.setAction(Intent.ACTION_GET_CONTENT);
 				startActivityForResult(Intent.createChooser(intent, "Select Picture"), 42);
+			}
+		});
+		deleteImage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//imgView.setImageResource(R.drawable.imgHolder);
+				DatabaseActivity.deleteImage(String.valueOf(currentItem.getTimestamp()));
 			}
 		});
 	}
