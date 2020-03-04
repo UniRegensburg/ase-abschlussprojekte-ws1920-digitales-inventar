@@ -147,6 +147,7 @@ public class NewItemActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (getNewItem()) {
                     Toast.makeText(getApplicationContext(), "new Item added!", Toast.LENGTH_SHORT).show();
+                    //TODO wait for database to return toast(?)
                     finish();
                 }else{
                     //show toast

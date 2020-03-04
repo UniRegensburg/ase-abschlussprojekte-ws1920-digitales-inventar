@@ -2,6 +2,8 @@ package com.example.digitalesinventar;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +32,8 @@ public class ViewItemActivity extends AppCompatActivity {
 	//SCREEN WIDTH
 	int screenWidth;
 	String searchquery;
+	//Bitmap
+	Bitmap bitmap;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +129,15 @@ public class ViewItemActivity extends AppCompatActivity {
 		Log.d("Intent data: ",  "" + currentItem.getItemName());
 		//TODO: set current img
 		//imgView.setImageBitmap();
+		/*if (extras.getBoolean("imageChange")) { //for edited images, which aren't uploaded yet
+			byte[] byteArray = extras.getByteArray("bitmapByteArray");
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inMutable = true;
+			bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length, options);
+			imgView.setImageBitmap(bitmap);
+		} else {
+			DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
+		}*/
 		DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
 	}
 

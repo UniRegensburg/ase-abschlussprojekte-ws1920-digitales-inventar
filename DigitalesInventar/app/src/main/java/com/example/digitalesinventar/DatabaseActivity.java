@@ -17,7 +17,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.gson.internal.$Gson$Preconditions;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -63,12 +62,11 @@ public class DatabaseActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void avoid) {
-                        Log.d("DB addEntry", "item added to database");
-                        //getDataFromDatabase(); //or add manually and call updateList -> now after uploadImg
-                        if (newImage) {
+                      Log.d("DB addEntry", "item added to database");
+                      //getDataFromDatabase(); //or add manually and call updateList -> now after uploadImg
+                      getDataFromDatabase();
+                      if (newImage) {
                           uploadImage(cachedBitmap, ts);
-                        } else {
-                          getDataFromDatabase();
                         }
                     }
                 })
@@ -91,13 +89,15 @@ public class DatabaseActivity {
             @Override
             public void onSuccess(Void avoid) {
               EditItemActivity.showToast(true);
-              ViewItemActivity.updateDataAfterEdit(wipItem);
+              //ViewItemActivity.updateDataAfterEdit(wipItem);
               Log.d("DB updateEntry", "item updated");
               if (newImage) {
                 uploadImage(cachedBitmap, String.valueOf(timestamp));
               } else {
+                //ViewItemActivity.updateDataAfterEdit(wipItem);
                 getDataFromDatabase();
               }
+              ViewItemActivity.updateDataAfterEdit(wipItem);
               //getDataFromDatabase(); //or add manually and call updateList
               //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString()); //crashed app
             }
@@ -266,7 +266,7 @@ public class DatabaseActivity {
       cachedBitmap = bitmap;
   }
 
-  public static void uploadImage(Bitmap bitmap, final String itemID) {
+  public static void uploadImage(final Bitmap bitmap, final String itemID) {
     String pathStr = MainActivity.userID+"/images/"+itemID+".jpg";
     StorageReference imagesRef = storageRef.child(pathStr);
     //Log.d("uploadImg", "1.5: "+ pathStr);
@@ -288,9 +288,6 @@ public class DatabaseActivity {
       public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
         // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
         // ...
-        Log.d("uploadImg", "2 success");
-        DataModelItemList currentItem = getItemFromDatabase(Long.valueOf(itemID)); //to update image in view even without other changes
-        ViewItemActivity.updateDataAfterEdit(currentItem);
         getDataFromDatabase();
       }
     });
@@ -311,7 +308,7 @@ public class DatabaseActivity {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inMutable = true;
         downloadedBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
-        setBitmap(view);
+        view.setImageBitmap(downloadedBitmap);
         ///imageView.setImageBitmap(bitmap);
       }
     }).addOnFailureListener(new OnFailureListener() {
@@ -321,10 +318,6 @@ public class DatabaseActivity {
         Log.d("loadImg", "2 fail");
       }
     });
-  }
-
-  private static void setBitmap(ImageView view) {
-      view.setImageBitmap(downloadedBitmap);
   }
 
   public static void deleteImage(String itemID) {

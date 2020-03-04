@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 //Activity for editing existing entries in the database
@@ -57,6 +58,7 @@ public class EditItemActivity extends AppCompatActivity {
 	String searchquery;
 
 	boolean newImage = false;
+	static Bitmap cachedBitmap;
 
 
 	@Override
@@ -146,6 +148,15 @@ public class EditItemActivity extends AppCompatActivity {
 				Bundle extras = new Bundle();
 				extras.putLong("itemTs",currentItem.getTimestamp());
 				extras.putString("searchQuery", searchquery);
+				/*//set if intent contains image
+				extras.putBoolean("imageChange", newImage);
+				//convert cachedBitmap to byteArray
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				cachedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+				byte[] byteArray = stream.toByteArray();
+				//bitmap.recycle(); //?
+				extras.putByteArray("bitmapByteArray", byteArray);
+				 */
 				Log.d("editedItem", ":" + editTextName.getText());
 				returnIntent.putExtras(extras);
 				setResult(Activity.RESULT_OK, returnIntent);
@@ -197,6 +208,7 @@ public class EditItemActivity extends AppCompatActivity {
 					imgView.setImageBitmap(bitmap);
 					//Log.d("loadPicker", "4; ");
 					DatabaseActivity.setCachedBitmap(bitmap);
+					//cachedBitmap = bitmap; //crashes
 					newImage = true;
 					//DatabaseActivity.uploadImage(bitmap, String.valueOf(currentItem.getTimestamp())); //large img
 				} catch (IOException e) {
@@ -206,15 +218,20 @@ public class EditItemActivity extends AppCompatActivity {
 		} else if (requestCode == 999) {
 			try {
 				Bundle extras = data.getExtras();
-				Bitmap imageBitmap = (Bitmap) extras.get("data");
-				imgView.setImageBitmap(imageBitmap);
-				DatabaseActivity.setCachedBitmap(imageBitmap);
+				Bitmap bitmap = (Bitmap) extras.get("data");
+				imgView.setImageBitmap(bitmap);
+				DatabaseActivity.setCachedBitmap(bitmap);
+				//cachedBitmap = bitmap; //crashes
 				newImage = true;
 				//DatabaseActivity.uploadImage(imageBitmap, String.valueOf(currentItem.getTimestamp()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public static void setCachedBitmap(Bitmap bitmap) {
+		cachedBitmap = bitmap;
 	}
 
 	public static void showToast(boolean success) {
