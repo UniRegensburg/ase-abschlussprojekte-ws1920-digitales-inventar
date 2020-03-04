@@ -164,6 +164,7 @@ public class EditItemActivity extends AppCompatActivity {
 				}
 			}
 		});
+
 		addImageByPicker.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -173,6 +174,7 @@ public class EditItemActivity extends AppCompatActivity {
 				startActivityForResult(Intent.createChooser(intent, "Select Picture"), 42);
 			}
 		});
+
 		deleteImage.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
