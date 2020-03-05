@@ -36,7 +36,7 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
         this.filteredList = data;
     }
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint("RestrictedApi") //necessary for generating release apk & google login
     public ItemListAdapter() {
         super(getApplicationContext(), 0);
     }
