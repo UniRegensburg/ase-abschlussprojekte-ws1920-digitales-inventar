@@ -7,13 +7,13 @@ preBuild.dependsOn('checkstyle')
 android {
     signingConfigs {
         release {
-            storeFile file('C:\\Users\\lucas\\Documents\\0000uni\\6ws1920\\amse\\project\\ase-abschlussprojekte-ws1920-digitales-inventar\\keystore3.jks')
+            storeFile file('../keystore3.jks')
             storePassword 'digitalesinventar'
             keyAlias = 'digitalesinventar'
             keyPassword 'digitalesinventar'
         }
         debug {
-            storeFile file('C:\\Users\\lucas\\Documents\\0000uni\\6ws1920\\amse\\project\\ase-abschlussprojekte-ws1920-digitales-inventar\\keystore3.jks')
+            storeFile file('../keystore3.jks')
             storePassword 'digitalesinventar'
             keyAlias = 'digitalesinventar'
             keyPassword 'digitalesinventar'
