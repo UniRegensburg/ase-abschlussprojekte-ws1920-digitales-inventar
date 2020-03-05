@@ -130,25 +130,31 @@ public class ViewItemActivity extends AppCompatActivity {
 		//TODO: set current img
 		//imgView.setImageBitmap();
 		/*if (extras.getBoolean("imageChange")) { //for edited images, which aren't uploaded yet
+			Log.d("assign img", "intent"); //never called
 			byte[] byteArray = extras.getByteArray("bitmapByteArray");
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inMutable = true;
 			bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length, options);
 			imgView.setImageBitmap(bitmap);
 		} else {
+			//Log.d("assign img", "db");
 			DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
 		}*/
 		DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
 	}
 
-	public static void updateDataAfterEdit(DataModelItemList currentItem) {
+	public static void updateDataAfterEdit(DataModelItemList currentItem, boolean newImage, Bitmap bitmap) {
+		Log.d("updateItemView", "1");
 		//name & cat
 		textViewName.setText(currentItem.getItemName());
 		textViewCategory.setText(currentItem.getItemCategory());
 		//format and set date
 		textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 		textViewLocation.setText(currentItem.getItemLocation());
-		DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
+		//DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
+		if (newImage) {
+			imgView.setImageBitmap(bitmap);
+		}
 	}
 
 	@Override

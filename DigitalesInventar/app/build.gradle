@@ -5,6 +5,20 @@ apply plugin: 'com.google.gms.google-services'
 preBuild.dependsOn('checkstyle')
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\lucas\\Documents\\0000uni\\6ws1920\\amse\\project\\ase-abschlussprojekte-ws1920-digitales-inventar\\keystore3.jks')
+            storePassword 'digitalesinventar'
+            keyAlias = 'digitalesinventar'
+            keyPassword 'digitalesinventar'
+        }
+        debug {
+            storeFile file('C:\\Users\\lucas\\Documents\\0000uni\\6ws1920\\amse\\project\\ase-abschlussprojekte-ws1920-digitales-inventar\\keystore3.jks')
+            storePassword 'digitalesinventar'
+            keyAlias = 'digitalesinventar'
+            keyPassword 'digitalesinventar'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -31,6 +45,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'com.google.firebase:firebase-firestore:21.3.1'
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'

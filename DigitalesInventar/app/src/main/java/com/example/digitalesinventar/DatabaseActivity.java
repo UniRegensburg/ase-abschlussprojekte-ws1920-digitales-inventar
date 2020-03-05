@@ -93,11 +93,12 @@ public class DatabaseActivity {
               Log.d("DB updateEntry", "item updated");
               if (newImage) {
                 uploadImage(cachedBitmap, String.valueOf(timestamp));
+                //hier bild laden und in view item setzen?
               } else {
                 //ViewItemActivity.updateDataAfterEdit(wipItem);
                 getDataFromDatabase();
               }
-              ViewItemActivity.updateDataAfterEdit(wipItem);
+              ViewItemActivity.updateDataAfterEdit(wipItem, newImage, cachedBitmap);
               //getDataFromDatabase(); //or add manually and call updateList
               //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString()); //crashed app
             }
@@ -280,7 +281,7 @@ public class DatabaseActivity {
       @Override
       public void onFailure(@NonNull Exception exception) {
         // Handle unsuccessful uploads
-        Log.d("uploadImg", "2 fail");
+        Log.d("uploadImg", "fail");
 
       }
     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -288,6 +289,7 @@ public class DatabaseActivity {
       public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
         // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
         // ...
+        Log.d("uploadImg", "success");
         getDataFromDatabase();
       }
     });

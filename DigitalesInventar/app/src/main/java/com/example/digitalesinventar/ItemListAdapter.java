@@ -1,5 +1,7 @@
 package com.example.digitalesinventar;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +11,12 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
+
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 //custom ListAdapter to display an object of type "DataModelItemList" which holds a database entry
 public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements Filterable {
@@ -29,6 +34,11 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
         this.dataSet = data;
         this.fragActivity = fragActivity;
         this.filteredList = data;
+    }
+
+    @SuppressLint("RestrictedApi")
+    public ItemListAdapter() {
+        super(getApplicationContext(), 0);
     }
 
     @Override

@@ -7,6 +7,9 @@ public class DataModelItemList implements Cloneable{
     String itemCategory;
     long timestamp;
 
+    public DataModelItemList() {
+
+    }
     public DataModelItemList(String itemName, String itemCategory, String itemLocation, long timestamp) {
         this.itemName = itemName;
         this.itemCategory = itemCategory;

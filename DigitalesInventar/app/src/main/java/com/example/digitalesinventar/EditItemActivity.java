@@ -58,7 +58,7 @@ public class EditItemActivity extends AppCompatActivity {
 	String searchquery;
 
 	boolean newImage = false;
-	static Bitmap cachedBitmap;
+	//Bitmap cachedBitmap;
 
 
 	@Override
@@ -143,7 +143,6 @@ public class EditItemActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				context = getApplicationContext();
 				DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), currentItem.getTimestamp(), newImage);
-				newImage = false;
 				Intent returnIntent = new Intent(context, ViewItemActivity.class);
 				Bundle extras = new Bundle();
 				extras.putLong("itemTs",currentItem.getTimestamp());
@@ -151,17 +150,20 @@ public class EditItemActivity extends AppCompatActivity {
 				/*//set if intent contains image
 				extras.putBoolean("imageChange", newImage);
 				//convert cachedBitmap to byteArray
-				ByteArrayOutputStream stream = new ByteArrayOutputStream();
-				cachedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-				byte[] byteArray = stream.toByteArray();
-				//bitmap.recycle(); //?
-				extras.putByteArray("bitmapByteArray", byteArray);
-				 */
+				if (newImage) { //works
+					ByteArrayOutputStream stream = new ByteArrayOutputStream();
+					cachedBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+					byte[] byteArray = stream.toByteArray();
+					//bitmap.recycle(); //?
+					extras.putByteArray("bitmapByteArray", byteArray);
+				}
+				//newImage = false;*/
 				Log.d("editedItem", ":" + editTextName.getText());
 				returnIntent.putExtras(extras);
 				setResult(Activity.RESULT_OK, returnIntent);
 				//set query back to def
 				searchquery = "";
+				//newImage = false;
 				finish();
 			}
 		});
@@ -208,7 +210,9 @@ public class EditItemActivity extends AppCompatActivity {
 					imgView.setImageBitmap(bitmap);
 					//Log.d("loadPicker", "4; ");
 					DatabaseActivity.setCachedBitmap(bitmap);
-					//cachedBitmap = bitmap; //crashes
+					Log.d("editImg", "pre bitmap 42");
+					//cachedBitmap = bitmap;//
+					Log.d("editImg", "post bitmap 42");
 					newImage = true;
 					//DatabaseActivity.uploadImage(bitmap, String.valueOf(currentItem.getTimestamp())); //large img
 				} catch (IOException e) {
@@ -221,17 +225,15 @@ public class EditItemActivity extends AppCompatActivity {
 				Bitmap bitmap = (Bitmap) extras.get("data");
 				imgView.setImageBitmap(bitmap);
 				DatabaseActivity.setCachedBitmap(bitmap);
-				//cachedBitmap = bitmap; //crashes
+				Log.d("editImg", "pre bitmap 999");
+				//cachedBitmap = bitmap;
+				Log.d("editImg", "pre bitmap 999");
 				newImage = true;
 				//DatabaseActivity.uploadImage(imageBitmap, String.valueOf(currentItem.getTimestamp()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	public static void setCachedBitmap(Bitmap bitmap) {
-		cachedBitmap = bitmap;
 	}
 
 	public static void showToast(boolean success) {
