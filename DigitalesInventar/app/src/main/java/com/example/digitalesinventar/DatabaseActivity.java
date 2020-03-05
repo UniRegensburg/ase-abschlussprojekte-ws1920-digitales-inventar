@@ -42,7 +42,6 @@ public class DatabaseActivity {
     //Bitmap to be cached while Item is created
     private static Bitmap cachedBitmap;
     private static Bitmap downloadedBitmap;
-    private static Bitmap emptyBitmap;
     //ITEMS
 
     //ADD ITEM TO DB
@@ -63,11 +62,12 @@ public class DatabaseActivity {
                     @Override
                     public void onSuccess(Void avoid) {
                       Log.d("DB addEntry", "item added to database");
-                      //getDataFromDatabase(); //or add manually and call updateList -> now after uploadImg
-                      getDataFromDatabase();
+                      //getDataFromDatabase(); //  contained in uploadImage
                       if (newImage) {
                           uploadImage(cachedBitmap, ts);
-                        }
+                      } else {
+                        getDataFromDatabase();
+                      }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -89,17 +89,13 @@ public class DatabaseActivity {
             @Override
             public void onSuccess(Void avoid) {
               EditItemActivity.showToast(true);
-              //ViewItemActivity.updateDataAfterEdit(wipItem);
               Log.d("DB updateEntry", "item updated");
               if (newImage) {
                 uploadImage(cachedBitmap, String.valueOf(timestamp));
-                //hier bild laden und in view item setzen?
               } else {
-                //ViewItemActivity.updateDataAfterEdit(wipItem);
                 getDataFromDatabase();
               }
               ViewItemActivity.updateDataAfterEdit(wipItem, newImage, cachedBitmap);
-              //getDataFromDatabase(); //or add manually and call updateList
               //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString()); //crashed app
             }
           })
@@ -264,6 +260,7 @@ public class DatabaseActivity {
 
   //Media
   public static void setCachedBitmap(Bitmap bitmap) {
+      Log.d("updateItemView", "0.5 db bmp cached");
       cachedBitmap = bitmap;
   }
 
