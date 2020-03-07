@@ -265,7 +265,7 @@ public class DatabaseActivity {
   }
 
   public static void uploadImage(Bitmap bitmap, final String itemID) {
-    String pathStr = MainActivity.userID+"/images/"+itemID+".jpg";
+    String pathStr = MainActivity.userID + "/images/" + itemID + ".jpg";
     StorageReference imagesRef = storageRef.child(pathStr);
     //Log.d("uploadImg", "1.5: "+ pathStr);
 
@@ -293,7 +293,7 @@ public class DatabaseActivity {
   }
 
   public static void downloadImage(String itemID, final ImageView view) {
-    String imgPath = MainActivity.userID+"/images/"+itemID+".jpg";
+    String imgPath = MainActivity.userID + "/images/" + itemID + ".jpg";
     StorageReference islandRef = storageRef.child(imgPath);
 
     final long ONE_MEGABYTE = 1024 * 1024 *10;

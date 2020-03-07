@@ -124,7 +124,6 @@ public class ViewItemActivity extends AppCompatActivity {
 		textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 		textViewLocation.setText(currentItem.getItemLocation());
 		Log.d("Intent data: ",  "" + currentItem.getItemName());
-
 		DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
 		imgView.invalidate();
 	}
@@ -141,6 +140,7 @@ public class ViewItemActivity extends AppCompatActivity {
 			//but view is only sometimes updated, sometimes even w/ no new img log
 			Log.d("updateItemView", "2 new img");
 			imgView.setImageBitmap(bitmap);
+			imgView.invalidate();
 		} else {
 			Log.d("updateItemView", "2 no new img");
 		}
