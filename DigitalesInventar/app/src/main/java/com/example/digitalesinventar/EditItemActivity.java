@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,7 +22,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 //Activity for editing existing entries in the database
@@ -50,6 +50,8 @@ public class EditItemActivity extends AppCompatActivity {
 	Button cancel;
 	//IMAGE VIEW
 	ImageView imgView;
+	//IMAGE
+	Drawable defaultImage;
 	//SCREEN WIDTH
 	int screenWidth;
 	DataModelItemList currentItem;
@@ -87,6 +89,8 @@ public class EditItemActivity extends AppCompatActivity {
 		textViewCategory = findViewById(R.id.textViewCategory);
 		//IMG_VIEW
 		imgView = findViewById(R.id.imgView);
+		//IMAGE
+		defaultImage = getResources().getDrawable(R.drawable.imgholder);
 		//EDIT-TEXTS
 		editTextName = findViewById(R.id.itemName);
 		editTextLocation = findViewById(R.id.itemLocation);
@@ -182,6 +186,8 @@ public class EditItemActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				//imgView.setImageResource(R.drawable.imgHolder); //TODO reset image
 				DatabaseActivity.deleteImage(String.valueOf(currentItem.getTimestamp()));
+				//set imgView back to default
+				imgView.setImageDrawable(defaultImage);
 			}
 		});
 	}
