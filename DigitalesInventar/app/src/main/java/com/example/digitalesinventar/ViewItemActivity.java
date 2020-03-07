@@ -126,6 +126,7 @@ public class ViewItemActivity extends AppCompatActivity {
 		Log.d("Intent data: ",  "" + currentItem.getItemName());
 
 		DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
+		imgView.invalidate();
 	}
 
 	public static void updateDataAfterEdit(DataModelItemList currentItem, boolean newImage, Bitmap bitmap) {

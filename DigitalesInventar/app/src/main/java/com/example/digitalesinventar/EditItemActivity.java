@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -51,7 +51,7 @@ public class EditItemActivity extends AppCompatActivity {
 	//IMAGE VIEW
 	ImageView imgView;
 	//IMAGE
-	Drawable defaultImage;
+	Bitmap defaultImage;
 	//SCREEN WIDTH
 	int screenWidth;
 	DataModelItemList currentItem;
@@ -90,7 +90,8 @@ public class EditItemActivity extends AppCompatActivity {
 		//IMG_VIEW
 		imgView = findViewById(R.id.imgView);
 		//IMAGE
-		defaultImage = getResources().getDrawable(R.drawable.imgholder);
+		defaultImage = BitmapFactory.decodeResource(this.getResources(),
+			R.drawable.imgholder);
 		//EDIT-TEXTS
 		editTextName = findViewById(R.id.itemName);
 		editTextLocation = findViewById(R.id.itemLocation);
@@ -184,10 +185,10 @@ public class EditItemActivity extends AppCompatActivity {
 		deleteImage.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//imgView.setImageResource(R.drawable.imgHolder); //TODO reset image
 				DatabaseActivity.deleteImage(String.valueOf(currentItem.getTimestamp()));
 				//set imgView back to default
-				imgView.setImageDrawable(defaultImage);
+				DatabaseActivity.setCachedBitmap(defaultImage);
+				imgView.setImageBitmap(defaultImage);
 			}
 		});
 	}
@@ -202,8 +203,11 @@ public class EditItemActivity extends AppCompatActivity {
 				Uri uri = data.getData();
 				try {
 					Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-					imgView.setImageBitmap(bitmap);
+					//scale bitmap down before compressing to handle larger images
+					//TODO crop to square
+					bitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, false);
 					DatabaseActivity.setCachedBitmap(bitmap);
+					imgView.setImageBitmap(bitmap);
 					newImage = true;
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -213,8 +217,11 @@ public class EditItemActivity extends AppCompatActivity {
 			try {
 				Bundle extras = data.getExtras();
 				Bitmap bitmap = (Bitmap) extras.get("data");
-				imgView.setImageBitmap(bitmap);
+				//scale bitmap down before compressing to handle larger images
+				//TODO crop to square
+				bitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, false);
 				DatabaseActivity.setCachedBitmap(bitmap);
+				imgView.setImageBitmap(bitmap);
 				newImage = true;
 			} catch (Exception e) {
 				e.printStackTrace();

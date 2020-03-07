@@ -79,8 +79,7 @@ public class DatabaseActivity {
     }
 
     //UPDATE EDITED ITEM IN DB
-  //TODO UPDATE ITEM
-    public static void updateEntry(String id, String name, String category, String location, final Long timestamp, final boolean newImage) {
+    public static void updateEntry(final String id, String name, String category, String location, final Long timestamp, final boolean newImage) {
       final DataModelItemList wipItem = new DataModelItemList(name, category, location, timestamp);
       //Log.d("DB updateEntry", "data:"+id+" ;"+name+" ;"+category+" ;"+location+" ;"+timestamp);
       db.collection("users").document(MainActivity.userID).collection("items").document(id)
@@ -91,6 +90,7 @@ public class DatabaseActivity {
               EditItemActivity.showToast(true);
               Log.d("DB updateEntry", "item updated");
               if (newImage) {
+                deleteImage(id);
                 uploadImage(cachedBitmap, String.valueOf(timestamp));
               } else {
                 getDataFromDatabase();
@@ -264,7 +264,7 @@ public class DatabaseActivity {
       cachedBitmap = bitmap;
   }
 
-  public static void uploadImage(final Bitmap bitmap, final String itemID) {
+  public static void uploadImage(Bitmap bitmap, final String itemID) {
     String pathStr = MainActivity.userID+"/images/"+itemID+".jpg";
     StorageReference imagesRef = storageRef.child(pathStr);
     //Log.d("uploadImg", "1.5: "+ pathStr);
@@ -302,6 +302,7 @@ public class DatabaseActivity {
       public void onSuccess(byte[] bytes) {
         // Data for "images/island.jpg" is returns, use this as needed
         Log.d("loadImg", "2 success from db");
+        Log.d("currentIMG", ": " + view.getImageMatrix().toShortString());
         //ImageView imageView = findViewById(R.id.image_View);
         //Bitmap bitmap = MediaStore.Images.Media.
         BitmapFactory.Options options = new BitmapFactory.Options();
