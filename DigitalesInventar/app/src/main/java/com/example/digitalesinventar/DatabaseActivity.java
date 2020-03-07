@@ -296,7 +296,7 @@ public class DatabaseActivity {
     String imgPath = MainActivity.userID+"/images/"+itemID+".jpg";
     StorageReference islandRef = storageRef.child(imgPath);
 
-    final long ONE_MEGABYTE = 1024 * 1024;
+    final long ONE_MEGABYTE = 1024 * 1024 *10;
     islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
       @Override
       public void onSuccess(byte[] bytes) {
