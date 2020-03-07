@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 
-public class ConfirmationDialogFragment extends DialogFragment {
+public class DeleteItemsConfirmationDialogFragment extends DialogFragment {
 
 	public static final String ARG_TIMESTAMP = "timestamp";
 
@@ -17,6 +17,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
 
 		Bundle args = getArguments();
 		final String timestamp = args.getString(ARG_TIMESTAMP);
+
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setMessage("Do you really want to delete this item?")

@@ -195,11 +195,12 @@ public class EditItemActivity extends AppCompatActivity {
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-
-		if (requestCode == 42) { //image
+		if (requestCode == 333) {
+			finishAndRemoveTask();
+		}else if (requestCode == 42) { //image
 			Log.d("loadPicker", "2");
-			if (data != null && data.getData() != null) {
 
+			if (data != null && data.getData() != null) {
 				Uri uri = data.getData();
 				try {
 					Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
@@ -253,21 +254,26 @@ public class EditItemActivity extends AppCompatActivity {
 		long itemID = extras.getLong("itemTs");
 		//set query for search
 		searchquery = extras.getString("searchQuery");
-		//retrieve data from db
-		currentItem = DatabaseActivity.getItemFromDatabase(itemID);
-		editTextName.setText(currentItem.getItemName());
-		editTextLocation.setText(currentItem.getItemLocation());
-		//format and set date
-		textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
+		//check if item was deleted
+		if (itemID == 0) {
+			finish();
+		} else {
+			//retrieve data from db
+			currentItem = DatabaseActivity.getItemFromDatabase(itemID);
+			editTextName.setText(currentItem.getItemName());
+			editTextLocation.setText(currentItem.getItemLocation());
+			//format and set date
+			textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 
-		//set spinner item
-		for (int i=0; i < DatabaseActivity.categoryArray.size(); i++) {
-			if (categorySpinner.getItemAtPosition(i).equals(currentItem.getItemCategory())) {
-				categorySpinner.setSelection(i);
+			//set spinner item
+			for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
+				if (categorySpinner.getItemAtPosition(i).equals(currentItem.getItemCategory())) {
+					categorySpinner.setSelection(i);
+				}
 			}
-		}
 
-		DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
-		//downloads again after downloading in viewItemActivity
+			DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
+			//downloads again after downloading in viewItemActivity
+		}
 	}
 }

@@ -99,8 +99,8 @@ public class MainActivityFragment extends Fragment {
     private void showConfirmDialog(String timestamp){
         //Create Dialog
         Bundle args = new Bundle();
-        args.putString(ConfirmationDialogFragment.ARG_TIMESTAMP, timestamp);
-        DialogFragment dialog = new ConfirmationDialogFragment();
+        args.putString(DeleteItemsConfirmationDialogFragment.ARG_TIMESTAMP, timestamp);
+        DialogFragment dialog = new DeleteItemsConfirmationDialogFragment();
         dialog.setArguments(args);
         dialog.show(getFragmentManager(),"tag");
     }

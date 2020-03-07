@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 public class NewCategoryActivity extends AppCompatActivity {
 	//TEXT-VIEWs
@@ -19,7 +20,7 @@ public class NewCategoryActivity extends AppCompatActivity {
 	//EDIT-TEXTs
 	EditText editTextOwnCat;
 	//SPINNER
-	Spinner categorySpinner;
+	static Spinner categorySpinner;
 	//ADAPTER
 	static ArrayAdapter<String> adapter;
 	//BUTTONS
@@ -106,9 +107,7 @@ public class NewCategoryActivity extends AppCompatActivity {
 					|| selectedCategory.equals("Einrichtung") || selectedCategory.equals("Hobby") || selectedCategory.equals("Werkzeug")) {
 					Toast.makeText(getApplicationContext(), "Default category " + selectedCategory + " can't be removed!", Toast.LENGTH_SHORT).show();
 				}else {
-					DatabaseActivity.deleteCategoryFromDatabase(selectedCategory);
-					categorySpinner.setSelection(0);
-					Toast.makeText(getApplicationContext(), "Category " + selectedCategory + " removed!", Toast.LENGTH_SHORT).show();
+					showConfirmDialog(selectedCategory);
 				}
 			}
 		});
@@ -129,6 +128,15 @@ public class NewCategoryActivity extends AppCompatActivity {
 		editTextOwnCat.setWidth(screenWidth/3);
 		addCatSave.setWidth(screenWidth/3);
 		removeCat.setWidth(screenWidth/3);
+	}
+
+	private void showConfirmDialog(String category){
+		//Create Dialog
+		Bundle args = new Bundle();
+		args.putString(DeleteCategoriesConfirmationDialogFragment.ARG_CATEGORY, category);
+		DialogFragment dialog = new DeleteCategoriesConfirmationDialogFragment();
+		dialog.setArguments(args);
+		dialog.show(getSupportFragmentManager(),"tag");
 	}
 
 }

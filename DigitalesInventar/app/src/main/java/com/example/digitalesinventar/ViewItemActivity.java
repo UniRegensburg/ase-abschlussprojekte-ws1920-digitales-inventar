@@ -116,6 +116,10 @@ public class ViewItemActivity extends AppCompatActivity {
 		Bundle extras = intent.getExtras();
 		long itemID = extras.getLong("itemTs");
 		searchquery = extras.getString("searchQuery");
+		//check if item was deleted
+		if (itemID == 0) {
+			finish();
+		} else {
 		//retrieve data from db
 		DataModelItemList currentItem = DatabaseActivity.getItemFromDatabase(itemID);
 		textViewName.setText(currentItem.getItemName());
@@ -126,6 +130,7 @@ public class ViewItemActivity extends AppCompatActivity {
 		Log.d("Intent data: ",  "" + currentItem.getItemName());
 		DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
 		imgView.invalidate();
+		}
 	}
 
 	public static void updateDataAfterEdit(DataModelItemList currentItem, boolean newImage, Bitmap bitmap) {
@@ -151,7 +156,9 @@ public class ViewItemActivity extends AppCompatActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Log.d("onActivityResult", "called");
 		// Check which request we're responding to
-		if (requestCode == 666) {
+		if (requestCode == 333) {
+			finishAndRemoveTask();
+		}else if (requestCode == 666) {
 			// Make sure the request was successful
 			if (resultCode == Activity.RESULT_OK) {
 				Bundle extras = data.getExtras();

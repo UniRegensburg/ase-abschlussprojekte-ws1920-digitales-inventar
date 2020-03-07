@@ -20,7 +20,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,7 +41,6 @@ public class DatabaseActivity {
     //Bitmap to be cached while Item is created
     private static Bitmap cachedBitmap;
     private static Bitmap downloadedBitmap;
-    //ITEMS
 
     //ADD ITEM TO DB
     public static void addEntry(String name, String category , String location, final boolean newImage) {
@@ -117,7 +115,7 @@ public class DatabaseActivity {
     public static void getDataFromDatabase() {
         itemArray.clear(); //clear array first to avoid multiple entries of single entry
         itemArrayBackup.clear();
-        //db.collection("items")
+      //db.collection("items")
         db.collection("users").document(MainActivity.userID).collection("items")
         .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -125,13 +123,11 @@ public class DatabaseActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                //add entry as DataModelItemList object
-                                //to be able to reference different attributes of the object later on
-                                DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), Long.parseLong(document.get("ts").toString()));
-                                itemArray.add(newItem);
-                                itemArrayBackup.add(newItem);
-																Collections.reverse(itemArray);
-																Collections.reverse(itemArrayBackup);
+                              //add entry as DataModelItemList object
+                              //to be able to reference different attributes of the object later on
+                              DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), Long.parseLong(document.get("ts").toString()));
+                              itemArray.add(0, newItem); //add item on top of the list
+                              itemArrayBackup.add(0, newItem);
                             }
                             Log.d("DB loadEntry", "items loaded from db");
                             //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString());
@@ -218,14 +214,13 @@ public class DatabaseActivity {
         });
     }
 
-    //GET CATEGORY FROM DB
-    public static String getCategoryFromDatabase(String catName) {
-      for (int i=0; i < categoryArray.size(); i++) {
-        if(categoryArray.get(i).equals(catName)) {
-          return categoryArray.get(i);
+    public static void deleteItemsByCategory(final String category) {
+      deleteCategoryFromDatabase(category);
+      for (int i = 0; i < itemArray.size(); i++) {
+          if (itemArray.get(i).getItemCategory().equals(category)) {
+            deleteItemFromDatabase((Long.toString(itemArray.get(i).getTimestamp())));
+          }
         }
-      }
-      return null;
     }
 
   //GET CATEGORY-DATA FROM DB
@@ -296,7 +291,7 @@ public class DatabaseActivity {
     String imgPath = MainActivity.userID + "/images/" + itemID + ".jpg";
     StorageReference islandRef = storageRef.child(imgPath);
 
-    final long ONE_MEGABYTE = 1024 * 1024 *10;
+    final long ONE_MEGABYTE = 1024 * 1024 * 10;
     islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
       @Override
       public void onSuccess(byte[] bytes) {
@@ -318,26 +313,27 @@ public class DatabaseActivity {
         Log.d("loadImg", "2 fail");
       }
     });
+
   }
 
   public static void deleteImage(String itemID) {
     Log.d("delItem", "1");
-    String pathStr = MainActivity.userID+"/images/"+itemID+".jpg";
+    String pathStr = MainActivity.userID + "/images/" + itemID + ".jpg";
     StorageReference deleteRef = storageRef.child(pathStr);
-
-    // Delete the file
-    deleteRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-      @Override
-      public void onSuccess(Void aVoid) {
-        // File deleted successfully
-        Log.d("delItem", "2 success");
-      }
-    }).addOnFailureListener(new OnFailureListener() {
-      @Override
-      public void onFailure(@NonNull Exception exception) {
-        // Uh-oh, an error occurred!
-        Log.d("delItem", "2, fail");
-      }
-    });
+      // Delete the file
+      deleteRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+        @Override
+        public void onSuccess(Void aVoid) {
+          // File deleted successfully
+          Log.d("delItem", "2 success");
+        }
+      }).addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure(@NonNull Exception exception) {
+          // Uh-oh, an error occurred!
+          Log.d("delItem", "2, fail");
+        }
+      });
   }
+
 }
