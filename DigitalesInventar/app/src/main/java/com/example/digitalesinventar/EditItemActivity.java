@@ -148,6 +148,9 @@ public class EditItemActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				context = getApplicationContext();
 				DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), currentItem.getTimestamp(), newImage);
+				//^ TODO crashes     java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String java.lang.Object.toString()' on a null object reference
+				//reproduce: edit item -> edit kat -> new cat -> back -> save item (no new cat) -> edit item -> edit cat -> del new cat w/ items -> save
+				//zur not: try & catch
 				newImage = false;
 				Intent returnIntent = new Intent(context, ViewItemActivity.class);
 				Bundle extras = new Bundle();

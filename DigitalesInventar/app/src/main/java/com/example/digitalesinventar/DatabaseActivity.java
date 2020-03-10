@@ -80,6 +80,7 @@ public class DatabaseActivity {
 
     //UPDATE EDITED ITEM IN DB
     public static void updateEntry(final String id, String name, String category, String location, final Long timestamp, final boolean newImage) {
+      //TODO remove timestamp as it's the same as id
       final DataModelItemList wipItem = new DataModelItemList(name, category, location, timestamp);
       //Log.d("DB updateEntry", "data:"+id+" ;"+name+" ;"+category+" ;"+location+" ;"+timestamp);
       db.collection("users").document(MainActivity.userID).collection("items").document(id)
@@ -257,7 +258,7 @@ public class DatabaseActivity {
               String newItem = document.get("categoryName").toString();
               categoryArray.add(newItem);
             }
-            Log.d("DB loadCategories", "categories loaded from db");
+            Log.d("DB loadCategories", "categories loaded from db" + categoryArray);
           } else {
             Log.d("DB loadCategories", "categories not loaded from db");
           }

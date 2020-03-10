@@ -26,7 +26,7 @@ public class DeleteCategoriesConfirmationDialogFragment extends DialogFragment {
 				public void onClick(DialogInterface dialog, int id) {
 					// TODO delete all items with the called category
 					DatabaseActivity.deleteItemsByCategory(category);
-					DatabaseActivity.deleteCategoryFromDatabase(category);
+					//DatabaseActivity.deleteCategoryFromDatabase(category);
 					NewCategoryActivity.categorySpinner.setSelection(0);
 					Toast.makeText(getActivity(), "Category " + category + " with all items removed!", Toast.LENGTH_SHORT).show();
 					Intent intentA = new Intent(getContext(), EditItemActivity.class);
