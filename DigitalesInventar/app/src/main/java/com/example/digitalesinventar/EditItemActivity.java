@@ -38,7 +38,7 @@ public class EditItemActivity extends AppCompatActivity {
 	EditText editTextName;
 	EditText editTextLocation;
 	//SPINNER
-	Spinner categorySpinner;
+	static Spinner categorySpinner;
 	//ADAPTER
 	static ArrayAdapter<String> adapter;
 	//BUTTONS
@@ -197,9 +197,7 @@ public class EditItemActivity extends AppCompatActivity {
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == 333) {
-			finishAndRemoveTask();
-		}else if (requestCode == 42) { //image
+		if (requestCode == 42) { //image
 			Log.d("loadPicker", "2");
 
 			if (data != null && data.getData() != null) {
@@ -229,6 +227,10 @@ public class EditItemActivity extends AppCompatActivity {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (requestCode == 333){ //code 333
+			//ohne if wird aufgerufen
+			Log.d("delkat", "edit code 333");
+			finishAndRemoveTask();
 		}
 	}
 
@@ -257,9 +259,7 @@ public class EditItemActivity extends AppCompatActivity {
 		//set query for search
 		searchquery = extras.getString("searchQuery");
 		//check if item was deleted
-		if (itemID == 0) {
-			finish();
-		} else {
+		if (itemID != 0) {
 			//retrieve data from db
 			currentItem = DatabaseActivity.getItemFromDatabase(itemID);
 			editTextName.setText(currentItem.getItemName());
@@ -276,6 +276,10 @@ public class EditItemActivity extends AppCompatActivity {
 
 			DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
 			//downloads again after downloading in viewItemActivity
+		} else {
+			Log.d("delkat", "edit code 0");
+			finish();
+			//finishAndRemoveTask();
 		}
 	}
 }

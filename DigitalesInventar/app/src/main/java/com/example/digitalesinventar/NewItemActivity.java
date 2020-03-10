@@ -33,7 +33,7 @@ public class NewItemActivity extends AppCompatActivity {
 	EditText editTextName;
 	EditText editTextLocation;
 	//SPINNER
-	Spinner categorySpinner;
+	static Spinner categorySpinner;
 	//ADAPTER
 	static ArrayAdapter<String> adapter;
 	//BUTTONS

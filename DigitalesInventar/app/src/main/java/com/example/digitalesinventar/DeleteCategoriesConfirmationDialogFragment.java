@@ -42,6 +42,16 @@ public class DeleteCategoriesConfirmationDialogFragment extends DialogFragment {
 					//only delete category without items included
 					DatabaseActivity.deleteCategoryFromDatabase(category);
 					NewCategoryActivity.categorySpinner.setSelection(0);
+					try {
+						EditItemActivity.categorySpinner.setSelection(0); //in case spinner is not yet initialised
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					try {
+						NewItemActivity.categorySpinner.setSelection(0); //in case spinner is not yet initialised
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					Toast.makeText(getActivity(), "Category " + category + " removed!", Toast.LENGTH_SHORT).show();
 				}
 			});
