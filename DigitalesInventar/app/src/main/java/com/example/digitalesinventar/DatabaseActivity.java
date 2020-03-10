@@ -41,6 +41,8 @@ public class DatabaseActivity {
     //Bitmap to be cached while Item is created
     private static Bitmap cachedBitmap;
     private static Bitmap downloadedBitmap;
+    //loading bool to prevent duplicating data locally
+    private static boolean currentlyLoading = false;
 
     //ADD ITEM TO DB
     public static void addEntry(String name, String category , String location, final boolean newImage) {
@@ -115,30 +117,35 @@ public class DatabaseActivity {
 
     //GET ITEM-DATA FROM DB
     public static void getDataFromDatabase() {
-        itemArray.clear(); //clear array first to avoid multiple entries of single entry
-        itemArrayBackup.clear();
-      //db.collection("items")
-        db.collection("users").document(MainActivity.userID).collection("items")
-        .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                              //add entry as DataModelItemList object
-                              //to be able to reference different attributes of the object later on
-                              DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), Long.parseLong(document.get("ts").toString()));
-                              itemArray.add(0, newItem); //add item on top of the list
-                              itemArrayBackup.add(0, newItem);
-                            }
-                            Log.d("DB loadEntry", "items loaded from db");
-                            //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString());
-                            MainActivityFragment.updateList(); //update view in fragment
-                        } else {
-                            Log.d("DB loadEntry", "item not loaded from db");
-                        }
-                    }
-                });
+        if(!currentlyLoading) {
+          currentlyLoading = true;
+          itemArray.clear(); //clear array first to avoid multiple entries of single entry
+          itemArrayBackup.clear();
+          //db.collection("items")
+          db.collection("users").document(MainActivity.userID).collection("items")
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+              @Override
+              public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                  for (QueryDocumentSnapshot document : task.getResult()) {
+                    //add entry as DataModelItemList object
+                    //to be able to reference different attributes of the object later on
+                    DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), Long.parseLong(document.get("ts").toString()));
+                    itemArray.add(0, newItem); //add item on top of the list
+                    itemArrayBackup.add(0, newItem);
+                  }
+                  Log.d("DB loadEntry", "items loaded from db");
+                  //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString());
+                  currentlyLoading = false;
+                  MainActivityFragment.updateList(); //update view in fragment
+                } else {
+                  Log.d("DB loadEntry", "item not loaded from db");
+                  currentlyLoading = false;
+                }
+              }
+            });
+        }
     }
 
     //DELETE ITEM FROM DB
@@ -218,11 +225,14 @@ public class DatabaseActivity {
 
     public static void deleteItemsByCategory(final String category) {
       deleteCategoryFromDatabase(category);
+      currentlyLoading = true; //prevent loading while deleting
       for (int i = 0; i < itemArray.size(); i++) {
           if (itemArray.get(i).getItemCategory().equals(category)) {
             deleteItemFromDatabase((Long.toString(itemArray.get(i).getTimestamp())));
           }
         }
+      currentlyLoading = false;
+      getDataFromDatabase();
     }
 
   //GET CATEGORY-DATA FROM DB
