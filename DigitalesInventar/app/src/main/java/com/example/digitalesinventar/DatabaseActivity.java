@@ -89,7 +89,9 @@ public class DatabaseActivity {
               Log.d("DB updateEntry", "item updated");
               if (newImage) {
                 deleteImage(id);
-                uploadImage(cachedBitmap, String.valueOf(timestamp));
+                if (cachedBitmap != null) {
+                  uploadImage(cachedBitmap, String.valueOf(timestamp));
+                }
               } else {
                 getDataFromDatabase();
               }

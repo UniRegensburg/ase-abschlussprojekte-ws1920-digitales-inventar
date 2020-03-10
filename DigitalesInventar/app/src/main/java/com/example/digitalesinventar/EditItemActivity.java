@@ -188,7 +188,8 @@ public class EditItemActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				DatabaseActivity.deleteImage(String.valueOf(currentItem.getTimestamp()));
 				//set imgView back to default
-				DatabaseActivity.setCachedBitmap(defaultImage);
+				DatabaseActivity.setCachedBitmap(null);
+				newImage = true;
 				imgView.setImageBitmap(defaultImage);
 			}
 		});

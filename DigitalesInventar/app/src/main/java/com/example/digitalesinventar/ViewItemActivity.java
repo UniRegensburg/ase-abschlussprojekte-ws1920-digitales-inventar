@@ -3,6 +3,7 @@ package com.example.digitalesinventar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +32,8 @@ public class ViewItemActivity extends AppCompatActivity {
 	//SCREEN WIDTH
 	int screenWidth;
 	String searchquery;
+	//Default Image
+	static Bitmap defaultBmp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,8 @@ public class ViewItemActivity extends AppCompatActivity {
 		setWidths();
 		setupButtons();
 		assignDataFromIntent(getIntent());
+		defaultBmp = BitmapFactory.decodeResource(this.getResources(),
+			R.drawable.imgholder);
 	}
 
 	public void initView() {
@@ -146,7 +151,11 @@ public class ViewItemActivity extends AppCompatActivity {
 		if (newImage) { //check logs for updateItemView: image is cached, bool works
 			//but view is only sometimes updated, sometimes even w/ no new img log
 			Log.d("updateItemView", "2 new img");
-			imgView.setImageBitmap(bitmap);
+			if (bitmap != null) {
+				imgView.setImageBitmap(bitmap);
+			} else {
+				imgView.setImageBitmap(defaultBmp);
+			}
 			imgView.invalidate();
 		} else {
 			Log.d("updateItemView", "2 no new img");
