@@ -120,16 +120,18 @@ public class ViewItemActivity extends AppCompatActivity {
 		if (itemID == 0) {
 			finish();
 		} else {
-		//retrieve data from db
-		DataModelItemList currentItem = DatabaseActivity.getItemFromDatabase(itemID);
-		textViewName.setText(currentItem.getItemName());
-		textViewCategory.setText(currentItem.getItemCategory());
-		//format and set date
-		textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
-		textViewLocation.setText(currentItem.getItemLocation());
-		Log.d("Intent data: ",  "" + currentItem.getItemName());
-		DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
-		imgView.invalidate();
+			//retrieve data from db
+			DataModelItemList currentItem = DatabaseActivity.getItemFromDatabase(itemID);
+			textViewName.setText(currentItem.getItemName());
+			textViewCategory.setText(currentItem.getItemCategory());
+			//format and set date
+			textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
+			textViewLocation.setText(currentItem.getItemLocation());
+			Log.d("Intent data: ",  "" + currentItem.getItemName());
+			if (extras.getBoolean("fromMain")) {
+				DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
+				imgView.invalidate();
+			}
 		}
 	}
 

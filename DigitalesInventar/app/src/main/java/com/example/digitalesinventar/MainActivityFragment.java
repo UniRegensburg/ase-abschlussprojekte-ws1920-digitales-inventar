@@ -91,6 +91,7 @@ public class MainActivityFragment extends Fragment {
         Intent intent = new Intent(getActivity(), ViewItemActivity.class);
         Bundle extras = new Bundle();
         extras.putLong("itemTs",timestamp);
+        extras.putBoolean("fromMain", true);
         intent.putExtras(extras);
         Log.i("MainActivity", "intent to start viewItem created");
         startActivity(intent);

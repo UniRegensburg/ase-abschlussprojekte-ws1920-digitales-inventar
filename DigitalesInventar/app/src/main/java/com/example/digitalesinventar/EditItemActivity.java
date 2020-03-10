@@ -153,6 +153,7 @@ public class EditItemActivity extends AppCompatActivity {
 				Bundle extras = new Bundle();
 				extras.putLong("itemTs",currentItem.getTimestamp());
 				extras.putString("searchQuery", searchquery);
+				extras.putBoolean("fromMain", false);
 				Log.d("editedItem", ":" + editTextName.getText());
 				returnIntent.putExtras(extras);
 				setResult(Activity.RESULT_OK, returnIntent);
