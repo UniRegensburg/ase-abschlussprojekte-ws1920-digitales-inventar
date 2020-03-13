@@ -209,7 +209,8 @@
         android:layout_marginStart="5sp"
         android:layout_marginEnd="5sp"
         android:weightSum="3"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/textViewBorrowPerson"
@@ -233,7 +234,8 @@
         android:layout_marginStart="5sp"
         android:layout_marginEnd="5sp"
         android:weightSum="3"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/textViewBorrowDate"

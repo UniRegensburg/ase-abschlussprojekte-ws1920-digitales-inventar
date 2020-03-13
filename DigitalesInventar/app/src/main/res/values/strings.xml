@@ -39,4 +39,8 @@
         <item>Hobby</item>
         <item>Werkzeug</item>
     </string-array>
+    <string-array name="borrowed_spinner">
+        <item>ausgeliehen</item>
+        <item>nicht ausgeliehen</item>
+    </string-array>
 </resources>
