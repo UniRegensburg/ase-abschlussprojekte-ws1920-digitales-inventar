@@ -11,7 +11,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 
@@ -23,7 +22,6 @@ public class SearchActivity extends AppCompatActivity {
 	public ArrayList<DataModelItemList> filteredList = new ArrayList<>();
 	ArrayAdapter adapter;
 	ListView itemListView;
-	Toolbar toolbar;
 	long timestamp;
 	String searchquery;
 	TextView result;
@@ -35,14 +33,6 @@ public class SearchActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search);
 		result = findViewById(R.id.searchresult);
-
-		toolbar = findViewById(R.id.toolbar);
-		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
 
 		itemListView = findViewById(R.id.fragment_list);
 		handleIntent(getIntent());

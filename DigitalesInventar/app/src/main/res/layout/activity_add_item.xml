@@ -4,14 +4,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:layout_anchorGravity="center"
-        app:popupTheme="@style/AppTheme.PopupOverlay"/>
-
     <LinearLayout
         android:id="@+id/addImage"
         android:layout_below="@+id/toolbar"
@@ -96,7 +88,7 @@
             android:id="@+id/addCatButton"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/editIcon"/>
+            android:drawableStart="@drawable/editicon"/>
     </LinearLayout>
 
     <LinearLayout
@@ -150,7 +142,7 @@
             android:id="@+id/addBuyDateButton"
             android:layout_width="41dp"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/plusIcon"/>
+            android:drawableStart="@drawable/plusicon"/>
     </LinearLayout>
 
     <LinearLayout
@@ -253,7 +245,7 @@
             android:id="@+id/addBorrowDateButton"
             android:layout_width="41dp"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/plusIcon"/>
+            android:drawableStart="@drawable/plusicon"/>
     </LinearLayout>
 
     <LinearLayout
