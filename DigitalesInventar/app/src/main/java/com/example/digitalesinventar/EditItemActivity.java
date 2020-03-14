@@ -52,8 +52,6 @@ public class EditItemActivity extends AppCompatActivity {
 	ImageView imgView;
 	//IMAGE
 	Bitmap defaultImage;
-	//SCREEN WIDTH
-	int screenWidth;
 	DataModelItemList currentItem;
 	//Context
 	public static Context context;
@@ -73,7 +71,6 @@ public class EditItemActivity extends AppCompatActivity {
 	public void setupView() {
 		setContentView(R.layout.activity_edit_item);
 		initView();
-		setWidths();
 		setupButtons();
 		setupSpinner();
 		assignDataFromIntent();
@@ -84,7 +81,7 @@ public class EditItemActivity extends AppCompatActivity {
 		//TEXT-VIEWS
 		textViewName = findViewById(R.id.textViewName);
 		textViewTime = findViewById(R.id.itemTime);
-		textViewTimeInfo = findViewById(R.id.textViewTime);
+		//textViewTimeInfo = findViewById(R.id.textViewTime);
 		textViewLocation = findViewById(R.id.textViewLocation);
 		textViewCategory = findViewById(R.id.textViewCategory);
 		//IMG_VIEW
@@ -109,20 +106,6 @@ public class EditItemActivity extends AppCompatActivity {
 		//setting input filters
 		editTextName.setFilters(new InputFilter[] { InputChecker.filter });
 		editTextLocation.setFilters(new InputFilter[] { InputChecker.filter });
-	}
-
-	public void setWidths() {
-		screenWidth = UIhelper.screenWidth(getWindowManager());
-		textViewName.setWidth(screenWidth/2);
-		textViewTime.setWidth(screenWidth/2);
-		textViewTimeInfo.setWidth(screenWidth/2);
-		textViewLocation.setWidth(screenWidth/2);
-		textViewCategory.setWidth(screenWidth/2);
-		editTextName.setWidth(screenWidth/2);
-		editTextLocation.setWidth(screenWidth/2);
-		editCategories.setWidth(screenWidth/2);
-		save.setWidth(screenWidth/2);
-		cancel.setWidth(screenWidth/2);
 	}
 
 	public void setupButtons() {
