@@ -9,23 +9,17 @@ public class DataModelItemList implements Cloneable{
     String itemCategory;
     Date buyDate;
     double value;
-    String borrowState;
-    String borrowPerson;
-    Date borrowDate;
     long timestamp; //as ID
 
     public DataModelItemList() {
 
     }
-    public DataModelItemList(String itemName, String itemCategory, String itemLocation, Date buyDate, double value, String borrowState, String borrowPerson, Date borrowDate,long timestamp) {
+    public DataModelItemList(String itemName, String itemCategory, String itemLocation, /*Date buyDate, double value,*/long timestamp) {
         this.itemName = itemName;
         this.itemCategory = itemCategory;
         this.itemLocation = itemLocation;
-        this.buyDate = buyDate;
-        this.value = value;
-        this.borrowState = borrowState;
-        this.borrowPerson = borrowPerson;
-        this.borrowDate = borrowDate;
+        //this.buyDate = buyDate;
+        //this.value = value;
         this.timestamp = timestamp;
     }
 
