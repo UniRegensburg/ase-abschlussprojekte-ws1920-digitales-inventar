@@ -195,9 +195,9 @@
             android:textStyle="bold"
             android:textColor="@color/mediumEmphasized"/>
         <EditText
+            android:id="@+id/itemValue"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/itemValue" />
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <RelativeLayout

@@ -45,7 +45,7 @@ public class DatabaseActivity {
     private static boolean currentlyLoading = false;
 
     //ADD ITEM TO DB
-    public static void addEntry(String name, String category , String location, final boolean newImage) {
+    public static void addEntry(String name, String category , String location, String buyDate, double value, final boolean newImage) {
         Log.d("DB addEntry", "item added");
         long tsLong = System.currentTimeMillis();
         final String ts = Long.toString(tsLong);
@@ -53,6 +53,8 @@ public class DatabaseActivity {
         entry.put("name", name);
         entry.put("category", category);
         entry.put("location", location);
+        entry.put("buydate", buyDate);
+        entry.put("value", value);
         entry.put("ts", ts);
 
         //db.collection("items").document(ts)
@@ -79,12 +81,12 @@ public class DatabaseActivity {
     }
 
     //UPDATE EDITED ITEM IN DB
-    public static void updateEntry(final String id, String name, String category, String location, final Long timestamp, final boolean newImage) {
+    public static void updateEntry(final String id, String name, String category, String location, String buyDate, double value, final Long timestamp, final boolean newImage) {
       //TODO remove timestamp as it's the same as id
-      final DataModelItemList wipItem = new DataModelItemList(name, category, location, timestamp);
+      final DataModelItemList wipItem = new DataModelItemList(name, category, location, buyDate, value, timestamp);
       //Log.d("DB updateEntry", "data:"+id+" ;"+name+" ;"+category+" ;"+location+" ;"+timestamp);
       db.collection("users").document(MainActivity.userID).collection("items").document(id)
-        .update("name", name, "category", category, "location", location, "ts", timestamp)
+        .update("name", name, "category", category, "location", location, "buydate", buyDate, "value", value, "ts", timestamp)
           .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void avoid) {
@@ -132,7 +134,7 @@ public class DatabaseActivity {
                   for (QueryDocumentSnapshot document : task.getResult()) {
                     //add entry as DataModelItemList object
                     //to be able to reference different attributes of the object later on
-                    DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), Long.parseLong(document.get("ts").toString()));
+                    DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), document.get("buydate").toString(), Double.parseDouble(document.get("value").toString()) ,Long.parseLong(document.get("ts").toString()));
                     itemArray.add(0, newItem); //add item on top of the list
                     itemArrayBackup.add(0, newItem);
                   }

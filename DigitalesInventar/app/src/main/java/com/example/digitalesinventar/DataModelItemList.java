@@ -1,25 +1,23 @@
 package com.example.digitalesinventar;
 
-import java.util.Date;
-
 //DataModel for the Firebase-entries to be set to a custom ListAdapter
 public class DataModelItemList implements Cloneable{
     String itemName;
     String itemLocation;
     String itemCategory;
-    Date buyDate;
+    String buyDate;
     double value;
     long timestamp; //as ID
 
     public DataModelItemList() {
 
     }
-    public DataModelItemList(String itemName, String itemCategory, String itemLocation, /*Date buyDate, double value,*/long timestamp) {
+    public DataModelItemList(String itemName, String itemCategory, String itemLocation, String buyDate, double value, long timestamp) {
         this.itemName = itemName;
         this.itemCategory = itemCategory;
         this.itemLocation = itemLocation;
-        //this.buyDate = buyDate;
-        //this.value = value;
+        this.buyDate = buyDate;
+        this.value = value;
         this.timestamp = timestamp;
     }
 
@@ -33,6 +31,14 @@ public class DataModelItemList implements Cloneable{
 
     public String getItemLocation() {
         return itemLocation;
+    }
+
+    public String getItemBuyDate() {
+        return buyDate;
+    }
+
+    public double getItemValue() {
+        return value;
     }
 
     public long getTimestamp() {

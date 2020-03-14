@@ -20,6 +20,8 @@ public class ViewItemActivity extends AppCompatActivity {
 	static TextView textViewTime;
 	static TextView textViewCategory;
 	static TextView textViewLocation;
+	static TextView textViewBuyDate;
+	static TextView textViewValue;
 	TextView infoViewName;
 	TextView infoViewTime;
 	TextView infoViewCategory;
@@ -58,6 +60,8 @@ public class ViewItemActivity extends AppCompatActivity {
 		textViewCategory = findViewById(R.id.Category);
 		textViewTime = findViewById(R.id.Time);
 		textViewLocation = findViewById(R.id.Location);
+		textViewBuyDate = findViewById(R.id.BuyDate);
+		textViewValue = findViewById(R.id.Value);
 		infoViewName = findViewById(R.id.Name_Item);
 		infoViewCategory = findViewById(R.id.Category_Item);
 		infoViewTime = findViewById(R.id.Time_Item);
@@ -113,6 +117,8 @@ public class ViewItemActivity extends AppCompatActivity {
 			//format and set date
 			textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 			textViewLocation.setText(currentItem.getItemLocation());
+			textViewBuyDate.setText(currentItem.getItemBuyDate());
+			textViewValue.setText(Double.toString(currentItem.getItemValue()) + "€");
 			Log.d("Intent data: ",  "" + currentItem.getItemName());
 			if (extras.getBoolean("fromMain")) {
 				DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
@@ -133,6 +139,8 @@ public class ViewItemActivity extends AppCompatActivity {
 		//format and set date
 		textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 		textViewLocation.setText(currentItem.getItemLocation());
+		textViewBuyDate.setText(currentItem.getItemBuyDate());
+		textViewValue.setText(Double.toString(currentItem.getItemValue()) + "€");
 		if (newImage) { //check logs for updateItemView: image is cached, bool works
 			//but view is only sometimes updated, sometimes even w/ no new img log
 			Log.d("updateItemView", "2 new img");

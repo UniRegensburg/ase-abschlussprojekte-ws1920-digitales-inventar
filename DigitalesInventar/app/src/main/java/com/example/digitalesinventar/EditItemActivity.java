@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import java.io.IOException;
 
@@ -34,9 +36,12 @@ public class EditItemActivity extends AppCompatActivity {
 	TextView textViewTimeInfo;
 	TextView textViewLocation;
 	TextView textViewCategory;
+	static TextView textViewBuyDate;
+	TextView textViewValue;
 	//EDIT-TEXTS
 	EditText editTextName;
 	EditText editTextLocation;
+	EditText editTextValue;
 	//SPINNER
 	static Spinner categorySpinner;
 	//ADAPTER
@@ -45,6 +50,7 @@ public class EditItemActivity extends AppCompatActivity {
 	ImageButton addImageByCamera;
 	ImageButton addImageByPicker;
 	ImageButton deleteImage;
+	Button editBuyDate;
 	Button editCategories;
 	Button save;
 	Button cancel;
@@ -84,6 +90,8 @@ public class EditItemActivity extends AppCompatActivity {
 		//textViewTimeInfo = findViewById(R.id.textViewTime);
 		textViewLocation = findViewById(R.id.textViewLocation);
 		textViewCategory = findViewById(R.id.textViewCategory);
+		textViewBuyDate = findViewById(R.id.itemBuyDate);
+		textViewValue =findViewById(R.id.textViewValue);
 		//IMG_VIEW
 		imgView = findViewById(R.id.imgView);
 		//IMAGE
@@ -92,6 +100,7 @@ public class EditItemActivity extends AppCompatActivity {
 		//EDIT-TEXTS
 		editTextName = findViewById(R.id.itemName);
 		editTextLocation = findViewById(R.id.itemLocation);
+		editTextValue = findViewById(R.id.itemValue);
 		//SPINNER
 		categorySpinner = findViewById(R.id.spinnerCategory);
 		//BUTTONS
@@ -99,13 +108,15 @@ public class EditItemActivity extends AppCompatActivity {
 		addImageByPicker = findViewById(R.id.pickerButton);
 		deleteImage = findViewById(R.id.deleteButton);
 		editCategories = findViewById(R.id.addCatButton);
+		editBuyDate = findViewById(R.id.addBuyDateButton);
 		save = findViewById(R.id.addItemSave);
 		cancel = findViewById(R.id.addItemCancel);
-
 
 		//setting input filters
 		editTextName.setFilters(new InputFilter[] { InputChecker.filter });
 		editTextLocation.setFilters(new InputFilter[] { InputChecker.filter });
+		//numbers only for value
+		editTextValue.setInputType(InputType.TYPE_CLASS_NUMBER);
 	}
 
 	public void setupButtons() {
@@ -119,6 +130,13 @@ public class EditItemActivity extends AppCompatActivity {
 			}
 		});
 
+		editBuyDate.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				DialogFragment newFragment = new DatePickerFragment();
+				newFragment.show(getSupportFragmentManager(), "datePicker");
+			}
+		});
 		cancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -130,7 +148,7 @@ public class EditItemActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				context = getApplicationContext();
-				DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), currentItem.getTimestamp(), newImage);
+				DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), textViewBuyDate.getText().toString(), Double.parseDouble(editTextValue.getText().toString()), currentItem.getTimestamp(), newImage);
 				//^ TODO crashes     java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String java.lang.Object.toString()' on a null object reference
 				//reproduce: edit item -> edit kat -> new cat -> back -> save item (no new cat) -> edit item -> edit cat -> del new cat w/ items -> save
 				//zur not: try & catch
@@ -252,7 +270,8 @@ public class EditItemActivity extends AppCompatActivity {
 			editTextLocation.setText(currentItem.getItemLocation());
 			//format and set date
 			textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
-
+			textViewBuyDate.setText(currentItem.getItemBuyDate());
+			textViewValue.setText(Double.toString(currentItem.getItemValue()) + "€");
 			//set spinner item
 			for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
 				if (categorySpinner.getItemAtPosition(i).equals(currentItem.getItemCategory())) {
@@ -267,5 +286,9 @@ public class EditItemActivity extends AppCompatActivity {
 			finish();
 			//finishAndRemoveTask();
 		}
+	}
+
+	public static TextView getDateView() {
+		return textViewBuyDate;
 	}
 }
