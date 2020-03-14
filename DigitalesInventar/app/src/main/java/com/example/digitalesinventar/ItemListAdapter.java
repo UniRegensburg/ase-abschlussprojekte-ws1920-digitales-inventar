@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
@@ -26,6 +27,7 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
         TextView txtItemName;
         TextView txtTimestamp;
         TextView txtCategory;
+        ImageView imgView;
     }
 
     public ItemListAdapter(ArrayList<DataModelItemList> data, FragmentActivity fragActivity) {
@@ -59,7 +61,7 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
             viewHolder.txtItemName = (TextView) convertView.findViewById(R.id.item_name);
             viewHolder.txtTimestamp = (TextView) convertView.findViewById(R.id.item_ts);
             viewHolder.txtCategory = (TextView) convertView.findViewById(R.id.item_category);
-            /*viewHolder.img = (ImageView) convertView.findViewById(R.id.item_img);*/
+            viewHolder.imgView = (ImageView) convertView.findViewById(R.id.item_img);
 
             result = convertView;
             convertView.setTag(viewHolder);
@@ -72,6 +74,7 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
         @SuppressLint("RestrictedApi") DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
         viewHolder.txtTimestamp.setText(dateFormat.format(InputChecker.formattedDate(dataModel)));
         viewHolder.txtCategory.setText(dataModel.getItemCategory());
+        DatabaseActivity.downloadImage(Long.toString(dataModel.getTimestamp()), viewHolder.imgView);
 
         // Return the completed view to render on screen
         return convertView;
