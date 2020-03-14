@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
@@ -59,6 +60,7 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
             Log.i("itemListAdapter", "" + dataModel.getTimestamp());
             viewHolder.txtItemName = (TextView) convertView.findViewById(R.id.item_name);
             viewHolder.txtTimestamp = (TextView) convertView.findViewById(R.id.item_ts);
+            /*viewHolder.img = (ImageView) convertView.findViewById(R.id.item_img);*/
 
             result = convertView;
             convertView.setTag(viewHolder);
@@ -68,7 +70,8 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
             result = convertView;
         }
         viewHolder.txtItemName.setText(dataModel.getItemName());
-        viewHolder.txtTimestamp.setText(InputChecker.formattedDate(dataModel).toString());
+        @SuppressLint("RestrictedApi") DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+        viewHolder.txtTimestamp.setText(dateFormat.format(InputChecker.formattedDate(dataModel)));
 
         // Return the completed view to render on screen
         return convertView;
