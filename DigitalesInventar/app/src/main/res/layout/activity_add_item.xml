@@ -22,7 +22,7 @@
             <ImageView
                 android:layout_height="160dp"
                 android:layout_width="160dp"
-                android:id="@+id/imageView1"
+                android:id="@+id/imgView"
                 android:src="@drawable/img_holder"
                 android:scaleType="centerCrop"/>
         </androidx.cardview.widget.CardView>
