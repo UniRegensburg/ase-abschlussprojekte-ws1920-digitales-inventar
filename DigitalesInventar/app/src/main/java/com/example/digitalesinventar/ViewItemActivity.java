@@ -29,8 +29,6 @@ public class ViewItemActivity extends AppCompatActivity {
 	//BUTTONS
 	Button edit;
 	Button back;
-	//SCREEN WIDTH
-	int screenWidth;
 	String searchquery;
 	//Default Image
 	static Bitmap defaultBmp;
@@ -47,7 +45,6 @@ public class ViewItemActivity extends AppCompatActivity {
 	public void setupView() {
 		setContentView(R.layout.activity_view_item);
 		initView();
-		setWidths();
 		setupButtons();
 		assignDataFromIntent(getIntent());
 		defaultBmp = BitmapFactory.decodeResource(this.getResources(),
@@ -70,20 +67,6 @@ public class ViewItemActivity extends AppCompatActivity {
 		//BUTTONS
 		edit = findViewById(R.id.editItemButton);
 		back = findViewById(R.id.backButton);
-	}
-
-	public void setWidths() {
-		screenWidth = UIhelper.screenWidth(getWindowManager());
-		textViewName.setWidth(screenWidth/2);
-		textViewCategory.setWidth(screenWidth/2);
-		textViewTime.setWidth(screenWidth/2);
-		textViewLocation.setWidth(screenWidth/2);
-		infoViewName.setWidth(screenWidth/2);
-		infoViewCategory.setWidth(screenWidth/2);
-		infoViewTime.setWidth(screenWidth/2);
-		infoViewLocation.setWidth(screenWidth/2);
-		back.setWidth(screenWidth/2);
-		edit.setWidth(screenWidth/2);
 	}
 
 	public void setupButtons() {
