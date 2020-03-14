@@ -1,17 +1,14 @@
 package com.example.digitalesinventar;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import java.text.DateFormat;
@@ -28,6 +25,7 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
     private static class ViewHolder {
         TextView txtItemName;
         TextView txtTimestamp;
+        TextView txtCategory;
     }
 
     public ItemListAdapter(ArrayList<DataModelItemList> data, FragmentActivity fragActivity) {
@@ -60,6 +58,7 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
             Log.i("itemListAdapter", "" + dataModel.getTimestamp());
             viewHolder.txtItemName = (TextView) convertView.findViewById(R.id.item_name);
             viewHolder.txtTimestamp = (TextView) convertView.findViewById(R.id.item_ts);
+            viewHolder.txtCategory = (TextView) convertView.findViewById(R.id.item_category);
             /*viewHolder.img = (ImageView) convertView.findViewById(R.id.item_img);*/
 
             result = convertView;
@@ -72,6 +71,7 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
         viewHolder.txtItemName.setText(dataModel.getItemName());
         @SuppressLint("RestrictedApi") DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
         viewHolder.txtTimestamp.setText(dateFormat.format(InputChecker.formattedDate(dataModel)));
+        viewHolder.txtCategory.setText(dataModel.getItemCategory());
 
         // Return the completed view to render on screen
         return convertView;
