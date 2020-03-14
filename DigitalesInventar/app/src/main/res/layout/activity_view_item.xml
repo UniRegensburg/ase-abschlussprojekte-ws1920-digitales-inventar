@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:maxWidth="250dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/imgholder2"
+            android:src="@drawable/img_holder"
             android:layout_marginTop="@dimen/fui_body_padding_bottom"
             android:layout_marginStart="5sp"/>
     </LinearLayout>

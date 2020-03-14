@@ -51,7 +51,7 @@ public class ViewItemActivity extends AppCompatActivity {
 		setupButtons();
 		assignDataFromIntent(getIntent());
 		defaultBmp = BitmapFactory.decodeResource(this.getResources(),
-			R.drawable.imgholder);
+			R.drawable.img_holder);
 	}
 
 	public void initView() {

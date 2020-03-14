@@ -91,7 +91,7 @@ public class EditItemActivity extends AppCompatActivity {
 		imgView = findViewById(R.id.imgView);
 		//IMAGE
 		defaultImage = BitmapFactory.decodeResource(this.getResources(),
-			R.drawable.imgholder);
+			R.drawable.img_holder);
 		//EDIT-TEXTS
 		editTextName = findViewById(R.id.itemName);
 		editTextLocation = findViewById(R.id.itemLocation);

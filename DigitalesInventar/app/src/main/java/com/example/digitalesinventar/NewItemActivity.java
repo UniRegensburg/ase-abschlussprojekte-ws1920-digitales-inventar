@@ -44,8 +44,6 @@ public class NewItemActivity extends AppCompatActivity {
 	Button cancel;
 	//IMAGE VIEW
 	ImageView imgView;
-	//SCREEN WIDTH
-	int screenWidth;
 
 	boolean newImage = false;
 
@@ -97,7 +95,6 @@ public class NewItemActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_add_item);
 		Log.i("NewItemActivity", "xml file linked");
 		initView();
-		setWidths();
 		setupButtons();
 		setupSpinner();
 	}
@@ -186,19 +183,6 @@ public class NewItemActivity extends AppCompatActivity {
 		// Apply the adapter to the spinner
 		categorySpinner.setAdapter(adapter);
 	}
-
-	public void setWidths() {
-		screenWidth = UIhelper.screenWidth(getWindowManager());
-		textViewCategory.setWidth(screenWidth/2);
-		textViewName.setWidth(screenWidth/2);
-		editTextName.setWidth(screenWidth/2);
-		editTextLocation.setWidth(screenWidth/2);
-		textViewLocation.setWidth(screenWidth/2);
-		editCategories.setWidth(screenWidth/4);
-		cancel.setWidth(screenWidth/2);
-		save.setWidth(screenWidth/2);
-	}
-
 
 	//get new item from EditText to add new database entry
 	public boolean getNewItem() {

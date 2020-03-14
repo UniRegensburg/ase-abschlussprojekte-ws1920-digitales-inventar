@@ -10,6 +10,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/primary"
         android:theme="@style/AppTheme.AppBarOverlay">
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -31,7 +32,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/primary"
             app:layout_anchorGravity="center"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
