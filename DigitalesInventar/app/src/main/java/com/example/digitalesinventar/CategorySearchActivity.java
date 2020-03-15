@@ -34,14 +34,7 @@ public class CategorySearchActivity extends AppCompatActivity {
 		itemListView = findViewById(R.id.fragment_list);
 		result = findViewById(R.id.searchresult);
 		handleIntent(getIntent());
-
-		toolbar = findViewById(R.id.toolbar);
-		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
+		
 	}
 
 	@Override

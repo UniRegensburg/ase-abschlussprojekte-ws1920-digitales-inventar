@@ -89,7 +89,7 @@ public class EditItemActivity extends AppCompatActivity {
 	public void initView() {
 		//UI-ELEMENTS
 		//TEXT-VIEWS
-		textViewName = findViewById(R.id.textViewName);
+		textViewName = findViewById(R.id.itemName);
 		textViewTime = findViewById(R.id.itemTime);
 		//textViewTimeInfo = findViewById(R.id.textViewTime);
 		textViewLocation = findViewById(R.id.textViewLocation);
@@ -210,7 +210,8 @@ public class EditItemActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				context = getApplicationContext();
-				DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), textViewBuyDate.getText().toString(), Double.parseDouble(editTextValue.getText().toString()), currentItem.getTimestamp(), newImage);
+				//Log.d("new-ui-debug", "edit save, ts "+ currentItem.getTimestamp() + "; name " + editTextName.getText() + "; cat " + categorySpinner.getSelectedItem() + "; ort " + editTextLocation.getText() + "; date " + textViewBuyDate.getText() + "; wert " + editTextValue.getText());
+				DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), textViewBuyDate.getText().toString(), editTextValue.getText().toString(), currentItem.getTimestamp(), newImage);
 				//^ TODO crashes     java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String java.lang.Object.toString()' on a null object reference
 				//reproduce: edit item -> edit kat -> new cat -> back -> save item (no new cat) -> edit item -> edit cat -> del new cat w/ items -> save
 				//zur not: try & catch
@@ -333,7 +334,7 @@ public class EditItemActivity extends AppCompatActivity {
 			//format and set date
 			textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 			textViewBuyDate.setText(currentItem.getItemBuyDate());
-			textViewValue.setText(Double.toString(currentItem.getItemValue()) + "€");
+			editTextValue.setText(Double.toString(currentItem.getItemValue()));
 			//set spinner item
 			for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
 				if (categorySpinner.getItemAtPosition(i).equals(currentItem.getItemCategory())) {

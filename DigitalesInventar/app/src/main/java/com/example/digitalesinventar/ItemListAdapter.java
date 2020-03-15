@@ -62,6 +62,7 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
             viewHolder.txtTimestamp = (TextView) convertView.findViewById(R.id.item_ts);
             viewHolder.txtCategory = (TextView) convertView.findViewById(R.id.item_category);
             viewHolder.imgView = (ImageView) convertView.findViewById(R.id.item_img);
+            DatabaseActivity.downloadImage(Long.toString(dataModel.getTimestamp()), viewHolder.imgView);
 
             result = convertView;
             convertView.setTag(viewHolder);
@@ -70,15 +71,17 @@ public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements 
             viewHolder = (ViewHolder) convertView.getTag();
             result = convertView;
         }
+
         viewHolder.txtItemName.setText(dataModel.getItemName());
         @SuppressLint("RestrictedApi") DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
         viewHolder.txtTimestamp.setText(dateFormat.format(InputChecker.formattedDate(dataModel)));
         viewHolder.txtCategory.setText(dataModel.getItemCategory());
-        DatabaseActivity.downloadImage(Long.toString(dataModel.getTimestamp()), viewHolder.imgView);
-
+        Log.d("loadImg", "download called in adapter");
+        //DatabaseActivity.downloadImage(Long.toString(dataModel.getTimestamp()), viewHolder.imgView);
         // Return the completed view to render on screen
         return convertView;
     }
+
 /*
     @Override
     public Filter getFilter(){

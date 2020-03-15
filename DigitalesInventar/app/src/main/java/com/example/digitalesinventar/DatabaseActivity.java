@@ -81,12 +81,16 @@ public class DatabaseActivity {
     }
 
     //UPDATE EDITED ITEM IN DB
-    public static void updateEntry(final String id, String name, String category, String location, String buyDate, double value, final Long timestamp, final boolean newImage) {
+    public static void updateEntry(final String id, String name, String category, String location, String buyDate, String value, final Long timestamp, final boolean newImage) {
       //TODO remove timestamp as it's the same as id
-      final DataModelItemList wipItem = new DataModelItemList(name, category, location, buyDate, value, timestamp);
+      Double valueWip = Double.valueOf(0);
+      if (value.length() > 0) { //catch for parsing error
+        valueWip = Double.parseDouble(value);
+      }
+      final DataModelItemList wipItem = new DataModelItemList(name, category, location, buyDate, valueWip, timestamp);
       //Log.d("DB updateEntry", "data:"+id+" ;"+name+" ;"+category+" ;"+location+" ;"+timestamp);
       db.collection("users").document(MainActivity.userID).collection("items").document(id)
-        .update("name", name, "category", category, "location", location, "buydate", buyDate, "value", value, "ts", timestamp)
+        .update("name", name, "category", category, "location", location, "buydate", buyDate, "value", valueWip, "ts", timestamp)
           .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void avoid) {
@@ -306,7 +310,7 @@ public class DatabaseActivity {
     String imgPath = MainActivity.userID + "/images/" + itemID + ".jpg";
     StorageReference islandRef = storageRef.child(imgPath);
 
-    final long ONE_MEGABYTE = 1024 * 1024 * 10;
+    final long ONE_MEGABYTE = 1024 * 1024;
     islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
       @Override
       public void onSuccess(byte[] bytes) {
