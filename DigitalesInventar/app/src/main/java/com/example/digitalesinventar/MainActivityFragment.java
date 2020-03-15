@@ -97,10 +97,11 @@ public class MainActivityFragment extends Fragment {
         startActivity(intent);
     }
 
-    private void showConfirmDialog(String timestamp){
+    private void showConfirmDialog(ArrayList timestamps, String itemCount){
         //Create Dialog
         Bundle args = new Bundle();
-        args.putString(DeleteItemsConfirmationDialogFragment.ARG_TIMESTAMP, timestamp);
+        args.putStringArrayList(DeleteItemsConfirmationDialogFragment.ARG_TIMESTAMP, timestamps);
+        args.putString(DeleteItemsConfirmationDialogFragment.ARG_COUNT, itemCount);
         DialogFragment dialog = new DeleteItemsConfirmationDialogFragment();
         dialog.setArguments(args);
         dialog.show(getFragmentManager(),"tag");
@@ -152,11 +153,13 @@ public class MainActivityFragment extends Fragment {
                     View child = itemListView.getChildAt(i);
                     child.setBackgroundColor(0x00999999);
                 }
+                String itemCount = String.valueOf(count);
+                showConfirmDialog(selected_items, itemCount);
 
-                for (String timestamp: selected_items){
-                    showConfirmDialog(timestamp);
-                    count = count -1;
-                }
+                //for (String timestamp: selected_items){
+                  //  showConfirmDialog(timestamp);
+                    //count = count -1;
+                //}
                 mode.finish();
                 return true;
             }
