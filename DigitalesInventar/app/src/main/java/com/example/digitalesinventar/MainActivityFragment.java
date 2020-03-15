@@ -19,6 +19,11 @@ import android.widget.SearchView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+
 import java.util.ArrayList;
 
 
@@ -26,7 +31,7 @@ import java.util.ArrayList;
 public class MainActivityFragment extends Fragment {
 
     public static ArrayAdapter itemArrayAdapter;
-    static ListView itemListView;
+    static SwipeMenuListView itemListView;
     long timestamp;
     int count;
     ArrayList<String> selected_items = new ArrayList<>();
@@ -43,7 +48,7 @@ public class MainActivityFragment extends Fragment {
         Log.i("MainActivityFragment", "inflater called");
         //rootView.findViewById(R.id.fragment_container);
         //set layout for ListView for data from db
-        itemListView = (ListView) view.findViewById(R.id.fragment_list);
+        itemListView = view.findViewById(R.id.fragment_list);
         Log.i("MainActivityFragment", "listView: ");
         
         // Multiple Items can be selected - works with longClick
@@ -60,6 +65,40 @@ public class MainActivityFragment extends Fragment {
                 launchViewItem();
             }
         });
+
+        launchSwipeMenu();
+        itemListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                switch (index) {
+                    case 0:
+                        // edit
+                        Log.i("onMenuItemClicked", "Edit");
+                        DataModelItemList item = (DataModelItemList) itemListView.getItemAtPosition(position);
+                        timestamp = item.getTimestamp();
+
+                        Intent intent = new Intent(getActivity(),EditItemActivity.class);
+                        Bundle extras = new Bundle();
+                        extras.putLong("itemTs",timestamp);
+                        extras.putBoolean("fromMain", true);
+                        intent.putExtras(extras);
+                        startActivityForResult(intent, 666);
+                        break;
+                    case 1:
+                        // delete
+                        Log.i("onMenuItemClicked", "Delete");
+                        DataModelItemList itemDelete = (DataModelItemList) itemListView.getItemAtPosition(position);
+                        String itemTimestamp = String.valueOf(itemDelete.getTimestamp());
+
+                        ArrayList<String> delete_list = new ArrayList<>();
+                        delete_list.add(itemTimestamp);
+                        showConfirmDialog(delete_list,"1");
+                        break;
+                }
+                return false;
+            }
+        });
+
         setupList();
         Log.i("MainActivityFragment", "setupList called");
         return view;
@@ -74,11 +113,6 @@ public class MainActivityFragment extends Fragment {
         itemListView.setAdapter(itemArrayAdapter);
         Log.i("MainActivityFragment", "listAdapter set");
     }
-
-    /*public void setupSearchList(ArrayList<DataModelItemList> filteredList) {
-        itemArrayAdapter = new ItemListAdapter(filteredList,getActivity());
-        itemListView.setAdapter(itemArrayAdapter);
-    }*/
 
     public static void updateList() {
         Log.i("MainActivityFragment", "adapter dataset changed");
@@ -156,10 +190,6 @@ public class MainActivityFragment extends Fragment {
                 String itemCount = String.valueOf(count);
                 showConfirmDialog(selected_items, itemCount);
 
-                //for (String timestamp: selected_items){
-                  //  showConfirmDialog(timestamp);
-                    //count = count -1;
-                //}
                 mode.finish();
                 return true;
             }
@@ -191,6 +221,40 @@ public class MainActivityFragment extends Fragment {
                 return true;
             }
         });
+    }
+
+    private void launchSwipeMenu(){
+        Log.i("MainActivityFragment", "launchSwipeMenu called");
+
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+            @Override
+            public void create(SwipeMenu menu) {
+                // create "edit" item
+                SwipeMenuItem editItem = new SwipeMenuItem(getActivity());
+                // set item background
+                editItem.setBackground(R.color.primaryVariant);
+                // set item width
+                editItem.setWidth(250);
+                // set item title
+                editItem.setIcon(R.drawable.ic_edit);
+                // add to menu
+                menu.addMenuItem(editItem);
+
+                // create "delete" item
+                SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
+                // set item background
+                deleteItem.setBackground(R.color.error);
+                // set item width
+                deleteItem.setWidth(250);
+                // set a icon
+                deleteItem.setIcon(R.drawable.ic_delete);
+                // add to menu
+                menu.addMenuItem(deleteItem);
+            }
+        };
+
+        //set creator
+        itemListView.setMenuCreator(creator);
     }
 
     private void doLiveUpdates(String query) {
