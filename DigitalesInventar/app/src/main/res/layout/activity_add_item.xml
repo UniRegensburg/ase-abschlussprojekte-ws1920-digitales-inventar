@@ -180,8 +180,7 @@
         <TextView
             android:id="@+id/itemBuyDate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/item_buy_date"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
