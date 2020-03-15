@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static String userID = "defaultEmptyID";
     private SearchView searchView;
+
+    FrameLayout frameLayout;
+    TabLayout tabLayout;
 
     //UI-ELEMENTS --- NOTE: wird später dann noch ausgelagert in eigenstaendiges Fragment
     Button firstCat;
@@ -160,10 +165,46 @@ public class MainActivity extends AppCompatActivity {
     //sets and initializes UI for MainActivity
     public void setupMainMenu() {
         setContentView(R.layout.activity_main);
+        frameLayout = (FrameLayout) findViewById(R.id.fragment_container);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+					@Override
+					public void onTabSelected(TabLayout.Tab tab) {
+						int position = tab.getPosition();
+						Log.i("setupMain", "tabselected" + position);
+						MainActivityFragment fragment = null;
+						switch (tab.getPosition()) {
+							case 0:
+								fragment = new MainActivityFragment();
+								Log.i("onTabSelected", "case 0" + position);
+								break;
+							case 1:
+								//fragment = new SecondFragment();
+								Log.i("onTabSelected", "case 1" + position);
+								break;
+							case 2:
+								//fragment = new ThirdFragment();
+								Log.i("onTabSelected", "case 2" + position);
+								break;
+						}
+						getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,fragment).commit();
+					}
+
+
+					@Override
+					public void onTabUnselected(TabLayout.Tab tab) {
+
+					}
+
+					@Override
+					public void onTabReselected(TabLayout.Tab tab) {
+
+					}});
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DatabaseActivity.getDataFromDatabase();
-        DatabaseActivity.getCategoriesFromDatabase();
+        //DatabaseActivity.getCategoriesFromDatabase();
 
         plusButton = findViewById(R.id.plusButton);
         plusButton.setOnClickListener(new View.OnClickListener() {
@@ -173,16 +214,16 @@ public class MainActivity extends AppCompatActivity {
                 launchNewItemActivity();
             }
         });
-        setupCategories();
+        //setupCategories();
     }
 
     private void setupCategories() {
-        firstCat = findViewById(R.id.cat1);
-        secondCat = findViewById(R.id.cat2);
-        thirdCat = findViewById(R.id.cat3);
-        fourthCat = findViewById(R.id.cat4);
-        fifthCat= findViewById(R.id.cat5);
-        sixthCat = findViewById(R.id.cat6);
+        //firstCat = findViewById(R.id.cat1);
+        //secondCat = findViewById(R.id.cat2);
+        //thirdCat = findViewById(R.id.cat3);
+        //fourthCat = findViewById(R.id.cat4);
+        //fifthCat= findViewById(R.id.cat5);
+        //sixthCat = findViewById(R.id.cat6);
         //Log.i("MainActivity", "btn.add: "+firstCat.toString());
         catButtonArray[0] = firstCat;
         catButtonArray[1] = secondCat;
