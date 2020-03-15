@@ -96,6 +96,11 @@
             android:layout_height="30dp"
             android:layout_marginStart="2dp"
             android:background="@drawable/edit30px"/>
+        <Button
+            android:id="@+id/deleteCat"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/delete30px"/>
     </LinearLayout>
 
     <LinearLayout
@@ -110,7 +115,9 @@
         <Spinner
             android:id="@+id/spinnerCategory"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:longClickable="true"
+            android:spinnerMode="dropdown" />
     </LinearLayout>
 
     <LinearLayout

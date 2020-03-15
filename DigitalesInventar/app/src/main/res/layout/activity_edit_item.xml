@@ -135,6 +135,11 @@
         android:layout_height="30dp"
         android:layout_marginStart="2dp"
         android:background="@drawable/brush30px"/>
+        <Button
+            android:id="@+id/deleteCat"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/delete30px"/>
     </LinearLayout>
 
     <LinearLayout

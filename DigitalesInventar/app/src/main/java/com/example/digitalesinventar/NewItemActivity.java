@@ -1,5 +1,7 @@
 package com.example.digitalesinventar;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +48,7 @@ public class NewItemActivity extends AppCompatActivity {
 	ImageButton addImageByCamera;
 	ImageButton addImageByPicker;
 	Button editCategories;
+	Button deleteCategory;
 	Button addBuyDate;
 	Button save;
 	Button cancel;
@@ -125,6 +129,7 @@ public class NewItemActivity extends AppCompatActivity {
 		addImageByCamera = findViewById(R.id.cameraButton);
 		addImageByPicker = findViewById(R.id.pickerButton);
 		editCategories = findViewById(R.id.addCatButton);
+		deleteCategory = findViewById(R.id.deleteCat);
 		addBuyDate = findViewById(R.id.addBuyDateButton);
 		save = findViewById(R.id.addItemSave);
 		cancel = findViewById(R.id.addItemCancel);
@@ -140,11 +145,69 @@ public class NewItemActivity extends AppCompatActivity {
 		editCategories.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//start editCategories activity
-				Intent intent = new Intent(getApplicationContext(),NewCategoryActivity.class);
-				startActivity(intent);
+				AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewItemActivity.this);
+				alertDialog.setTitle("Add Category");
+				alertDialog.setMessage("Enter a Category");
+
+				final EditText input = new EditText(NewItemActivity.this);
+				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.MATCH_PARENT);
+				input.setLayoutParams(lp);
+				alertDialog.setView(input);
+
+				alertDialog.setPositiveButton("ADD",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							String category = input.getText().toString();
+							if (InputChecker.checkEmptyInput(category)) {
+								Log.i("addCat", "input not empty");
+								for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
+									//avoid multiple entries
+									if (category.equals(DatabaseActivity.categoryArray.get(i))) {
+										Toast.makeText(getApplicationContext(), "Category " + category + " already exists!", Toast.LENGTH_SHORT).show();
+										return;
+									}
+								}
+								Log.i("addCat", "input not twice");
+								DatabaseActivity.addCategory(category);
+								//TODO set spinner selection to added category
+								//clear input
+								input.setText("");
+								//hide keyboard
+								UIhelper.hideKeyboard(NewItemActivity.this);
+								Toast.makeText(getApplicationContext(), "Category " + category + " was successfully added!", Toast.LENGTH_SHORT).show();
+							} else {
+								Toast.makeText(getApplicationContext(), "please enter a category", Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
+				 alertDialog.setNegativeButton("CANCEL",
+					 new DialogInterface.OnClickListener() {
+											public void onClick(DialogInterface dialog, int which) {
+												dialog.cancel();
+											}
+										});
+
+				 alertDialog.show();
+									}
+
+				});
+
+		deleteCategory.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String selectedCategory = categorySpinner.getSelectedItem().toString();
+				//make sure user does not try to delete predefined categories
+				if (selectedCategory.equals("Unterhaltungselektronik") || selectedCategory.equals("Haushaltsgegenstände")
+					|| selectedCategory.equals("Einrichtung") || selectedCategory.equals("Hobby") || selectedCategory.equals("Werkzeug")) {
+					Toast.makeText(getApplicationContext(), "Default category " + selectedCategory + " can't be removed!", Toast.LENGTH_SHORT).show();
+				}else {
+					showConfirmDialog(selectedCategory);
+				}
 			}
 		});
+
 
 		addBuyDate.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -227,5 +290,14 @@ public class NewItemActivity extends AppCompatActivity {
 
 	public static TextView getDateView() {
 		return textViewBuyDate;
+	}
+
+	private void showConfirmDialog(String category){
+		//Create Dialog
+		Bundle args = new Bundle();
+		args.putString(DeleteCategoriesConfirmationDialogFragment.ARG_CATEGORY, category);
+		DialogFragment dialog = new DeleteCategoriesConfirmationDialogFragment();
+		dialog.setArguments(args);
+		dialog.show(getSupportFragmentManager(),"tag");
 	}
 }
