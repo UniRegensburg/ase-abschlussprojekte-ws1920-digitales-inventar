@@ -15,7 +15,6 @@
         android:theme="@style/AppTheme.AppBarOverlay">
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -35,7 +34,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/primary"
-            android:layout_below="@+id/toolbar">
+            android:layout_below="@+id/toolbar"
+            app:tabIndicatorColor="#fff"
+            app:tabSelectedTextColor="#fff"
+            app:tabTextColor="#000">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
@@ -91,16 +93,17 @@
                 android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
         </LinearLayout>
-    </RelativeLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/plusButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/plus50px" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/plusButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/plus50px" />
+
+    </RelativeLayout>
 
 </LinearLayout>

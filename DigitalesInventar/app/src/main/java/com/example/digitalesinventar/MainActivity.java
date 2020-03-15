@@ -15,6 +15,7 @@ import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -44,17 +45,8 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
 
     //UI-ELEMENTS --- NOTE: wird später dann noch ausgelagert in eigenstaendiges Fragment
-    Button firstCat;
-    Button secondCat;
-    Button thirdCat;
-    Button fourthCat;
-    Button fifthCat;
-    Button sixthCat;
     Toolbar toolbar;
     FloatingActionButton plusButton;
-    Button[] catButtonArray = new Button[6];//will need to be reworked for custom category buttons
-    //HELPERS
-    int screenWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,30 +162,48 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 					@Override
 					public void onTabSelected(TabLayout.Tab tab) {
-						int position = tab.getPosition();
-						Log.i("setupMain", "tabselected" + position);
-						MainActivityFragment fragment = null;
+						Fragment fragment = null;
 						switch (tab.getPosition()) {
 							case 0:
 								fragment = new MainActivityFragment();
-								Log.i("onTabSelected", "case 0" + position);
+								Log.i("onTabSelected", "case 0");
+								plusButton = findViewById(R.id.plusButton);
+								plusButton.setOnClickListener(new View.OnClickListener() {
+								    @Override
+                    public void onClick(View view) {
+								        Log.i("MainActivity", "plusButton clicked");
+								        launchNewItemActivity();
+								    }
+								});
 								break;
-							case 1:
-								//fragment = new SecondFragment();
-								Log.i("onTabSelected", "case 1" + position);
+                case 1:
+								Log.i("onTabSelected", "case 1");
+								fragment = new CategoryFragment();
+								plusButton = findViewById(R.id.plusButton);
+								plusButton.setOnClickListener(new View.OnClickListener() {
+								    @Override
+                      public void onClick(View view) {
+								        Log.i("MainActivity", "plusButton clicked");
+								        launchNewCategoryActivity();
+								    }
+								});
 								break;
 							case 2:
-								//fragment = new ThirdFragment();
-								Log.i("onTabSelected", "case 2" + position);
+								Log.i("onTabSelected", "case 2");
+								fragment = new PlaceFragment();
+								plusButton = findViewById(R.id.plusButton);
+								plusButton.hide();
 								break;
 						}
 						getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,fragment).commit();
 					}
 
-
 					@Override
 					public void onTabUnselected(TabLayout.Tab tab) {
-
+            if (tab.getPosition() == 2){
+                plusButton = findViewById(R.id.plusButton);
+                plusButton.show();
+            }
 					}
 
 					@Override
@@ -204,63 +214,21 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DatabaseActivity.getDataFromDatabase();
-        //DatabaseActivity.getCategoriesFromDatabase();
-
-        plusButton = findViewById(R.id.plusButton);
-        plusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("MainActivity", "plusButton clicked");
-                launchNewItemActivity();
-            }
-        });
-        //setupCategories();
     }
 
-    private void setupCategories() {
-        //firstCat = findViewById(R.id.cat1);
-        //secondCat = findViewById(R.id.cat2);
-        //thirdCat = findViewById(R.id.cat3);
-        //fourthCat = findViewById(R.id.cat4);
-        //fifthCat= findViewById(R.id.cat5);
-        //sixthCat = findViewById(R.id.cat6);
-        //Log.i("MainActivity", "btn.add: "+firstCat.toString());
-        catButtonArray[0] = firstCat;
-        catButtonArray[1] = secondCat;
-        catButtonArray[2] = thirdCat;
-        catButtonArray[3] = fourthCat;
-        catButtonArray[4] = fifthCat;
-        catButtonArray[5] = sixthCat;
-        //set width of Buttons
-        screenWidth = UIhelper.screenWidth(getWindowManager());
-        //firstCat.setHeight(screenWidth/3);
-        secondCat.setWidth(screenWidth/3);
-        //secondCat.setHeight(screenWidth/3);
-        firstCat.setWidth(screenWidth/3);
-        //thirdCat.setHeight(screenWidth/3);
-        thirdCat.setWidth(screenWidth/3);
-        //fourthCat.setHeight(screenWidth/3);
-        fourthCat.setWidth(screenWidth/3);
-        //fifthCat.setHeight(screenWidth/3);
-        fifthCat.setWidth(screenWidth/3);
-        //sixthCat.setHeight(screenWidth/3);
-        sixthCat.setWidth(screenWidth/3);
-
-        for (final Button cat : catButtonArray){
-            cat.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    //Log.i("CatMainActivity", "btn: "+cat.getText().toString());
-                    launchCategorySearchActivity(cat.getText().toString());
-                }
-            });
-        }
-    }
-
-    //onClick action for plusButton --> launches newItemActivity
+    //onClick action for plusButton when item is selected--> launches newItemActivity
     private void launchNewItemActivity() {
         Log.i("MainActivity", "launchNewItemActivity called");
         Intent intent = new Intent(this, NewItemActivity.class);
         Log.i("MainActivity", "intent to start newItemActivity created");
+        startActivity(intent);
+    }
+
+    //onClick action for plusButton when category is selected --> launches newItemActivity
+    private void launchNewCategoryActivity() {
+        Log.i("MainActivity", "launchNewItemActivity called");
+        Intent intent = new Intent(this, NewCategoryActivity.class);
+        Log.i("MainActivity", "intent to start newCategoryActivity created");
         startActivity(intent);
     }
 
