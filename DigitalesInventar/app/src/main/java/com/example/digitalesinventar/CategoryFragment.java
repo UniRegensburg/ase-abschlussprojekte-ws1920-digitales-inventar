@@ -48,7 +48,7 @@ public class CategoryFragment extends Fragment {
 			}
 		});
 
-		launchSwipeMenu();
+		//launchSwipeMenu();
 		/*itemListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
@@ -107,14 +107,13 @@ public class CategoryFragment extends Fragment {
 
 	private void launchCat() {
 		Log.i("catActivity", "launchCatActivity called for " + catName);
-		/*Intent intent = new Intent(getActivity(), ViewItemActivity.class);
+		Intent intent = new Intent(getActivity(), SearchActivity.class);
 		Bundle extras = new Bundle();
-		extras.putString("catName",catName);
+		extras.putString("searchQuery",catName);
 		extras.putBoolean("fromMain", true);
 		intent.putExtras(extras);
-		Log.i("MainActivity", "intent to start viewItem created");
+		Log.i("catctivity", "intent to start search created");
 		startActivity(intent);
-		 */
 	}
 
 	private void launchSwipeMenu(){

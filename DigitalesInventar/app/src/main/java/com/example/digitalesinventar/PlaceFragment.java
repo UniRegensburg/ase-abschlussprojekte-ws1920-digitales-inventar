@@ -1,5 +1,6 @@
 package com.example.digitalesinventar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,7 +48,7 @@ public class PlaceFragment extends Fragment {
 			}
 		});
 
-		launchSwipeMenu();
+		//launchSwipeMenu();
 		/*itemListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
@@ -106,15 +107,14 @@ public class PlaceFragment extends Fragment {
 	}
 
 	private void launchPlace() {
-		Log.i("catActivity", "launchCatActivity called for " + placeName);
-		/*Intent intent = new Intent(getActivity(), ViewItemActivity.class);
+		Log.i("placeActivity", "launchCatActivity called for " + placeName);
+		Intent intent = new Intent(getActivity(), SearchActivity.class);
 		Bundle extras = new Bundle();
-		extras.putString("catName",catName);
+		extras.putString("searchQuery",placeName);
 		extras.putBoolean("fromMain", true);
 		intent.putExtras(extras);
-		Log.i("MainActivity", "intent to start viewItem created");
+		Log.i("placeActivity", "intent to start search created");
 		startActivity(intent);
-		 */
 	}
 
 	private void launchSwipeMenu(){
