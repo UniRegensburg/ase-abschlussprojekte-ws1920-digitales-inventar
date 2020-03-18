@@ -25,6 +25,8 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 //Fragment for displaying database entries as list in layout of MainActivity
@@ -35,9 +37,111 @@ public class MainActivityFragment extends Fragment {
     long timestamp;
     int count;
     ArrayList<String> selected_items = new ArrayList<>();
-    ArrayList<DataModelItemList> filteredList;// = new ArrayList<>();
+    static ArrayList<DataModelItemList> filteredList;// = new ArrayList<>();
+    static ArrayList<String> nameList = new ArrayList<>();
+    static ArrayList<String> tsList = new ArrayList<>();
 
     public MainActivityFragment()  {
+    }
+
+    private static void extractNames() {
+        nameList.clear();
+        for (DataModelItemList item : DatabaseActivity.itemArray) {
+            nameList.add(item.getItemName());
+        }
+    }
+
+    private static void extractTimestamps() {
+        tsList.clear();
+        for (DataModelItemList item : DatabaseActivity.itemArray) {
+            tsList.add(String.valueOf(item.getTimestamp()));
+        }
+    }
+
+    private static void sortItemArrayBySortedNames() {
+        Log.d("mainSort", "sortName");
+        DatabaseActivity.loadBackup();
+        ArrayList<DataModelItemList> wipItemArray = new ArrayList<>();
+        wipItemArray.addAll(DatabaseActivity.itemArray);
+        filteredList.clear();
+        for (String sortName : nameList) {
+            for (DataModelItemList sortingItem : wipItemArray) {
+                if (sortName == sortingItem.getItemName()) {
+                    filteredList.add(sortingItem);
+                }
+            }
+        }
+        Log.d("mainSort", ""+filteredList);
+        itemArrayAdapter.notifyDataSetChanged();
+    }
+
+    private static void sortItemArrayBySortedTs() {
+        Log.d("mainSort", "sortTs");
+        DatabaseActivity.loadBackup();
+        ArrayList<DataModelItemList> wipItemArray = new ArrayList<>();
+        wipItemArray.addAll(DatabaseActivity.itemArray);
+        filteredList.clear();
+        for (String sortTs : tsList) {
+            Log.d("mainSort", "outsideFor"+sortTs);
+            for (DataModelItemList sortingItem : wipItemArray) {
+                Log.d("mainSort", "insideFor"+sortingItem.getTimestamp());
+                if (Long.valueOf(sortTs) == sortingItem.getTimestamp()) {
+                    Log.d("mainSort", "hit");
+                    filteredList.add(sortingItem);
+                }
+            }
+        }
+        Log.d("mainSort", ""+filteredList);
+        itemArrayAdapter.notifyDataSetChanged();
+    }
+
+
+    public static void sortByNameUp() {
+        Log.d("mainSort", "nameUp");
+        extractNames();
+        Collections.sort(nameList, new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                return s2.compareToIgnoreCase(s1);
+            }
+        });
+        sortItemArrayBySortedNames();
+    }
+
+    public static void sortByNameDown() {
+        Log.d("mainSort", "nameDown");
+        extractNames();
+        Collections.sort(nameList, new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                return s1.compareToIgnoreCase(s2);
+            }
+        });
+        sortItemArrayBySortedNames();
+    }
+
+    public static void sortByÄlteste() {
+        Log.d("mainSort", "alt");
+        extractTimestamps();
+        Collections.sort(tsList, new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                return s1.compareToIgnoreCase(s2);
+            }
+        });
+        sortItemArrayBySortedTs();
+    }
+
+    public static void sortByNeueste() {
+        Log.d("mainSort", "neu");
+        extractTimestamps();
+        Collections.sort(tsList, new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                return s2.compareToIgnoreCase(s1);
+            }
+        });
+        sortItemArrayBySortedTs();
     }
 
     @Override
