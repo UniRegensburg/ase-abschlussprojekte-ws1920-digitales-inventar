@@ -35,7 +35,7 @@ public class PlaceFragment extends Fragment {
 		View view= inflater.inflate(R.layout.fragment_main, container, false);
 		itemListView = view.findViewById(R.id.fragment_list);
 
-		itemListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+		//itemListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 		//launchMultipleItemSelection();
 
 		itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -43,7 +43,7 @@ public class PlaceFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent,
 															View view, int position, long id) {
 				placeName = (String) parent.getItemAtPosition(position);
-				Log.i("catOnClick", "" + placeName);
+				Log.i("placeOnClick", "" + placeName);
 				launchPlace();
 			}
 		});
@@ -83,13 +83,12 @@ public class PlaceFragment extends Fragment {
 
 		setupList();
 		Log.i("placeActivityFragment", "setupList called");
-
 		return view;
 	}
 
 	//link custom adapter with ListView for db entries
 	public void setupList() {
-		Log.i("catActivityFragment", "setupList called");
+		Log.i("placeActivityFragment", "setupList called");
 		for (int i=0; i<DatabaseActivity.itemArray.size(); i++) {
 			if (!placeArray.contains(DatabaseActivity.itemArray.get(i).itemLocation) &&
 			DatabaseActivity.itemArray.get(i).itemLocation != "") {
@@ -98,16 +97,16 @@ public class PlaceFragment extends Fragment {
 		}
 		placeArrayAdapter = new CategoryListAdapter(placeArray, getActivity());
 		itemListView.setAdapter(placeArrayAdapter);
-		Log.i("catActivityFragment", "listAdapter set");
+		Log.i("placeActivityFragment", "listAdapter set");
 	}
 
 	public static void updateList() {
-		Log.i("catActivityFragment", "adapter dataset changed");
+		Log.i("placeActivityFragment", "adapter dataset changed");
 		placeArrayAdapter.notifyDataSetChanged();
 	}
 
 	private void launchPlace() {
-		Log.i("placeActivity", "launchCatActivity called for " + placeName);
+		Log.i("placeActivity", "launchPlaceActivity called for " + placeName);
 		Intent intent = new Intent(getActivity(), SearchActivity.class);
 		Bundle extras = new Bundle();
 		extras.putString("searchQuery",placeName);

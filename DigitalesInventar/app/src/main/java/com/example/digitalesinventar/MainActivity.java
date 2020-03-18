@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.SearchView;
 
@@ -157,64 +156,82 @@ public class MainActivity extends AppCompatActivity {
     //sets and initializes UI for MainActivity
     public void setupMainMenu() {
         setContentView(R.layout.activity_main);
-        frameLayout = (FrameLayout) findViewById(R.id.fragment_container);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+				toolbar = findViewById(R.id.toolbar);
+				setSupportActionBar(toolbar);
+				DatabaseActivity.getDataFromDatabase();
+				DatabaseActivity.getCategoriesFromDatabase();
+
+				//initialise Button at the start
+				plusButton = findViewById(R.id.plusButton);
+				plusButton.setOnClickListener(new View.OnClickListener() {
 					@Override
-					public void onTabSelected(TabLayout.Tab tab) {
-						Fragment fragment = null;
-						switch (tab.getPosition()) {
-							case 0:
-								fragment = new MainActivityFragment();
-								Log.i("onTabSelected", "case 0");
-								plusButton = findViewById(R.id.plusButton);
-								plusButton.setOnClickListener(new View.OnClickListener() {
-								    @Override
-                    public void onClick(View view) {
-								        Log.i("MainActivity", "plusButton clicked");
-								        launchNewItemActivity();
-								    }
-								});
-								break;
-                case 1:
-								Log.i("onTabSelected", "case 1");
-								fragment = new CategoryFragment();
-								plusButton = findViewById(R.id.plusButton);
-								plusButton.setOnClickListener(new View.OnClickListener() {
-								    @Override
-                      public void onClick(View view) {
-								        Log.i("MainActivity", "plusButton clicked");
-								        launchNewCategoryActivity();
-								    }
-								});
-								break;
-							case 2:
-								Log.i("onTabSelected", "case 2");
-								fragment = new PlaceFragment();
-								plusButton = findViewById(R.id.plusButton);
-								plusButton.hide();
-								break;
-						}
-						getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,fragment).commit();
+					public void onClick(View view) {
+						Log.i("MainActivity", "plusButton clicked");
+						launchNewItemActivity();
 					}
+				});
 
-					@Override
-					public void onTabUnselected(TabLayout.Tab tab) {
-            if (tab.getPosition() == 2){
-                plusButton = findViewById(R.id.plusButton);
-                plusButton.show();
-            }
-					}
-
-					@Override
-					public void onTabReselected(TabLayout.Tab tab) {
-
-					}});
-
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        DatabaseActivity.getDataFromDatabase();
+				setupTabLayout();
     }
+
+    private void setupTabLayout(){
+			tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+			frameLayout = (FrameLayout) findViewById(R.id.fragment_container);
+
+			tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+				@Override
+				public void onTabSelected(TabLayout.Tab tab) {
+					Fragment fragment = null;
+					switch (tab.getPosition()) {
+						case 0:
+							Log.i("onTabSelected", "case 0");
+							fragment = new MainActivityFragment();
+							plusButton = findViewById(R.id.plusButton);
+							plusButton.setOnClickListener(new View.OnClickListener() {
+								@Override
+								public void onClick(View view) {
+									Log.i("MainActivity", "plusButton clicked");
+									launchNewItemActivity();
+								}
+							});
+							break;
+						case 1:
+							Log.i("onTabSelected", "case 1");
+							fragment = new CategoryFragment();
+							plusButton = findViewById(R.id.plusButton);
+							plusButton.setOnClickListener(new View.OnClickListener() {
+								@Override
+								public void onClick(View view) {
+									Log.i("MainActivity", "plusButton clicked");
+									launchNewCategoryActivity();
+								}
+							});
+							break;
+						case 2:
+
+							Log.i("onTabSelected", "case 2");
+							fragment = new PlaceFragment();
+							plusButton = findViewById(R.id.plusButton);
+							plusButton.hide();
+							break;
+					}
+					getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+				}
+
+				@Override
+				public void onTabUnselected(TabLayout.Tab tab) {
+					if (tab.getPosition() == 2){
+						plusButton = findViewById(R.id.plusButton);
+						plusButton.show();
+					}
+				}
+
+				@Override
+				public void onTabReselected(TabLayout.Tab tab) {
+
+				}});
+		}
 
     //onClick action for plusButton when item is selected--> launches newItemActivity
     private void launchNewItemActivity() {

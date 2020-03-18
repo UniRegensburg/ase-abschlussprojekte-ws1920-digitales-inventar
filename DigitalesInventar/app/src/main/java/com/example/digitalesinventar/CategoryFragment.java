@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -35,7 +37,7 @@ public class CategoryFragment extends Fragment {
 		View view= inflater.inflate(R.layout.fragment_main, container, false);
 		itemListView = view.findViewById(R.id.fragment_list);
 
-		itemListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+		//itemListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 		//launchMultipleItemSelection();
 
 		itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -48,53 +50,36 @@ public class CategoryFragment extends Fragment {
 			}
 		});
 
-		//launchSwipeMenu();
-		/*itemListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+		launchSwipeMenu();
+		itemListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
 				switch (index) {
 					case 0:
-						// edit
-						Log.i("onMenuItemClicked", "Edit");
-						String catName = (String) itemListView.getItemAtPosition(position);
-
-						Intent intent = new Intent(getActivity(),EditItemActivity.class);
-						Bundle extras = new Bundle();
-						extras.putString("catName",catName);
-						extras.putBoolean("fromMain", true);
-						intent.putExtras(extras);
-						startActivityForResult(intent, 666);
-						break;
-					case 1:
 						// delete
 						Log.i("onMenuItemClicked", "Delete");
-						DataModelItemList itemDelete = (DataModelItemList) itemListView.getItemAtPosition(position);
-						String itemTimestamp = String.valueOf(itemDelete.getTimestamp());
-
-						ArrayList<String> delete_list = new ArrayList<>();
-						delete_list.add(itemTimestamp);
-						showConfirmDialog(delete_list,"1");
-						break;
+						String itemCategory = (String) itemListView.getItemAtPosition(position);
+						deleteCategory(itemCategory);
 				}
 				return false;
 			}
 		});
-		 */
 
 		setupList();
-		Log.i("catActivityFragment", "setupList called");
-
 		return view;
 	}
 
 	//link custom adapter with ListView for db entries
 	public void setupList() {
 		Log.i("catActivityFragment", "setupList called");
-		for (int i=0; i<DatabaseActivity.itemArray.size(); i++) {
+		/*for (int i=0; i<DatabaseActivity.itemArray.size(); i++) {
 			if (!catArray.contains(DatabaseActivity.itemArray.get(i).itemCategory)) {
+				Log.i("cat_setupList", "bin da" + DatabaseActivity.itemArray.get(i).itemCategory );
 				catArray.add(DatabaseActivity.itemArray.get(i).itemCategory);
 			}
-		}
+			Log.i("cat_setupList", "catArray:" + catArray);
+		}*/
+		catArray = DatabaseActivity.categoryArray;
 		catArrayAdapter = new CategoryListAdapter(catArray, getActivity());
 		itemListView.setAdapter(catArrayAdapter);
 		Log.i("catActivityFragment", "listAdapter set");
@@ -103,6 +88,25 @@ public class CategoryFragment extends Fragment {
 	public static void updateList() {
 		Log.i("catActivityFragment", "adapter dataset changed");
 		catArrayAdapter.notifyDataSetChanged();
+	}
+
+	private void deleteCategory(String category){
+		//make sure user does not try to delete predefined categories
+		if (category.equals("Unterhaltungselektronik") || category.equals("Haushaltsgegenstände")
+			|| category.equals("Einrichtung") || category.equals("Hobby") || category.equals("Werkzeug")) {
+			Toast.makeText(getContext(), "Default category " + category + " can't be removed!", Toast.LENGTH_SHORT).show();
+		}else {
+			showConfirmDialog(category);
+		}
+	}
+
+	private void showConfirmDialog(String category){
+		//Create Dialog
+		Bundle args = new Bundle();
+		args.putString(DeleteCategoriesConfirmationDialogFragment.ARG_CATEGORY, category);
+		DialogFragment dialog = new DeleteCategoriesConfirmationDialogFragment();
+		dialog.setArguments(args);
+		dialog.show(getFragmentManager(),"tag");
 	}
 
 	private void launchCat() {
@@ -117,22 +121,11 @@ public class CategoryFragment extends Fragment {
 	}
 
 	private void launchSwipeMenu(){
-		Log.i("MainActivityFragment", "launchSwipeMenu called");
+		Log.i("CategoryFragment", "launchSwipeMenu called");
 
 		SwipeMenuCreator creator = new SwipeMenuCreator() {
 			@Override
 			public void create(SwipeMenu menu) {
-				// create "edit" item
-				SwipeMenuItem editItem = new SwipeMenuItem(getActivity());
-				// set item background
-				editItem.setBackground(R.color.primaryVariant);
-				// set item width
-				editItem.setWidth(250);
-				// set item title
-				editItem.setIcon(R.drawable.ic_edit);
-				// add to menu
-				menu.addMenuItem(editItem);
-
 				// create "delete" item
 				SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
 				// set item background
@@ -145,7 +138,6 @@ public class CategoryFragment extends Fragment {
 				menu.addMenuItem(deleteItem);
 			}
 		};
-
 		//set creator
 		itemListView.setMenuCreator(creator);
 	}
