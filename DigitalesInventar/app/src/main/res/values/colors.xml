@@ -17,6 +17,7 @@
     <color name="selection">#ffc442</color>
 
     <color name="category_text">#aaaaaa</color>
+    <color name="basis_text">#4d4c4c</color>
 
     <!--material-ui-palette-->
     <!--basic-colors-->

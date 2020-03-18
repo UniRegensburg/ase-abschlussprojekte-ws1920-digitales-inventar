@@ -46,6 +46,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="30sp"
                     android:textStyle="bold"
+                    android:textColor="@color/basis_text"
                     android:textSize="20sp"
                     android:text="Name_des_Item"/>
 
