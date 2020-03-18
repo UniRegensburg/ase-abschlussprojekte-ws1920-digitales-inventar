@@ -234,29 +234,29 @@ public class MainActivity extends AppCompatActivity {
 					case 0:
 						//Items
 						if (sortBySpinner.getSelectedItem() == "Neueste") {
-							//MainActivityFragment.sortByNeueste();
+							MainActivityFragment.sortByNeueste();
 						} else if (sortBySpinner.getSelectedItem() == "Älteste") {
-							//MainActivityFragment.sortByÄlteste();
+							MainActivityFragment.sortByÄlteste();
 						} else if (sortBySpinner.getSelectedItem() == "Name absteigend") {
-							//MainActivityFragment.sortByNameDown();
+							MainActivityFragment.sortByNameDown();
 						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
-							//MainActivityFragment.sortByNameUp();
+							MainActivityFragment.sortByNameUp();
 						}
 						break;
 					case 1:
 						//Category
 						if (sortBySpinner.getSelectedItem() == "Name absteigend") {
-							//CategoryFragment.sortByNameDown();
+							CategoryFragment.sortByNameDown();
 						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
-							//CategoryFragment.sortByNameUp();
+							CategoryFragment.sortByNameUp();
 						}
 						break;
 					case 2:
 						//Location
 						if (sortBySpinner.getSelectedItem() == "Name absteigend") {
-							//PlaceFragment.sortByNameDown();
+							PlaceFragment.sortByNameDown();
 						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
-							//PlaceFragment.sortByNameUp();
+							PlaceFragment.sortByNameUp();
 						}
 						break;
 				}

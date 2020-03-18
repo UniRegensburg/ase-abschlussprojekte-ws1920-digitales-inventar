@@ -17,16 +17,40 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class PlaceFragment extends Fragment {
 
 	static SwipeMenuListView itemListView;
-	private ArrayList<String> placeArray = new ArrayList<>();
+	private static ArrayList<String> placeArray = new ArrayList<>();
 	private static CategoryListAdapter placeArrayAdapter;
 	String placeName;
 
 	public PlaceFragment(){
 
+	}
+
+	public static void sortByNameDown() {
+		Log.d("placeSort", "nameDownn");
+		Collections.sort(placeArray, new Comparator<String>() {
+			@Override
+			public int compare(String s1, String s2) {
+				return s1.compareToIgnoreCase(s2);
+			}
+		});
+		placeArrayAdapter.notifyDataSetChanged();
+	}
+
+	public static void sortByNameUp() {
+		Log.d("placeSort", "nameUp");
+		Collections.sort(placeArray, new Comparator<String>() {
+			@Override
+			public int compare(String s1, String s2) {
+				return s2.compareToIgnoreCase(s1);
+			}
+		});
+		placeArrayAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -100,7 +124,7 @@ public class PlaceFragment extends Fragment {
 		Log.i("placeActivityFragment", "listAdapter set");
 	}
 
-	public static void updateList() {
+	public static void updateList() { //TODO call at add/update item in db
 		Log.i("placeActivityFragment", "adapter dataset changed");
 		placeArrayAdapter.notifyDataSetChanged();
 	}
