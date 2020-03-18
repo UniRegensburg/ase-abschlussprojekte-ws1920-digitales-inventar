@@ -11,10 +11,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +37,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
 
 	FrameLayout frameLayout;
 	TabLayout tabLayout;
+
+	Integer currentCase = 0;
+
+	Spinner sortBySpinner;
+	ArrayAdapter<String> spinnerAdapter;
+	ArrayList<String> spinnerArrayLarge = new ArrayList<>();
+	ArrayList<String> spinnerArraySmall = new ArrayList<>();
+
 
 	//UI-ELEMENTS --- NOTE: wird später dann noch ausgelagert in eigenstaendiges Fragment
 	Toolbar toolbar;
@@ -177,7 +189,85 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 
+		setupSortedSpinner();
 		setupTabLayout();
+	}
+
+	private void setupSpinnerArrays() {
+		spinnerArrayLarge.add("Neueste");
+		spinnerArrayLarge.add("Älteste");
+		spinnerArrayLarge.add("Name absteigend");
+		spinnerArrayLarge.add("Name aufsteigend");
+
+		spinnerArraySmall.add("Name absteigend");
+		spinnerArraySmall.add("Name aufsteigend");
+	}
+
+	private void setupBigSpinner() {
+		// Create an ArrayAdapter for the spinner using the string array and a default spinner layout
+		spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerArrayLarge);
+		// Specify the layout to use when the list of choices appears
+		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		sortBySpinner.setAdapter(spinnerAdapter);
+	}
+
+	private void setupSmallSpinner() {
+		// Create an ArrayAdapter for the spinner using the string array and a default spinner layout
+		spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerArraySmall);
+		// Specify the layout to use when the list of choices appears
+		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		sortBySpinner.setAdapter(spinnerAdapter);
+	}
+
+	private void setupSortedSpinner() {
+		setupSpinnerArrays();
+		sortBySpinner = findViewById(R.id.spinnerSortBy);
+		setupBigSpinner();
+		sortBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				// your code here
+				//Log.i("sortSpinner", "onItemSelected:case,name: "+currentCase+","+sortBySpinner.getSelectedItem());
+				switch (currentCase) {
+					case 0:
+						//Items
+						if (sortBySpinner.getSelectedItem() == "Neueste") {
+							//MainActivityFragment.sortByNeueste();
+						} else if (sortBySpinner.getSelectedItem() == "Älteste") {
+							//MainActivityFragment.sortByÄlteste();
+						} else if (sortBySpinner.getSelectedItem() == "Name absteigend") {
+							//MainActivityFragment.sortByNameDown();
+						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
+							//MainActivityFragment.sortByNameUp();
+						}
+						break;
+					case 1:
+						//Category
+						if (sortBySpinner.getSelectedItem() == "Name absteigend") {
+							//CategoryFragment.sortByNameDown();
+						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
+							//CategoryFragment.sortByNameUp();
+						}
+						break;
+					case 2:
+						//Location
+						if (sortBySpinner.getSelectedItem() == "Name absteigend") {
+							//PlaceFragment.sortByNameDown();
+						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
+							//PlaceFragment.sortByNameUp();
+						}
+						break;
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parentView) {
+				// your code here
+			}
+
+		});
 	}
 
 	private void setupTabLayout() {
@@ -191,6 +281,9 @@ public class MainActivity extends AppCompatActivity {
 				switch (tab.getPosition()) {
 					case 0:
 						Log.i("onTabSelected", "case 0");
+						currentCase = 0;
+						sortBySpinner.setAdapter(null);
+						setupBigSpinner();
 						fragment = new MainActivityFragment();
 						plusButton = findViewById(R.id.plusButton);
 						plusButton.setOnClickListener(new View.OnClickListener() {
@@ -203,6 +296,9 @@ public class MainActivity extends AppCompatActivity {
 						break;
 					case 1:
 						Log.i("onTabSelected", "case 1");
+						currentCase = 1;
+						sortBySpinner.setAdapter(null);
+						setupSmallSpinner();
 						fragment = new CategoryFragment();
 						plusButton = findViewById(R.id.plusButton);
 						plusButton.setOnClickListener(new View.OnClickListener() {
@@ -214,8 +310,10 @@ public class MainActivity extends AppCompatActivity {
 						});
 						break;
 					case 2:
-
 						Log.i("onTabSelected", "case 2");
+						currentCase = 2;
+						sortBySpinner.setAdapter(null);
+						setupSmallSpinner();
 						fragment = new PlaceFragment();
 						plusButton = findViewById(R.id.plusButton);
 						plusButton.hide();
