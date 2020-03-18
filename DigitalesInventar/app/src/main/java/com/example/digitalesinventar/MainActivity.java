@@ -349,8 +349,8 @@ public class MainActivity extends AppCompatActivity {
 	private void launchNewCategoryActivity() {
 		Log.i("MainActivity", "launchNewItemActivity called");
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
-		alertDialog.setTitle("Add Category");
-		alertDialog.setMessage("Enter a Category");
+		alertDialog.setTitle("Kategorie hinzufügen");
+		alertDialog.setMessage("Geben sie einen Namen ein");
 
 		final EditText input = new EditText(MainActivity.this);
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -359,7 +359,7 @@ public class MainActivity extends AppCompatActivity {
 		input.setLayoutParams(lp);
 		alertDialog.setView(input);
 
-		alertDialog.setPositiveButton("ADD",
+		alertDialog.setPositiveButton(R.string.add,
 			new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					String category = input.getText().toString();
@@ -368,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
 						for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
 							//avoid multiple entries
 							if (category.equals(DatabaseActivity.categoryArray.get(i))) {
-								Toast.makeText(getApplicationContext(), "Category " + category + " already exists!", Toast.LENGTH_SHORT).show();
+								Toast.makeText(getApplicationContext(), "Kategorie " + category + " existiert bereits!", Toast.LENGTH_SHORT).show();
 								return;
 							}
 						}
@@ -378,13 +378,13 @@ public class MainActivity extends AppCompatActivity {
 						input.setText("");
 						//hide keyboard
 						UIhelper.hideKeyboard(MainActivity.this);
-						Toast.makeText(getApplicationContext(), "Category " + category + " was successfully added!", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(), "Kategorie " + category + " wurde erfolgreich hinzugefügt!", Toast.LENGTH_SHORT).show();
 					} else {
-						Toast.makeText(getApplicationContext(), "please enter a category", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(), "Sie müssen einen Namen eingeben", Toast.LENGTH_SHORT).show();
 					}
 				}
 			});
-		alertDialog.setNegativeButton("CANCEL",
+		alertDialog.setNegativeButton(R.string.cancel,
 			new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.cancel();

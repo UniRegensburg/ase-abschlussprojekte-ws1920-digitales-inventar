@@ -73,7 +73,7 @@ public class NewCategoryActivity extends AppCompatActivity {
 					for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
 						//avoid multiple entries
 						if (category.equals(DatabaseActivity.categoryArray.get(i))) {
-							Toast.makeText(getApplicationContext(), "Category " + category + " already exists!", Toast.LENGTH_SHORT).show();
+							Toast.makeText(getApplicationContext(), "Kategorie " + category + " existiert bereits!", Toast.LENGTH_SHORT).show();
 							return;
 						}
 					}
@@ -84,9 +84,9 @@ public class NewCategoryActivity extends AppCompatActivity {
 					editTextOwnCat.setText("");
 					//hide keyboard
 					UIhelper.hideKeyboard(NewCategoryActivity.this);
-					Toast.makeText(getApplicationContext(), "Category " + category + " was successfully added!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Kategorie " + category + " wurde erfolgreich hinzugefügt!", Toast.LENGTH_SHORT).show();
 				}else{
-					Toast.makeText(getApplicationContext(), "please enter a category", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Sie müssen einen Namen eingeben", Toast.LENGTH_SHORT).show();
 				}
 
 			}
@@ -105,7 +105,7 @@ public class NewCategoryActivity extends AppCompatActivity {
 				//make sure user does not try to delete predefined categories
 				if (selectedCategory.equals("Unterhaltungselektronik") || selectedCategory.equals("Haushaltsgegenstände")
 					|| selectedCategory.equals("Einrichtung") || selectedCategory.equals("Hobby") || selectedCategory.equals("Werkzeug")) {
-					Toast.makeText(getApplicationContext(), "Default category " + selectedCategory + " can't be removed!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Die Standardkategorie " + selectedCategory + " kann nicht entfernt werden!", Toast.LENGTH_SHORT).show();
 				}else {
 					showConfirmDialog(selectedCategory);
 				}

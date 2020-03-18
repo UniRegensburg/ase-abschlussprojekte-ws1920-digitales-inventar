@@ -29,7 +29,7 @@ public class DeleteItemsConfirmationDialogFragment extends DialogFragment {
 		if (totalCount > 1){
 			Log.i("deleteItemConfirmDialog", "hier" + totalCount);
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setMessage("Do you really want to delete all items?")
+			builder.setMessage("Wirklich alle Items löschen?")
 				.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						// The item gets deleted
@@ -39,7 +39,7 @@ public class DeleteItemsConfirmationDialogFragment extends DialogFragment {
 						}
 					}
 				})
-				.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						// User cancelled the dialog
 					}
@@ -48,7 +48,7 @@ public class DeleteItemsConfirmationDialogFragment extends DialogFragment {
 		} else {
 			Log.i("deleteItemConfirmDialog", "dort" + totalCount);
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setMessage("Do you really want to delete this item?")
+			builder.setMessage("Wirklich dieses Item löschen?")
 				.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						// The item gets deleted
@@ -56,7 +56,7 @@ public class DeleteItemsConfirmationDialogFragment extends DialogFragment {
 						DatabaseActivity.deleteItemFromDatabase(timestamps.get(0));
 					}
 				})
-				.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						// User cancelled the dialog
 					}

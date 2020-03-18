@@ -146,8 +146,8 @@ public class NewItemActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewItemActivity.this);
-				alertDialog.setTitle("Add Category");
-				alertDialog.setMessage("Enter a Category");
+				alertDialog.setTitle("Kategorie hinzufügen");
+				alertDialog.setMessage("Gebe einen Namen ein");
 
 				final EditText input = new EditText(NewItemActivity.this);
 				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -156,7 +156,7 @@ public class NewItemActivity extends AppCompatActivity {
 				input.setLayoutParams(lp);
 				alertDialog.setView(input);
 
-				alertDialog.setPositiveButton("ADD",
+				alertDialog.setPositiveButton(R.string.add,
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
 							String category = input.getText().toString();
@@ -165,7 +165,7 @@ public class NewItemActivity extends AppCompatActivity {
 								for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
 									//avoid multiple entries
 									if (category.equals(DatabaseActivity.categoryArray.get(i))) {
-										Toast.makeText(getApplicationContext(), "Category " + category + " already exists!", Toast.LENGTH_SHORT).show();
+										Toast.makeText(getApplicationContext(), "Kategorie " + category + " existiert bereits!", Toast.LENGTH_SHORT).show();
 										return;
 									}
 								}
@@ -176,13 +176,13 @@ public class NewItemActivity extends AppCompatActivity {
 								input.setText("");
 								//hide keyboard
 								UIhelper.hideKeyboard(NewItemActivity.this);
-								Toast.makeText(getApplicationContext(), "Category " + category + " was successfully added!", Toast.LENGTH_SHORT).show();
+								Toast.makeText(getApplicationContext(), "Kategorie " + category + " wurde erfolgreich hinzugefügt!", Toast.LENGTH_SHORT).show();
 							} else {
-								Toast.makeText(getApplicationContext(), "please enter a category", Toast.LENGTH_SHORT).show();
+								Toast.makeText(getApplicationContext(), "Sie müssen einen Namen eingeben", Toast.LENGTH_SHORT).show();
 							}
 						}
 					});
-				 alertDialog.setNegativeButton("CANCEL",
+				 alertDialog.setNegativeButton(R.string.cancel,
 					 new DialogInterface.OnClickListener() {
 											public void onClick(DialogInterface dialog, int which) {
 												dialog.cancel();
@@ -201,7 +201,7 @@ public class NewItemActivity extends AppCompatActivity {
 				//make sure user does not try to delete predefined categories
 				if (selectedCategory.equals("Unterhaltungselektronik") || selectedCategory.equals("Haushaltsgegenstände")
 					|| selectedCategory.equals("Einrichtung") || selectedCategory.equals("Hobby") || selectedCategory.equals("Werkzeug")) {
-					Toast.makeText(getApplicationContext(), "Default category " + selectedCategory + " can't be removed!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Die Standardkategorie " + selectedCategory + " kann nicht gelöscht werden!", Toast.LENGTH_SHORT).show();
 				}else {
 					showConfirmDialog(selectedCategory);
 				}
@@ -228,12 +228,12 @@ public class NewItemActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				if (getNewItem()) {
-					Toast.makeText(getApplicationContext(), "new Item added!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Neues Item hinzugefügt!", Toast.LENGTH_SHORT).show();
 					//TODO wait for database to return toast(?)
 					finish();
 				}else{
 					//show toast
-					Toast.makeText(getApplicationContext(),"Please name your item!",Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),"Benenne das Item!",Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
