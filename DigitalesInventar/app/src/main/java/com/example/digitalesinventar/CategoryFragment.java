@@ -1,5 +1,7 @@
 package com.example.digitalesinventar;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -56,10 +60,17 @@ public class CategoryFragment extends Fragment {
 			public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
 				switch (index) {
 					case 0:
+						// edit
+						Log.i("onMenuItemClicked", "Edit");
+						String category = (String) itemListView.getItemAtPosition(position);
+						editCategory(category);
+						break;
+					case 1:
 						// delete
 						Log.i("onMenuItemClicked", "Delete");
 						String itemCategory = (String) itemListView.getItemAtPosition(position);
 						deleteCategory(itemCategory);
+						break;
 				}
 				return false;
 			}
@@ -88,6 +99,61 @@ public class CategoryFragment extends Fragment {
 	public static void updateList() {
 		Log.i("catActivityFragment", "adapter dataset changed");
 		catArrayAdapter.notifyDataSetChanged();
+	}
+
+	private void editCategory(String category){
+		if (category.equals("Unterhaltungselektronik") || category.equals("Haushaltsgegenstände")
+			|| category.equals("Einrichtung") || category.equals("Hobby") || category.equals("Werkzeug")) {
+			Toast.makeText(getContext(), "Default category " + category + " can't be edited!", Toast.LENGTH_SHORT).show();
+		}else {
+			showChangeDialog(category);
+		}
+	}
+
+	private void showChangeDialog(final String category){
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+		alertDialog.setTitle("Change Category \"" + category + "\"");
+		alertDialog.setMessage("Enter a new name");
+
+		final EditText input = new EditText(getActivity());
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+			LinearLayout.LayoutParams.MATCH_PARENT,
+			LinearLayout.LayoutParams.MATCH_PARENT);
+		input.setLayoutParams(lp);
+		alertDialog.setView(input);
+
+		alertDialog.setPositiveButton("CHANGE",
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					String newCategory = input.getText().toString();
+					if (InputChecker.checkEmptyInput(newCategory)) {
+						Log.i("addCat", "input not empty");
+						for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
+							//avoid multiple entries
+							if (newCategory.equals(DatabaseActivity.categoryArray.get(i))) {
+								Toast.makeText(getContext(), "Category " + newCategory + " already exists!", Toast.LENGTH_SHORT).show();
+								return;
+							}
+						}
+						Log.i("addCat", "input not twice");
+						DatabaseActivity.updateCategoryInDatabase(category, newCategory);
+						//clear input
+						input.setText("");
+						//hide keyboard
+						UIhelper.hideKeyboard(getActivity());
+						Toast.makeText(getContext(), "Category " + newCategory + " was successfully renamed!", Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(getContext(), "please enter a name", Toast.LENGTH_SHORT).show();
+					}
+				}
+			});
+		alertDialog.setNegativeButton("CANCEL",
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			});
+		alertDialog.show();
 	}
 
 	private void deleteCategory(String category){
@@ -126,6 +192,17 @@ public class CategoryFragment extends Fragment {
 		SwipeMenuCreator creator = new SwipeMenuCreator() {
 			@Override
 			public void create(SwipeMenu menu) {
+				// create "edit" item
+				SwipeMenuItem editItem = new SwipeMenuItem(getActivity());
+				// set item background
+				editItem.setBackground(R.color.primaryVariant);
+				// set item width
+				editItem.setWidth(250);
+				// set item title
+				editItem.setIcon(R.drawable.ic_edit);
+				// add to menu
+				menu.addMenuItem(editItem);
+
 				// create "delete" item
 				SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
 				// set item background
