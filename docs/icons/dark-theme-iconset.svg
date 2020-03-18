@@ -202,8 +202,8 @@
      id="namedview8"
      showgrid="false"
      inkscape:zoom="2.8284271"
-     inkscape:cx="-131.91209"
-     inkscape:cy="-113.77157"
+     inkscape:cx="-192.69122"
+     inkscape:cy="-162.96979"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -767,4 +767,20 @@
      inkscape:export-filename="D:\workspace2018\ase-abschlussprojekte-ws1920-digitales-inventar\DigitalesInventar\app\src\main\res\drawable\camera30px.png"
      inkscape:export-xdpi="65.015877"
      inkscape:export-ydpi="65.015877" />
+  <path
+     inkscape:connector-curvature="0"
+     d="m -377.96414,212.6874 c -1.96153,0 -3.54492,1.5834 -3.54492,3.54492 0,1.54795 -1.37071,2.36328 -2.36329,2.36328 1.08711,1.44161 2.94229,2.36329 4.72657,2.36329 2.61142,0 4.72656,-2.11514 4.72656,-4.72657 0,-1.96152 -1.5834,-3.54492 -3.54492,-3.54492 z m 16.2003,-11.07198 -1.5834,-1.5834 c -0.46084,-0.46084 -1.20527,-0.46084 -1.66611,0 l -10.58751,10.58751 3.24952,3.24951 10.5875,-10.58751 c 0.46084,-0.46084 0.46084,-1.20527 0,-1.66611 z"
+     id="path4-8-4"
+     style="stroke-width:1.18164134;fill:#ffffff"
+     inkscape:export-xdpi="126.36028"
+     inkscape:export-ydpi="126.36028"
+     inkscape:export-filename="D:\workspace2018\ase-abschlussprojekte-ws1920-digitales-inventar\DigitalesInventar\app\src\main\res\drawable\editWhite30px.png" />
+  <path
+     inkscape:connector-curvature="0"
+     d="m -321.01607,217.20479 c 0,1.35927 1.11213,2.4714 2.47141,2.4714 h 9.8856 c 1.35928,0 2.47141,-1.11213 2.47141,-2.4714 v -14.82843 h -14.82842 z m 3.03983,-8.7982 1.74234,-1.74234 2.63204,2.61969 2.61969,-2.61969 1.74234,1.74234 -2.61969,2.61969 2.61969,2.61968 -1.74234,1.74234 -2.61969,-2.61968 -2.61969,2.61968 -1.74234,-1.74234 2.61969,-2.61968 z m 8.69933,-9.73734 -1.23569,-1.2357 h -6.17852 l -1.23569,1.2357 h -4.32497 v 2.47141 h 17.29984 v -2.47141 z"
+     id="path4-6-0"
+     style="stroke-width:1.23570228;fill:#ffffff"
+     inkscape:export-filename="D:\workspace2018\ase-abschlussprojekte-ws1920-digitales-inventar\DigitalesInventar\app\src\main\res\drawable\deleteWhite30px.png"
+     inkscape:export-xdpi="166.48"
+     inkscape:export-ydpi="166.48" />
 </svg>

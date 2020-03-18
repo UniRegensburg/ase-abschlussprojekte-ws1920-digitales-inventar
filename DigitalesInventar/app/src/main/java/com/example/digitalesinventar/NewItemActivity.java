@@ -271,8 +271,11 @@ public class NewItemActivity extends AppCompatActivity {
 	public boolean getNewItem() {
 		if (InputChecker.checkEmptyInput(editTextName.getText().toString())) {
 			//get spinner input
-			String selectedCategory = categorySpinner.getSelectedItem().toString();
-			Log.i("selectedCategory: ", " " + selectedCategory);
+			String selectedCategory = "";
+			if (categorySpinner.getSelectedItem() != null) {
+				selectedCategory = categorySpinner.getSelectedItem().toString();
+				Log.i("selectedCategory: ", " " + selectedCategory);
+			}
 			//add item to database
 			double value;
 			if (editTextValue.getText().toString().equals("")) {
