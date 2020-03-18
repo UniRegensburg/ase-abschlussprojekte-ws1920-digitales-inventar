@@ -265,6 +265,11 @@ public class DatabaseActivity {
               categoryArray.add(newItem);
             }
             Log.d("DB loadCategories", "categories loaded from db" + categoryArray);
+            try {
+              CategoryFragment.updateList();
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
           } else {
             Log.d("DB loadCategories", "categories not loaded from db");
           }
