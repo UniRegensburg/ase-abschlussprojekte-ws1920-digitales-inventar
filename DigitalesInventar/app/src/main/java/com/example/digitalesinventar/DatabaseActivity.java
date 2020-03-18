@@ -278,23 +278,24 @@ public class DatabaseActivity {
   }
 
   //Update Category
-  public static void updateCategoryInDatabase(String oldCat, String newCat){
+  public static void updateCategoryInDatabase(String oldCat, final String newCat){
     Log.d("DB updateCategory", "category updated");
-    Map<String, Object> catEntry = new HashMap<>();
-    catEntry.put("categoryName", newCat);
     db.collection("users").document(MainActivity.userID).collection("categories").document(oldCat)
-      .update(catEntry).addOnSuccessListener(new OnSuccessListener<Void>() {
-      @Override
-      public void onSuccess(Void aVoid) {
-        Log.d("DB updateDategory", "category updated to database");
-        getCategoriesFromDatabase();
-      }
-    }).addOnFailureListener(new OnFailureListener() {
-      @Override
-      public void onFailure(@NonNull Exception e) {
-        Log.d("DB updateCategory", "Category NOT updated to database");
-      }
-    });
+      .delete()
+      .addOnSuccessListener(new OnSuccessListener<Void>() {
+        @Override
+        public void onSuccess(Void avoid) {
+          Log.d("DB del category", "DocumentSnapshot successfully deleted!");
+          //getCategoriesFromDatabase();
+          addCategory(newCat);
+        }
+      })
+      .addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure(@NonNull Exception e) {
+          Log.d("DB del category", "Error deleting document", e);
+        }
+      });
   }
 
   //Media
