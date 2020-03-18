@@ -340,7 +340,7 @@ public class MainActivityFragment extends Fragment {
                 // set item width
                 editItem.setWidth(250);
                 // set item title
-                editItem.setIcon(R.drawable.ic_edit);
+                editItem.setIcon(R.drawable.edit_white30px);
                 // add to menu
                 menu.addMenuItem(editItem);
 
@@ -351,7 +351,7 @@ public class MainActivityFragment extends Fragment {
                 // set item width
                 deleteItem.setWidth(250);
                 // set a icon
-                deleteItem.setIcon(R.drawable.ic_delete);
+                deleteItem.setIcon(R.drawable.delete_white30px);
                 // add to menu
                 menu.addMenuItem(deleteItem);
             }
