@@ -25,7 +25,6 @@
         <activity android:name=".ItemListAdapter"></activity>
         <activity android:name=".SignInFailedActivity"></activity>
         <activity android:name=".ViewItemActivity"></activity>
-        <activity android:name=".NewCategoryActivity"></activity>
         <activity android:name=".EditItemActivity"></activity>
         <activity android:name=".SearchActivity"
             android:launchMode="singleTop">
@@ -36,7 +35,6 @@
                 android:resource="@xml/searchable"/>
         </activity>
         <activity android:name=".CategorySearchActivity"></activity>
-
     </application>
 <!--
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

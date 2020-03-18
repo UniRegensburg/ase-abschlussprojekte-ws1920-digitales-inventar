@@ -2,6 +2,7 @@
     <string name="app_name">DigitalesInventar</string>
     <string name="action_settings">Settings</string>
     <string name="headingDI">Digitales Inventar</string>
+    <string name="login_message">You need to login to use Digitales Inventar.</string>
     <string name="categories">Kategorien </string>
     <string name="category">Kategorie</string>
     <string name="addOwnCategory">neue Kategorie</string>
@@ -31,7 +32,7 @@
     <string name="searchresult">Suchergebnis:</string>
     <string name="tab_text_1">Items</string>
     <string name="tab_text_2">Kategorien</string>
-    <string name="tab_text_3">Ort</string>
+    <string name="tab_text_3">Orte</string>
     <string-array name="categories_spinner">
         <item>Unterhaltungselektronik</item>
         <item>Haushaltsgegenstände</item>
