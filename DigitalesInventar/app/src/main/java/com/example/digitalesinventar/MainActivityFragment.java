@@ -266,9 +266,9 @@ public class MainActivityFragment extends Fragment {
                     selected_items.add(itemTimestamp);
                 }
                 if (count > 1){
-                    mode.setTitle(count + " items are selected");
+                    mode.setTitle(count + " Items sind ausgewählt");
                 } else {
-                    mode.setTitle(count + " item is selected");
+                    mode.setTitle(count + " Item ist ausgewählt");
                 }
             }
 

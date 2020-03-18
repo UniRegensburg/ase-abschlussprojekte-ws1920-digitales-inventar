@@ -21,13 +21,13 @@ public class DeleteCategoriesConfirmationDialogFragment extends DialogFragment {
 		final String category = args.getString(ARG_CATEGORY);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setMessage("Do you want do delete this category with all items?")
-			.setPositiveButton("delete items", new DialogInterface.OnClickListener() {
+		builder.setMessage("Wollen sie diese Kategorie mit allen Items löschen?")
+			.setPositiveButton("Items löschen", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					// TODO delete all items with the called category
 					DatabaseActivity.deleteItemsByCategory(category);
 					//DatabaseActivity.deleteCategoryFromDatabase(category); //categories already deleted in deleteItemsByCategory
-					Toast.makeText(getActivity(), "Category " + category + " with all items removed!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "Kategorie " + category + " wurde mit allen Items gelöscht!", Toast.LENGTH_SHORT).show();
 					Intent intentA = new Intent(getContext(), EditItemActivity.class);
 					intentA.putExtra("itemTs", 0);
 					startActivityForResult(intentA, 333);
@@ -37,7 +37,7 @@ public class DeleteCategoriesConfirmationDialogFragment extends DialogFragment {
 					//was wenn wir in new Item sind?
 				}
 			})
-			.setNegativeButton("keep items", new DialogInterface.OnClickListener() {
+			.setNegativeButton("Items behalten", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					//only delete category without items included
 					DatabaseActivity.deleteCategoryFromDatabase(category);
@@ -51,7 +51,7 @@ public class DeleteCategoriesConfirmationDialogFragment extends DialogFragment {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					Toast.makeText(getActivity(), "Category " + category + " removed!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "Kategorie " + category + " wurde gelöscht!", Toast.LENGTH_SHORT).show();
 				}
 			});
 		return builder.create();

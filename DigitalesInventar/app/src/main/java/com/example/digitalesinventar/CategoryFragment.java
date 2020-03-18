@@ -69,9 +69,6 @@ public class CategoryFragment extends Fragment {
 		View view= inflater.inflate(R.layout.fragment_main, container, false);
 		itemListView = view.findViewById(R.id.fragment_list);
 
-		//itemListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-		//launchMultipleItemSelection();
-
 		itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent,
@@ -111,14 +108,6 @@ public class CategoryFragment extends Fragment {
 	//link custom adapter with ListView for db entries
 	public void setupList() {
 		Log.i("catActivityFragment", "setupList called");
-		/*for (int i=0; i<DatabaseActivity.itemArray.size(); i++) {
-			if (!catArray.contains(DatabaseActivity.itemArray.get(i).itemCategory)) {
-				Log.i("cat_setupList", "bin da" + DatabaseActivity.itemArray.get(i).itemCategory );
-				catArray.add(DatabaseActivity.itemArray.get(i).itemCategory);
-			}
-			Log.i("cat_setupList", "catArray:" + catArray);
-		}*/
-		//catArray = DatabaseActivity.categoryArray;
 		catArrayAdapter = new CategoryListAdapter(DatabaseActivity.categoryArray, getActivity());
 		itemListView.setAdapter(catArrayAdapter);
 		Log.i("catActivityFragment", "listAdapter set");
@@ -132,7 +121,7 @@ public class CategoryFragment extends Fragment {
 	private void editCategory(String category){
 		if (category.equals("Unterhaltungselektronik") || category.equals("Haushaltsgegenstände")
 			|| category.equals("Einrichtung") || category.equals("Hobby") || category.equals("Werkzeug")) {
-			Toast.makeText(getContext(), "Default category " + category + " can't be edited!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getContext(), "Die Standardkategorie " + category + " kann nicht umbenannt werden!", Toast.LENGTH_SHORT).show();
 		}else {
 			showChangeDialog(category);
 		}
@@ -140,8 +129,8 @@ public class CategoryFragment extends Fragment {
 
 	private void showChangeDialog(final String category){
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-		alertDialog.setTitle("Change Category \"" + category + "\"");
-		alertDialog.setMessage("Enter a new name");
+		alertDialog.setTitle("Kategorie \"" + category + "\" umbenennen");
+		alertDialog.setMessage("Gebe einen neuen Namen ein");
 
 		final EditText input = new EditText(getActivity());
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -150,7 +139,7 @@ public class CategoryFragment extends Fragment {
 		input.setLayoutParams(lp);
 		alertDialog.setView(input);
 
-		alertDialog.setPositiveButton("CHANGE",
+		alertDialog.setPositiveButton(R.string.edit,
 			new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					String newCategory = input.getText().toString();
@@ -159,7 +148,7 @@ public class CategoryFragment extends Fragment {
 						for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
 							//avoid multiple entries
 							if (newCategory.equals(DatabaseActivity.categoryArray.get(i))) {
-								Toast.makeText(getContext(), "Category " + newCategory + " already exists!", Toast.LENGTH_SHORT).show();
+								Toast.makeText(getContext(), "Kategorie " + newCategory + " existiert bereits!", Toast.LENGTH_SHORT).show();
 								return;
 							}
 						}
@@ -169,13 +158,13 @@ public class CategoryFragment extends Fragment {
 						input.setText("");
 						//hide keyboard
 						UIhelper.hideKeyboard(getActivity());
-						Toast.makeText(getContext(), "Category " + newCategory + " was successfully renamed!", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getContext(), "Kategorie " + newCategory + " wurde erfolgreich umbenannt!", Toast.LENGTH_SHORT).show();
 					} else {
-						Toast.makeText(getContext(), "please enter a name", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getContext(), "Sie müssen einen Namen eingeben", Toast.LENGTH_SHORT).show();
 					}
 				}
 			});
-		alertDialog.setNegativeButton("CANCEL",
+		alertDialog.setNegativeButton(R.string.cancel,
 			new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.cancel();
@@ -188,7 +177,7 @@ public class CategoryFragment extends Fragment {
 		//make sure user does not try to delete predefined categories
 		if (category.equals("Unterhaltungselektronik") || category.equals("Haushaltsgegenstände")
 			|| category.equals("Einrichtung") || category.equals("Hobby") || category.equals("Werkzeug")) {
-			Toast.makeText(getContext(), "Default category " + category + " can't be removed!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getContext(), "Die Standardkategorie " + category + " kann nicht gelöscht werden!", Toast.LENGTH_SHORT).show();
 		}else {
 			showConfirmDialog(category);
 		}
