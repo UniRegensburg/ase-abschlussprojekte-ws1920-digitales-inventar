@@ -90,8 +90,8 @@ public class CategoryFragment extends Fragment {
 			}
 			Log.i("cat_setupList", "catArray:" + catArray);
 		}*/
-		catArray = DatabaseActivity.categoryArray;
-		catArrayAdapter = new CategoryListAdapter(catArray, getActivity());
+		//catArray = DatabaseActivity.categoryArray;
+		catArrayAdapter = new CategoryListAdapter(DatabaseActivity.categoryArray, getActivity());
 		itemListView.setAdapter(catArrayAdapter);
 		Log.i("catActivityFragment", "listAdapter set");
 	}
