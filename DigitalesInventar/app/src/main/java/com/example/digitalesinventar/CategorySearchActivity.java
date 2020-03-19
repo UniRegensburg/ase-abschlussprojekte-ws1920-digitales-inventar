@@ -3,14 +3,12 @@ package com.example.digitalesinventar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -19,8 +17,8 @@ public class CategorySearchActivity extends AppCompatActivity {
 
 	ArrayList<DataModelItemList> dataSet;
 	ArrayList<DataModelItemList> filteredList = new ArrayList<>();
-	ArrayAdapter adapter;
-	ListView itemListView;
+	ItemListAdapter adapter;
+	RecyclerView itemListView;
 	long timestamp;
 	Toolbar toolbar;
 	TextView result;
@@ -32,6 +30,7 @@ public class CategorySearchActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search);
 		itemListView = findViewById(R.id.fragment_list);
+		itemListView.setLayoutManager(new LinearLayoutManager(this));
 		result = findViewById(R.id.searchresult);
 		handleIntent(getIntent());
 		
@@ -47,19 +46,19 @@ public class CategorySearchActivity extends AppCompatActivity {
 		Log.i("CategoryActivity", "handleIntent");
 		String catName = getIntent().getStringExtra("catName");
 		Log.i("handleIntent", "catName: " + catName);
-		search(catName);
+		//search(catName);
 	}
 
 
-	private void search(String catName){
-		Log.i("SearchActivity", "catName: "+ catName);
+	private void search(String catName) {
+		Log.i("SearchActivity", "catName: " + catName);
 		result.setText("Kategorie '" + catName + "':");
-		adapter = new ItemListAdapter(filteredList,this);
+		adapter = new ItemListAdapter(this, filteredList);
 		itemListView.setAdapter(adapter);
 		dataSet = DatabaseActivity.itemArray;
 		Log.i("DoMySearch", "dataset: " + dataSet);
 
-		if (catName.isEmpty()){
+		if (catName.isEmpty()) {
 			filteredList = dataSet; //no empty cats
 		} else {
 			filteredList.clear();
@@ -67,7 +66,7 @@ public class CategorySearchActivity extends AppCompatActivity {
 			for (DataModelItemList row : dataSet) {
 				//Log.i("DoMySearch", "all rows: " + row.getItemCategory());
 				if (row.getItemCategory().toLowerCase().contains(catName.toLowerCase())) { //maybe equals better but cat names longer than buttons
-				//Log.i("DoMySearch", "hit row: " + row.getItemCategory());
+					//Log.i("DoMySearch", "hit row: " + row.getItemCategory());
 					filteredList.add(row);
 				}
 			}
@@ -75,7 +74,7 @@ public class CategorySearchActivity extends AppCompatActivity {
 
 		Log.i("DoMySearch", "filteredList: " + filteredList);
 		adapter.notifyDataSetChanged();
-		itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+	/*	itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent,
 															View view, int position, long id) {
@@ -85,9 +84,9 @@ public class CategorySearchActivity extends AppCompatActivity {
 				launchViewItem();
 			}
 		});
+*/
 	}
-
-	private void launchViewItem() {
+	/*private void launchViewItem() {
 		Log.i("SearchActivity", "launchNewItemActivity called");
 		Intent intent = new Intent(this, ViewItemActivity.class);
 		Bundle extras = new Bundle();
@@ -95,5 +94,5 @@ public class CategorySearchActivity extends AppCompatActivity {
 		intent.putExtras(extras);
 		Log.i("SearchActivity", "intent to start viewItem created");
 		startActivity(intent);
-	}
+	}*/
 }

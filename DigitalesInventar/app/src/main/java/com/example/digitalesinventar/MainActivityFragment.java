@@ -3,26 +3,18 @@ package com.example.digitalesinventar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,8 +24,14 @@ import java.util.Comparator;
 //Fragment for displaying database entries as list in layout of MainActivity
 public class MainActivityFragment extends Fragment {
 
-    public static ArrayAdapter itemArrayAdapter;
-    static SwipeMenuListView itemListView;
+    //public static ArrayAdapter itemArrayAdapter;
+    //static SwipeMenuListView itemListView;
+    static ItemListAdapter itemArrayAdapter;
+    static RecyclerView itemListView;
+    static RelativeLayout heading;
+    static TextView itemCounter;
+    Button cancelMultiSelect;
+    Button deleteMultipleItems;
     long timestamp;
     int count;
     ArrayList<String> selected_items = new ArrayList<>();
@@ -71,7 +69,7 @@ public class MainActivityFragment extends Fragment {
                 }
             }
         }
-        Log.d("mainSort", ""+filteredList);
+        Log.d("mainSort", "" + filteredList);
         itemArrayAdapter.notifyDataSetChanged();
     }
 
@@ -82,16 +80,16 @@ public class MainActivityFragment extends Fragment {
         wipItemArray.addAll(DatabaseActivity.itemArray);
         filteredList.clear();
         for (String sortTs : tsList) {
-            Log.d("mainSort", "outsideFor"+sortTs);
+            Log.d("mainSort", "outsideFor" + sortTs);
             for (DataModelItemList sortingItem : wipItemArray) {
-                Log.d("mainSort", "insideFor"+sortingItem.getTimestamp());
+                Log.d("mainSort", "insideFor" + sortingItem.getTimestamp());
                 if (Long.valueOf(sortTs) == sortingItem.getTimestamp()) {
                     Log.d("mainSort", "hit");
                     filteredList.add(sortingItem);
                 }
             }
         }
-        Log.d("mainSort", ""+filteredList);
+        Log.d("mainSort", "" + filteredList);
         itemArrayAdapter.notifyDataSetChanged();
     }
 
@@ -120,7 +118,7 @@ public class MainActivityFragment extends Fragment {
         sortItemArrayBySortedNames();
     }
 
-    public static void sortByÄlteste() {
+    public static void sortByOldest() {
         Log.d("mainSort", "alt");
         extractTimestamps();
         Collections.sort(tsList, new Comparator<String>() {
@@ -132,7 +130,7 @@ public class MainActivityFragment extends Fragment {
         sortItemArrayBySortedTs();
     }
 
-    public static void sortByNeueste() {
+    public static void sortByNewest() {
         Log.d("mainSort", "neu");
         extractTimestamps();
         Collections.sort(tsList, new Comparator<String>() {
@@ -152,9 +150,14 @@ public class MainActivityFragment extends Fragment {
         Log.i("MainActivityFragment", "inflater called");
         //rootView.findViewById(R.id.fragment_container);
         //set layout for ListView for data from db
+        heading = view.findViewById(R.id.itemsHeading);
+        itemCounter = view.findViewById(R.id.itemCounter);
+        deleteMultipleItems = view.findViewById(R.id.deleteMultipleItemsButton);
+        cancelMultiSelect = view.findViewById(R.id.cancelMultiSelect);
         itemListView = view.findViewById(R.id.fragment_list);
+        itemListView.setLayoutManager(new LinearLayoutManager(getContext()));
         Log.i("MainActivityFragment", "listView: ");
-        
+        /*
         // Multiple Items can be selected - works with longClick
         itemListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         launchMultipleItemSelection();
@@ -202,28 +205,44 @@ public class MainActivityFragment extends Fragment {
                 return false;
             }
         });
-
+*/
+				setupButtons();
         setupList();
         Log.i("MainActivityFragment", "setupList called");
         return view;
-
     }
 
+    private void setupButtons() {
+		cancelMultiSelect.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+				 setMultiChoiceMode(false);
+				}
+			});
+
+			deleteMultipleItems.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					deleteMultipleItems();
+				}
+			});
+		}
+
     //link custom adapter with ListView for db entries
-    public void setupList() {
+		private void setupList() {
         Log.i("MainActivityFragment", "setupList called");
         filteredList = DatabaseActivity.itemArray;
-        itemArrayAdapter = new ItemListAdapter(filteredList,getActivity());
+        itemArrayAdapter = new ItemListAdapter(getActivity(), filteredList);
         itemListView.setAdapter(itemArrayAdapter);
         Log.i("MainActivityFragment", "listAdapter set");
     }
 
-    public static void updateList() {
+    static void updateList() {
         Log.i("MainActivityFragment", "adapter dataset changed");
         itemArrayAdapter.notifyDataSetChanged();
     }
 
-    //onClick action for plusButton --> launches newItemActivity
+
     private void launchViewItem() {
         Log.i("MainActivity", "launchNewItemActivity called");
         Intent intent = new Intent(getActivity(), ViewItemActivity.class);
@@ -245,71 +264,30 @@ public class MainActivityFragment extends Fragment {
         dialog.show(getFragmentManager(),"tag");
     }
 
-    private void launchMultipleItemSelection(){
-        Log.i("MainActivityFragment", "launchMultipleItemSelected called");
-        count = 0;
-
-        itemListView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-            @Override
-            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-                DataModelItemList item = (DataModelItemList) itemListView.getItemAtPosition(position);
-                String itemTimestamp = String.valueOf(item.getTimestamp());
-                if (!checked){
-                    count = count -1;
-                    View child = itemListView.getChildAt(position);
-                    child.setBackgroundColor(0x00999999);
-                    selected_items.remove(itemTimestamp);
-                } else {
-                    count = count +1;
-                    View child = itemListView.getChildAt(position);
-                    child.setBackgroundColor(0x99990000);
-                    selected_items.add(itemTimestamp);
-                }
-                if (count > 1){
-                    mode.setTitle(count + " Items sind ausgewählt");
-                } else {
-                    mode.setTitle(count + " Item ist ausgewählt");
-                }
-            }
-
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                MenuInflater menuInflater = mode.getMenuInflater();
-                menuInflater.inflate(R.menu.context_menu, menu);
-                return true;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return false;
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-
-                for (int i = 0; i < itemListView.getCount(); i++){
-                    View child = itemListView.getChildAt(i);
-                    child.setBackgroundColor(0x00999999);
-                }
-                String itemCount = String.valueOf(count);
-                showConfirmDialog(selected_items, itemCount);
-
-                mode.finish();
-                return true;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-                for (int i = 0; i < itemListView.getCount(); i++){
-                    View child = itemListView.getChildAt(i);
-                    child.setBackgroundColor(0x00999999);
-                }
-                count = 0;
-            }
-        });
+    static void setMultiChoiceMode(boolean on) {
+    	if (on) {
+				itemListView.setBackgroundColor(0x99999999);
+				heading.setBackgroundColor(0x99999999);
+				heading.setVisibility(View.VISIBLE);
+			} else {
+    		itemArrayAdapter.setMultiselect(false);
+				itemListView.setBackgroundColor(0x00999999);
+				heading.setBackgroundColor(0x00999999);
+				heading.setVisibility(View.INVISIBLE);
+				itemArrayAdapter.unselectAll(itemListView);
+			}
     }
 
-    public void setupSearchListener(SearchView searchView){
+    private void deleteMultipleItems() {
+    	ArrayList<String> timestamps = new ArrayList<>();
+    	for(int i = 0; i < itemArrayAdapter.getSelected().size(); i++) {
+    		timestamps.add(String.valueOf(itemArrayAdapter.getSelected().get(i).getTimestamp()));
+			}
+			this.showConfirmDialog(timestamps, String.valueOf(timestamps.size()));
+    	setMultiChoiceMode(false);
+		}
+
+ 		void setupSearchListener(SearchView searchView){
         Log.i("MainActivityFragment", "setupSearchListener");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -327,7 +305,10 @@ public class MainActivityFragment extends Fragment {
         });
     }
 
-    private void launchSwipeMenu(){
+    static void setItemCounter(int count) {
+    	itemCounter.setText(String.valueOf(count));
+		}
+    /*private void launchSwipeMenu(){
         Log.i("MainActivityFragment", "launchSwipeMenu called");
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -359,7 +340,7 @@ public class MainActivityFragment extends Fragment {
 
         //set creator
         itemListView.setMenuCreator(creator);
-    }
+    }*/
 
     private void doLiveUpdates(String query) {
         DatabaseActivity.loadBackup();

@@ -283,7 +283,7 @@ public class NewItemActivity extends AppCompatActivity {
 			}else {
 				value = Double.parseDouble(editTextValue.getText().toString());
 			}
-			DatabaseActivity.addEntry(editTextName.getText().toString(), selectedCategory, editTextLocation.getText().toString(), textViewBuyDate.getText().toString(), value, newImage);
+			DatabaseActivity.addEntry(editTextName.getText().toString(), selectedCategory, editTextLocation.getText().toString(), textViewBuyDate.getText().toString(), value, false, newImage);
 			newImage = false;
 			return true;
 		} else {

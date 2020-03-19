@@ -234,9 +234,9 @@ public class MainActivity extends AppCompatActivity {
 					case 0:
 						//Items
 						if (sortBySpinner.getSelectedItem() == "Neueste") {
-							MainActivityFragment.sortByNeueste();
+							MainActivityFragment.sortByNewest();
 						} else if (sortBySpinner.getSelectedItem() == "Älteste") {
-							MainActivityFragment.sortByÄlteste();
+							MainActivityFragment.sortByOldest();
 						} else if (sortBySpinner.getSelectedItem() == "Name absteigend") {
 							MainActivityFragment.sortByNameDown();
 						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {

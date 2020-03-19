@@ -45,7 +45,7 @@ public class DatabaseActivity {
     private static boolean currentlyLoading = false;
 
     //ADD ITEM TO DB
-    public static void addEntry(String name, String category , String location, String buyDate, double value, final boolean newImage) {
+    public static void addEntry(String name, String category , String location, String buyDate, double value, boolean isChecked, final boolean newImage) {
         Log.d("DB addEntry", "item added");
         long tsLong = System.currentTimeMillis();
         final String ts = Long.toString(tsLong);
@@ -55,6 +55,7 @@ public class DatabaseActivity {
         entry.put("location", location);
         entry.put("buydate", buyDate);
         entry.put("value", value);
+        entry.put("checked", isChecked);
         entry.put("ts", ts);
 
         //db.collection("items").document(ts)
@@ -81,16 +82,16 @@ public class DatabaseActivity {
     }
 
     //UPDATE EDITED ITEM IN DB
-    public static void updateEntry(final String id, String name, String category, String location, String buyDate, String value, final Long timestamp, final boolean newImage) {
+    public static void updateEntry(final String id, String name, String category, String location, String buyDate, String value, boolean isChecked, final Long timestamp, final boolean newImage) {
       //TODO remove timestamp as it's the same as id
       Double valueWip = Double.valueOf(0);
       if (value.length() > 0) { //catch for parsing error
         valueWip = Double.parseDouble(value);
       }
-      final DataModelItemList wipItem = new DataModelItemList(name, category, location, buyDate, valueWip, timestamp);
+      final DataModelItemList wipItem = new DataModelItemList(name, category, location, buyDate, valueWip, isChecked, timestamp);
       //Log.d("DB updateEntry", "data:"+id+" ;"+name+" ;"+category+" ;"+location+" ;"+timestamp);
       db.collection("users").document(MainActivity.userID).collection("items").document(id)
-        .update("name", name, "category", category, "location", location, "buydate", buyDate, "value", valueWip, "ts", timestamp)
+        .update("name", name, "category", category, "location", location, "buydate", buyDate, "value", valueWip, "checked", isChecked,"ts", timestamp)
           .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void avoid) {
@@ -138,12 +139,11 @@ public class DatabaseActivity {
                   for (QueryDocumentSnapshot document : task.getResult()) {
                     //add entry as DataModelItemList object
                     //to be able to reference different attributes of the object later on
-                    DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), document.get("buydate").toString(), Double.parseDouble(document.get("value").toString()) ,Long.parseLong(document.get("ts").toString()));
+                    DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), document.get("buydate").toString(), Double.parseDouble(document.get("value").toString()), Boolean.parseBoolean(document.get("checked").toString()), Long.parseLong(document.get("ts").toString()));
                     itemArray.add(0, newItem); //add item on top of the list
                     itemArrayBackup.add(0, newItem);
                   }
                   Log.d("DB loadEntry", "items loaded from db");
-                  //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString());
                   currentlyLoading = false;
                   MainActivityFragment.updateList(); //update view in fragment
                 } else {
@@ -342,7 +342,7 @@ public class DatabaseActivity {
       public void onSuccess(byte[] bytes) {
         // Data for "images/island.jpg" is returns, use this as needed
         Log.d("loadImg", "2 success from db");
-        Log.d("currentIMG", ": " + view.getImageMatrix().toShortString());
+//        Log.d("currentIMG", ": " + view.getImageMatrix().toShortString());
         //ImageView imageView = findViewById(R.id.image_View);
         //Bitmap bitmap = MediaStore.Images.Media.
         BitmapFactory.Options options = new BitmapFactory.Options();

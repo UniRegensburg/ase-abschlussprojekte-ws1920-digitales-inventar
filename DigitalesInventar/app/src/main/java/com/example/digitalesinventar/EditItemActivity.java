@@ -211,7 +211,7 @@ public class EditItemActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				context = getApplicationContext();
 				//Log.d("new-ui-debug", "edit save, ts "+ currentItem.getTimestamp() + "; name " + editTextName.getText() + "; cat " + categorySpinner.getSelectedItem() + "; ort " + editTextLocation.getText() + "; date " + textViewBuyDate.getText() + "; wert " + editTextValue.getText());
-				DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), textViewBuyDate.getText().toString(), editTextValue.getText().toString(), currentItem.getTimestamp(), newImage);
+				DatabaseActivity.updateEntry(Long.toString(currentItem.getTimestamp()), editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), textViewBuyDate.getText().toString(), editTextValue.getText().toString(), false, currentItem.getTimestamp(), newImage);
 				//^ TODO crashes     java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String java.lang.Object.toString()' on a null object reference
 				//reproduce: edit item -> edit kat -> new cat -> back -> save item (no new cat) -> edit item -> edit cat -> del new cat w/ items -> save
 				//zur not: try & catch

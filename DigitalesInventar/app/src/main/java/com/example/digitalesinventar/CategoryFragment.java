@@ -8,19 +8,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +23,7 @@ import java.util.Comparator;
 
 public class CategoryFragment extends Fragment {
 
-	static SwipeMenuListView itemListView;
+	static RecyclerView itemListView;
 	private ArrayList<String> catArray = new ArrayList<>();
 	private static CategoryListAdapter catArrayAdapter;
 	String catName;
@@ -68,7 +63,8 @@ public class CategoryFragment extends Fragment {
 													 Bundle savedInstanceState) {
 		View view= inflater.inflate(R.layout.fragment_main, container, false);
 		itemListView = view.findViewById(R.id.fragment_list);
-
+		itemListView.setLayoutManager(new LinearLayoutManager(getContext()));
+/*
 		itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent,
@@ -78,7 +74,8 @@ public class CategoryFragment extends Fragment {
 				launchCat();
 			}
 		});
-
+*/
+		/*
 		launchSwipeMenu();
 		itemListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
 			@Override
@@ -100,6 +97,7 @@ public class CategoryFragment extends Fragment {
 				return false;
 			}
 		});
+		 */
 
 		setupList();
 		return view;
@@ -108,7 +106,7 @@ public class CategoryFragment extends Fragment {
 	//link custom adapter with ListView for db entries
 	public void setupList() {
 		Log.i("catActivityFragment", "setupList called");
-		catArrayAdapter = new CategoryListAdapter(DatabaseActivity.categoryArray, getActivity());
+		catArrayAdapter = new CategoryListAdapter(getActivity(), DatabaseActivity.categoryArray);
 		itemListView.setAdapter(catArrayAdapter);
 		Log.i("catActivityFragment", "listAdapter set");
 	}
@@ -203,6 +201,7 @@ public class CategoryFragment extends Fragment {
 		startActivity(intent);
 	}
 
+	/*
 	private void launchSwipeMenu(){
 		Log.i("CategoryFragment", "launchSwipeMenu called");
 
@@ -235,6 +234,7 @@ public class CategoryFragment extends Fragment {
 		//set creator
 		itemListView.setMenuCreator(creator);
 	}
+*/
 
 	private void doLiveUpdates(String query) {
 		DatabaseActivity.loadBackup();

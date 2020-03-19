@@ -6,15 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
-
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,9 +17,9 @@ import java.util.Comparator;
 
 public class PlaceFragment extends Fragment {
 
-	static SwipeMenuListView itemListView;
+	static RecyclerView itemListView;
 	private static ArrayList<String> placeArray = new ArrayList<>();
-	private static CategoryListAdapter placeArrayAdapter;
+	private static PlaceListAdapter placeArrayAdapter;
 	String placeName;
 
 	public PlaceFragment(){
@@ -58,11 +53,11 @@ public class PlaceFragment extends Fragment {
 													 Bundle savedInstanceState) {
 		View view= inflater.inflate(R.layout.fragment_main, container, false);
 		itemListView = view.findViewById(R.id.fragment_list);
-
+		itemListView.setLayoutManager(new LinearLayoutManager(getContext()));
 		//itemListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 		//launchMultipleItemSelection();
 
-		itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		/*itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent,
 															View view, int position, long id) {
@@ -71,7 +66,7 @@ public class PlaceFragment extends Fragment {
 				launchPlace();
 			}
 		});
-
+*/
 		//launchSwipeMenu();
 		/*itemListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
 			@Override
@@ -119,7 +114,7 @@ public class PlaceFragment extends Fragment {
 				placeArray.add(DatabaseActivity.itemArray.get(i).itemLocation);
 			}
 		}
-		placeArrayAdapter = new CategoryListAdapter(placeArray, getActivity());
+		placeArrayAdapter = new PlaceListAdapter(getActivity(), placeArray);
 		itemListView.setAdapter(placeArrayAdapter);
 		Log.i("placeActivityFragment", "listAdapter set");
 	}
@@ -140,6 +135,7 @@ public class PlaceFragment extends Fragment {
 		startActivity(intent);
 	}
 
+	/*
 	private void launchSwipeMenu(){
 		Log.i("MainActivityFragment", "launchSwipeMenu called");
 
@@ -173,7 +169,7 @@ public class PlaceFragment extends Fragment {
 		//set creator
 		itemListView.setMenuCreator(creator);
 	}
-
+*/
 
 	private void doLiveUpdates(String query) {
 		DatabaseActivity.loadBackup();
