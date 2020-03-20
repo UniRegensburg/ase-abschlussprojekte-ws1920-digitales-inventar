@@ -31,7 +31,7 @@ public class PlaceFragment extends Fragment {
 		Collections.sort(placeArray, new Comparator<String>() {
 			@Override
 			public int compare(String s1, String s2) {
-				return s1.compareToIgnoreCase(s2);
+				return s2.compareToIgnoreCase(s1);
 			}
 		});
 		placeArrayAdapter.notifyDataSetChanged();
@@ -42,7 +42,7 @@ public class PlaceFragment extends Fragment {
 		Collections.sort(placeArray, new Comparator<String>() {
 			@Override
 			public int compare(String s1, String s2) {
-				return s2.compareToIgnoreCase(s1);
+				return s1.compareToIgnoreCase(s2);
 			}
 		});
 		placeArrayAdapter.notifyDataSetChanged();

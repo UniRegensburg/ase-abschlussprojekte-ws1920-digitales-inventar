@@ -101,7 +101,7 @@ public class MainActivityFragment extends Fragment {
         Collections.sort(nameList, new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
-                return s2.compareToIgnoreCase(s1);
+                return s1.compareToIgnoreCase(s2);
             }
         });
         sortItemArrayBySortedNames();
@@ -113,7 +113,7 @@ public class MainActivityFragment extends Fragment {
         Collections.sort(nameList, new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
-                return s1.compareToIgnoreCase(s2);
+                return s2.compareToIgnoreCase(s1);
             }
         });
         sortItemArrayBySortedNames();
