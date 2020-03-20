@@ -1,6 +1,7 @@
 package com.example.digitalesinventar;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,20 +26,19 @@ import java.util.Comparator;
 //Fragment for displaying database entries as list in layout of MainActivity
 public class MainActivityFragment extends Fragment {
 
-    //public static ArrayAdapter itemArrayAdapter;
-    //static SwipeMenuListView itemListView;
-    static ItemListAdapter itemArrayAdapter;
-    static RecyclerView itemListView;
-    static RelativeLayout heading;
-    static TextView itemCounter;
-    Button cancelMultiSelect;
-    Button deleteMultipleItems;
-    long timestamp;
+    private static ItemListAdapter itemArrayAdapter;
+    private SwipeController swipeController = null;
+    private static RecyclerView itemListView;
+    private static RelativeLayout heading;
+    private static TextView itemCounter;
+    private Button cancelMultiSelect;
+    private Button deleteMultipleItems;
+    private long timestamp;
     int count;
     ArrayList<String> selected_items = new ArrayList<>();
-    static ArrayList<DataModelItemList> filteredList;// = new ArrayList<>();
-    static ArrayList<String> nameList = new ArrayList<>();
-    static ArrayList<String> tsList = new ArrayList<>();
+    private static ArrayList<DataModelItemList> filteredList;// = new ArrayList<>();
+    private static ArrayList<String> nameList = new ArrayList<>();
+    private static ArrayList<String> tsList = new ArrayList<>();
 
     public MainActivityFragment()  {
     }
@@ -94,7 +95,7 @@ public class MainActivityFragment extends Fragment {
     }
 
 
-    public static void sortByNameUp() {
+    static void sortByNameUp() {
         Log.d("mainSort", "nameUp");
         extractNames();
         Collections.sort(nameList, new Comparator<String>() {
@@ -106,7 +107,7 @@ public class MainActivityFragment extends Fragment {
         sortItemArrayBySortedNames();
     }
 
-    public static void sortByNameDown() {
+    static void sortByNameDown() {
         Log.d("mainSort", "nameDown");
         extractNames();
         Collections.sort(nameList, new Comparator<String>() {
@@ -118,7 +119,7 @@ public class MainActivityFragment extends Fragment {
         sortItemArrayBySortedNames();
     }
 
-    public static void sortByOldest() {
+    static void sortByOldest() {
         Log.d("mainSort", "alt");
         extractTimestamps();
         Collections.sort(tsList, new Comparator<String>() {
@@ -130,7 +131,7 @@ public class MainActivityFragment extends Fragment {
         sortItemArrayBySortedTs();
     }
 
-    public static void sortByNewest() {
+    static void sortByNewest() {
         Log.d("mainSort", "neu");
         extractTimestamps();
         Collections.sort(tsList, new Comparator<String>() {
@@ -157,55 +158,7 @@ public class MainActivityFragment extends Fragment {
         itemListView = view.findViewById(R.id.fragment_list);
         itemListView.setLayoutManager(new LinearLayoutManager(getContext()));
         Log.i("MainActivityFragment", "listView: ");
-        /*
-        // Multiple Items can be selected - works with longClick
-        itemListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        launchMultipleItemSelection();
-
-        itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent,
-                                           View view, int position, long id) {
-                DataModelItemList itemTs = (DataModelItemList) parent.getItemAtPosition(position);
-                timestamp = itemTs.getTimestamp();
-                Log.i("MainActivityItemOnClick", "" + timestamp);
-                launchViewItem();
-            }
-        });
-
-        launchSwipeMenu();
-        itemListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                switch (index) {
-                    case 0:
-                        // edit
-                        Log.i("onMenuItemClicked", "Edit");
-                        DataModelItemList item = (DataModelItemList) itemListView.getItemAtPosition(position);
-                        timestamp = item.getTimestamp();
-
-                        Intent intent = new Intent(getActivity(),EditItemActivity.class);
-                        Bundle extras = new Bundle();
-                        extras.putLong("itemTs",timestamp);
-                        extras.putBoolean("fromMain", true);
-                        intent.putExtras(extras);
-                        startActivityForResult(intent, 666);
-                        break;
-                    case 1:
-                        // delete
-                        Log.i("onMenuItemClicked", "Delete");
-                        DataModelItemList itemDelete = (DataModelItemList) itemListView.getItemAtPosition(position);
-                        String itemTimestamp = String.valueOf(itemDelete.getTimestamp());
-
-                        ArrayList<String> delete_list = new ArrayList<>();
-                        delete_list.add(itemTimestamp);
-                        showConfirmDialog(delete_list,"1");
-                        break;
-                }
-                return false;
-            }
-        });
-*/
+	      setupSwipeController();
 				setupButtons();
         setupList();
         Log.i("MainActivityFragment", "setupList called");
@@ -308,39 +261,43 @@ public class MainActivityFragment extends Fragment {
     static void setItemCounter(int count) {
     	itemCounter.setText(String.valueOf(count));
 		}
-    /*private void launchSwipeMenu(){
-        Log.i("MainActivityFragment", "launchSwipeMenu called");
 
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
+		private void setupSwipeController() {
+        swipeController = new SwipeController(new SwipeControllerActions() {
             @Override
-            public void create(SwipeMenu menu) {
-                // create "edit" item
-                SwipeMenuItem editItem = new SwipeMenuItem(getActivity());
-                // set item background
-                editItem.setBackground(R.color.primaryVariant);
-                // set item width
-                editItem.setWidth(250);
-                // set item title
-                editItem.setIcon(R.drawable.edit_white30px);
-                // add to menu
-                menu.addMenuItem(editItem);
-
-                // create "delete" item
-                SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
-                // set item background
-                deleteItem.setBackground(R.color.error);
-                // set item width
-                deleteItem.setWidth(250);
-                // set a icon
-                deleteItem.setIcon(R.drawable.delete_white30px);
-                // add to menu
-                menu.addMenuItem(deleteItem);
+            public void onRightClicked(int position) {
+                Log.i("onMenuItemClicked", "Delete");
+                DataModelItemList itemDelete = itemArrayAdapter.dataSet.get(position);
+                String itemTimestamp = String.valueOf(itemDelete.getTimestamp());
+                ArrayList<String> delete_list = new ArrayList<>();
+                delete_list.add(itemTimestamp);
+                showConfirmDialog(delete_list, "1");
             }
-        };
 
-        //set creator
-        itemListView.setMenuCreator(creator);
-    }*/
+            @Override
+            public void onLeftClicked(int position) {
+                Log.i("onMenuItemClicked", "Edit");
+                DataModelItemList itemDelete = itemArrayAdapter.dataSet.get(position);
+                String itemTimestamp = String.valueOf(itemDelete.getTimestamp());
+                Intent intent = new Intent(getActivity(),EditItemActivity.class);
+                Bundle extras = new Bundle();
+                extras.putLong("itemTs", Long.parseLong(itemTimestamp));
+                extras.putBoolean("fromMain", true);
+                intent.putExtras(extras);
+                startActivityForResult(intent, 666);
+            }
+        });
+
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
+        itemTouchhelper.attachToRecyclerView(itemListView);
+
+        itemListView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+                swipeController.onDraw(c);
+            }
+        });
+    }
 
     private void doLiveUpdates(String query) {
         DatabaseActivity.loadBackup();

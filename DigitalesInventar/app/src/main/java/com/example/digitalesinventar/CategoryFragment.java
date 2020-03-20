@@ -3,6 +3,7 @@ package com.example.digitalesinventar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +28,7 @@ public class CategoryFragment extends Fragment {
 	static RecyclerView itemListView;
 	private ArrayList<String> catArray = new ArrayList<>();
 	private static CategoryListAdapter catArrayAdapter;
+	private SwipeController swipeController = null;
 	String catName;
 
 	public CategoryFragment(){
@@ -64,42 +67,8 @@ public class CategoryFragment extends Fragment {
 		View view= inflater.inflate(R.layout.fragment_main, container, false);
 		itemListView = view.findViewById(R.id.fragment_list);
 		itemListView.setLayoutManager(new LinearLayoutManager(getContext()));
-/*
-		itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent,
-															View view, int position, long id) {
-				catName = (String) parent.getItemAtPosition(position);
-				Log.i("catOnClick", "" + catName);
-				launchCat();
-			}
-		});
-*/
-		/*
-		launchSwipeMenu();
-		itemListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-			@Override
-			public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-				switch (index) {
-					case 0:
-						// edit
-						Log.i("onMenuItemClicked", "Edit");
-						String category = (String) itemListView.getItemAtPosition(position);
-						editCategory(category);
-						break;
-					case 1:
-						// delete
-						Log.i("onMenuItemClicked", "Delete");
-						String itemCategory = (String) itemListView.getItemAtPosition(position);
-						deleteCategory(itemCategory);
-						break;
-				}
-				return false;
-			}
-		});
-		 */
-
 		setupList();
+		setupSwipeController();
 		return view;
 	}
 
@@ -201,41 +170,6 @@ public class CategoryFragment extends Fragment {
 		startActivity(intent);
 	}
 
-	/*
-	private void launchSwipeMenu(){
-		Log.i("CategoryFragment", "launchSwipeMenu called");
-
-		SwipeMenuCreator creator = new SwipeMenuCreator() {
-			@Override
-			public void create(SwipeMenu menu) {
-				// create "edit" item
-				SwipeMenuItem editItem = new SwipeMenuItem(getActivity());
-				// set item background
-				editItem.setBackground(R.color.primaryVariant);
-				// set item width
-				editItem.setWidth(250);
-				// set item title
-				editItem.setIcon(R.drawable.ic_edit);
-				// add to menu
-				menu.addMenuItem(editItem);
-
-				// create "delete" item
-				SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
-				// set item background
-				deleteItem.setBackground(R.color.error);
-				// set item width
-				deleteItem.setWidth(250);
-				// set a icon
-				deleteItem.setIcon(R.drawable.ic_delete);
-				// add to menu
-				menu.addMenuItem(deleteItem);
-			}
-		};
-		//set creator
-		itemListView.setMenuCreator(creator);
-	}
-*/
-
 	private void doLiveUpdates(String query) {
 		DatabaseActivity.loadBackup();
 		ArrayList<DataModelItemList> dataSet = new ArrayList<>();
@@ -260,6 +194,35 @@ public class CategoryFragment extends Fragment {
 			Log.i("DoMyFilter", "catList: " + catArray);
 			catArrayAdapter.notifyDataSetChanged();
 		}
+	}
+
+	private void setupSwipeController() {
+		swipeController = new SwipeController(new SwipeControllerActions() {
+			@Override
+			public void onRightClicked(int position) {
+				Log.i("onMenuItemClicked", "Delete");
+				String itemCategory = catArrayAdapter.dataSet.get(position);
+				deleteCategory(itemCategory);
+				catArrayAdapter.notifyDataSetChanged();
+			}
+
+			@Override
+			public void onLeftClicked(int position) {
+				Log.i("onMenuItemClicked", "Edit");
+				String category = catArrayAdapter.dataSet.get(position);
+				editCategory(category);
+			}
+		});
+
+		ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
+		itemTouchhelper.attachToRecyclerView(itemListView);
+
+		itemListView.addItemDecoration(new RecyclerView.ItemDecoration() {
+			@Override
+			public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+				swipeController.onDraw(c);
+			}
+		});
 	}
 
 }

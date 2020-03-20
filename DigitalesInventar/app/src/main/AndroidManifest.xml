@@ -19,13 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewItemActivity"></activity>
-        <activity android:name=".DatabaseActivity"></activity>
-        <activity android:name=".DataModelItemList"></activity>
-        <activity android:name=".ItemListAdapter"></activity>
-        <activity android:name=".SignInFailedActivity"></activity>
-        <activity android:name=".ViewItemActivity"></activity>
-        <activity android:name=".EditItemActivity"></activity>
+        <activity android:name=".NewItemActivity"/>
+        <activity android:name=".DatabaseActivity"/>
+        <activity android:name=".DataModelItemList"/>
+        <activity android:name=".ItemListAdapter"/>
+        <activity android:name=".SignInFailedActivity"/>
+        <activity android:name=".ViewItemActivity"/>
+        <activity android:name=".EditItemActivity"/>
         <activity android:name=".SearchActivity"
             android:launchMode="singleTop">
             <intent-filter>
@@ -34,7 +34,7 @@
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
         </activity>
-        <activity android:name=".CategorySearchActivity"></activity>
+        <activity android:name=".CategorySearchActivity"/>
     </application>
 <!--
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

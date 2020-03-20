@@ -54,52 +54,6 @@ public class PlaceFragment extends Fragment {
 		View view= inflater.inflate(R.layout.fragment_main, container, false);
 		itemListView = view.findViewById(R.id.fragment_list);
 		itemListView.setLayoutManager(new LinearLayoutManager(getContext()));
-		//itemListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-		//launchMultipleItemSelection();
-
-		/*itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent,
-															View view, int position, long id) {
-				placeName = (String) parent.getItemAtPosition(position);
-				Log.i("placeOnClick", "" + placeName);
-				launchPlace();
-			}
-		});
-*/
-		//launchSwipeMenu();
-		/*itemListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-			@Override
-			public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-				switch (index) {
-					case 0:
-						// edit
-						Log.i("onMenuItemClicked", "Edit");
-						String catName = (String) itemListView.getItemAtPosition(position);
-
-						Intent intent = new Intent(getActivity(),EditItemActivity.class);
-						Bundle extras = new Bundle();
-						extras.putString("catName",catName);
-						extras.putBoolean("fromMain", true);
-						intent.putExtras(extras);
-						startActivityForResult(intent, 666);
-						break;
-					case 1:
-						// delete
-						Log.i("onMenuItemClicked", "Delete");
-						DataModelItemList itemDelete = (DataModelItemList) itemListView.getItemAtPosition(position);
-						String itemTimestamp = String.valueOf(itemDelete.getTimestamp());
-
-						ArrayList<String> delete_list = new ArrayList<>();
-						delete_list.add(itemTimestamp);
-						showConfirmDialog(delete_list,"1");
-						break;
-				}
-				return false;
-			}
-		});
-		 */
-
 		setupList();
 		Log.i("placeActivityFragment", "setupList called");
 		return view;
@@ -135,41 +89,6 @@ public class PlaceFragment extends Fragment {
 		startActivity(intent);
 	}
 
-	/*
-	private void launchSwipeMenu(){
-		Log.i("MainActivityFragment", "launchSwipeMenu called");
-
-		SwipeMenuCreator creator = new SwipeMenuCreator() {
-			@Override
-			public void create(SwipeMenu menu) {
-				// create "edit" item
-				SwipeMenuItem editItem = new SwipeMenuItem(getActivity());
-				// set item background
-				editItem.setBackground(R.color.primaryVariant);
-				// set item width
-				editItem.setWidth(250);
-				// set item title
-				editItem.setIcon(R.drawable.ic_edit);
-				// add to menu
-				menu.addMenuItem(editItem);
-
-				// create "delete" item
-				SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
-				// set item background
-				deleteItem.setBackground(R.color.error);
-				// set item width
-				deleteItem.setWidth(250);
-				// set a icon
-				deleteItem.setIcon(R.drawable.ic_delete);
-				// add to menu
-				menu.addMenuItem(deleteItem);
-			}
-		};
-
-		//set creator
-		itemListView.setMenuCreator(creator);
-	}
-*/
 
 	private void doLiveUpdates(String query) {
 		DatabaseActivity.loadBackup();
