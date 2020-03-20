@@ -39,7 +39,7 @@ public class CategoryFragment extends Fragment {
 			//db liste in adapter allerdings nötig für updateList()
 			@Override
 			public int compare(String s1, String s2) {
-				return s1.compareToIgnoreCase(s2);
+				return s2.compareToIgnoreCase(s1);
 			}
 		});
 		catArrayAdapter.notifyDataSetChanged();
@@ -52,7 +52,7 @@ public class CategoryFragment extends Fragment {
 			//db liste in adapter allerdings nötig für updateList()
 			@Override
 			public int compare(String s1, String s2) {
-				return s2.compareToIgnoreCase(s1);
+				return s1.compareToIgnoreCase(s2);
 			}
 		});
 		catArrayAdapter.notifyDataSetChanged();

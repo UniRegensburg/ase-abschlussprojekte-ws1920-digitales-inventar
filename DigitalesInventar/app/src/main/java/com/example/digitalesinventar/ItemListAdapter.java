@@ -85,13 +85,13 @@ public void setData(ArrayList<DataModelItemList> data) {
                         context.startActivity(intent);
                     }else {
                         if (item.getChecked()) {
+                            item.setChecked(false);
 														MainActivityFragment.setItemCounter(getSelected().size());
-														item.setChecked(false);
 														view.setBackgroundColor(0x00999999);
                         }else{
-														MainActivityFragment.setItemCounter(getSelected().size());
                             item.setChecked(true);
-                            view.setBackgroundColor(0x99990000);
+														MainActivityFragment.setItemCounter(getSelected().size());
+                            view.setBackgroundColor(0x996200EE);
                         }
                     }
                 }
@@ -100,9 +100,13 @@ public void setData(ArrayList<DataModelItemList> data) {
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
+                public boolean onLongClick(View view) {
                     MainActivityFragment.setMultiChoiceMode(true);
                     multiselect = true;
+                    //first Item selected with LongClick
+                    MainActivityFragment.setItemCounter(1);
+                    item.setChecked(true);
+                    view.setBackgroundColor(0x996200EE);
                     return true;
                 }
             });
