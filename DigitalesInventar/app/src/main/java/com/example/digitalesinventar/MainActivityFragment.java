@@ -263,7 +263,7 @@ public class MainActivityFragment extends Fragment {
 		}
 
 		private void setupSwipeController() {
-        swipeController = new SwipeController(new SwipeControllerActions() {
+        swipeController = new SwipeController(getContext(), new SwipeControllerActions() {
             @Override
             public void onRightClicked(int position) {
                 Log.i("onMenuItemClicked", "Delete");

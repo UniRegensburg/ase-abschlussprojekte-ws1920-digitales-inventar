@@ -1,6 +1,9 @@
 package com.example.digitalesinventar;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -28,10 +31,12 @@ class SwipeController extends ItemTouchHelper.Callback {
 	private RectF buttonInstance = null;
 	private RecyclerView.ViewHolder currentItemViewHolder = null;
 	private SwipeControllerActions buttonsActions = null;
-	private static final float buttonWidth = 300;
+	private static final float buttonWidth = 200;
+	private Context context;
 
-	public SwipeController(SwipeControllerActions buttonsActions) {
+	public SwipeController(Context context, SwipeControllerActions buttonsActions) {
 		this.buttonsActions = buttonsActions;
+		this.context = context;
 	}
 
 	@Override
@@ -122,6 +127,7 @@ class SwipeController extends ItemTouchHelper.Callback {
 						public boolean onTouch(View v, MotionEvent event) {
 							return false;
 						}
+
 					});
 					setItemsClickable(recyclerView, true);
 					swipeBack = false;
@@ -150,22 +156,24 @@ class SwipeController extends ItemTouchHelper.Callback {
 
 	private void drawButtons(Canvas c, RecyclerView.ViewHolder viewHolder) {
 		float buttonWidthWithoutPadding = buttonWidth - 20;
-		float corners = 10;
 
 		View itemView = viewHolder.itemView;
 		Paint p = new Paint();
+		Bitmap deleteIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.delete_white30px);
+		Bitmap editIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.edit_white30px);
 
+		//left button
 		RectF leftButton = new RectF(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + buttonWidthWithoutPadding, itemView.getBottom());
 		p.setColor(0xf03700B3);
-		c.drawRoundRect(leftButton, corners, corners, p);
+		c.drawRect(leftButton, p);
 		drawText("EDIT", c, leftButton, p);
-
-		//c.setBitmap(BitmapFactory.decodeResource(,R.drawable.edit30px));
-
+		//c.drawBitmap(editIcon, new Rect((int) leftButton.centerX(), (int) leftButton.centerY(), (int) leftButton.right, (int) leftButton.bottom), leftButton, p);
+		//right button
 		RectF rightButton = new RectF(itemView.getRight() - buttonWidthWithoutPadding, itemView.getTop(), itemView.getRight(), itemView.getBottom());
 		p.setColor(0xf0B00020);
-		c.drawRoundRect(rightButton, corners, corners, p);
+		c.drawRect(rightButton, p);
 		drawText("DELETE", c, rightButton, p);
+		//c.drawBitmap(deleteIcon, new Rect((int) leftButton.left, (int) leftButton.top, (int) leftButton.right, (int) leftButton.bottom), rightButton, p);
 
 		buttonInstance = null;
 		if (buttonShowedState == ButtonsState.LEFT_VISIBLE) {
@@ -176,7 +184,7 @@ class SwipeController extends ItemTouchHelper.Callback {
 		}
 	}
 
-	private void drawText(String text, Canvas c, RectF button, Paint p) {
+		private void drawText(String text, Canvas c, RectF button, Paint p) {
 		float textSize = 60;
 		p.setColor(Color.WHITE);
 		p.setAntiAlias(true);
@@ -185,6 +193,7 @@ class SwipeController extends ItemTouchHelper.Callback {
 		float textWidth = p.measureText(text);
 		c.drawText(text, button.centerX()-(textWidth/2), button.centerY()+(textSize/2), p);
 	}
+
 
 	public void onDraw(Canvas c) {
 		if (currentItemViewHolder != null) {
