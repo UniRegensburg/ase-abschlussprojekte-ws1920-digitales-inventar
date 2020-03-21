@@ -92,7 +92,7 @@ public void setData(ArrayList<DataModelItemList> data) {
                         }else{
                             item.setChecked(true);
 														MainActivityFragment.setItemCounter(getSelected().size());
-                            view.setBackgroundColor(0x996200EE);
+                            view.setBackgroundColor(0x09999999);
                         }
                     }
                 }
@@ -107,7 +107,7 @@ public void setData(ArrayList<DataModelItemList> data) {
                     //first Item selected with LongClick
                     MainActivityFragment.setItemCounter(1);
                     item.setChecked(true);
-                    view.setBackgroundColor(0x996200EE);
+                    view.setBackgroundColor(0x09999999);
                     return true;
                 }
             });
