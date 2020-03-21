@@ -26,7 +26,7 @@ enum ButtonsState {
 
 class SwipeController extends ItemTouchHelper.Callback {
 
-	private boolean swipeBack = false;
+	private boolean swipeBack;
 	private ButtonsState buttonShowedState = ButtonsState.GONE;
 	private RectF buttonInstance = null;
 	private RecyclerView.ViewHolder currentItemViewHolder = null;
@@ -108,7 +108,7 @@ class SwipeController extends ItemTouchHelper.Callback {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					setTouchUpListener(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+					setTouchUpListener(c, recyclerView, viewHolder, dX, dY, actionState, false);
 				}
 				return false;
 			}
@@ -159,21 +159,18 @@ class SwipeController extends ItemTouchHelper.Callback {
 
 		View itemView = viewHolder.itemView;
 		Paint p = new Paint();
-		Bitmap deleteIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.delete_white30px);
-		Bitmap editIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.edit_white30px);
 
 		//left button
 		RectF leftButton = new RectF(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + buttonWidthWithoutPadding, itemView.getBottom());
 		p.setColor(0xf03700B3);
 		c.drawRect(leftButton, p);
-		drawText("EDIT", c, leftButton, p);
-		//c.drawBitmap(editIcon, new Rect((int) leftButton.centerX(), (int) leftButton.centerY(), (int) leftButton.right, (int) leftButton.bottom), leftButton, p);
+		drawIcon(c, leftButton, p, R.drawable.edit_white30px);
+
 		//right button
 		RectF rightButton = new RectF(itemView.getRight() - buttonWidthWithoutPadding, itemView.getTop(), itemView.getRight(), itemView.getBottom());
 		p.setColor(0xf0B00020);
 		c.drawRect(rightButton, p);
-		drawText("DELETE", c, rightButton, p);
-		//c.drawBitmap(deleteIcon, new Rect((int) leftButton.left, (int) leftButton.top, (int) leftButton.right, (int) leftButton.bottom), rightButton, p);
+		drawIcon(c, rightButton, p, R.drawable.delete_white30px);
 
 		buttonInstance = null;
 		if (buttonShowedState == ButtonsState.LEFT_VISIBLE) {
@@ -199,5 +196,10 @@ class SwipeController extends ItemTouchHelper.Callback {
 		if (currentItemViewHolder != null) {
 			drawButtons(c, currentItemViewHolder);
 		}
+	}
+
+	private void drawIcon (Canvas c, RectF button, Paint p, int iconDrawable){
+		Bitmap icon = BitmapFactory.decodeResource(context.getResources(), iconDrawable);
+		c.drawBitmap(icon, button.left + (button.width()/2) - (icon.getWidth()/2), button.top + (button.height()/2) - (icon.getHeight()/2), p);
 	}
 }
