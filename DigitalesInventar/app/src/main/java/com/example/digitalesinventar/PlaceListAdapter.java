@@ -47,16 +47,15 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Mult
 
 		void bind(final String item) {
 			textViewPlace.setText(item);
-			placeName = item;
 
 			itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 
-					Log.i("PlaceListAdapter", "launchPlaceActivity called for " + placeName);
+					Log.i("PlaceListAdapter", "launchPlaceActivity called for " + item);
 					Intent intent = new Intent(context, SearchActivity.class);
 					Bundle extras = new Bundle();
-					extras.putString("searchQuery", placeName);
+					extras.putString("searchQuery", item);
 					extras.putBoolean("fromMain", true);
 					intent.putExtras(extras);
 					Log.i("PlaceActivity", "intent to start search created");

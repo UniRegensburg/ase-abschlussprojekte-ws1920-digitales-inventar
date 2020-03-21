@@ -66,7 +66,6 @@ public class CategoryFragment extends Fragment {
 													 Bundle savedInstanceState) {
 		View view= inflater.inflate(R.layout.fragment_main, container, false);
 		itemListView = view.findViewById(R.id.fragment_list);
-		itemListView.setLayoutManager(new LinearLayoutManager(getContext()));
 		setupList();
 		setupSwipeController();
 		return view;
@@ -77,6 +76,7 @@ public class CategoryFragment extends Fragment {
 		Log.i("catActivityFragment", "setupList called");
 		catArrayAdapter = new CategoryListAdapter(getActivity(), DatabaseActivity.categoryArray);
 		itemListView.setAdapter(catArrayAdapter);
+		itemListView.setLayoutManager(new LinearLayoutManager(getContext()));
 		Log.i("catActivityFragment", "listAdapter set");
 	}
 
