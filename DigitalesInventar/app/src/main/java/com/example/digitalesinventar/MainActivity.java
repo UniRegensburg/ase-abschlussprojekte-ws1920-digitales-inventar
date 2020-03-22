@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -63,23 +64,12 @@ public class MainActivity extends AppCompatActivity {
 	//UI-ELEMENTS --- NOTE: wird später dann noch ausgelagert in eigenstaendiges Fragment
 	Toolbar toolbar;
 	FloatingActionButton plusButton;
+	Button settingsButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		// Choose authentication providers //v1
-		List<AuthUI.IdpConfig> providers = Arrays.asList(
-			new AuthUI.IdpConfig.EmailBuilder().build(),
-			new AuthUI.IdpConfig.GoogleBuilder().build());
-
-		// Create and launch sign-in intent
-		startActivityForResult(
-			AuthUI.getInstance()
-				.createSignInIntentBuilder()
-				.setAvailableProviders(providers)
-				.build(),
-			RC_SIGN_IN);
+		callLogin();
 	}
 
 	@Override
@@ -118,10 +108,14 @@ public class MainActivity extends AppCompatActivity {
 		int id = item.getItemId();
 
 		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings) {
+		if (id == R.id.action_logout) {
+			FirebaseAuth.getInstance().signOut();
+			Log.i("logout", "logout clicked");
+			callLogin();
 			return true;
+		} else {
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -168,6 +162,20 @@ public class MainActivity extends AppCompatActivity {
 		if (account != null) {
 			// ok
 		}
+	}
+
+	private void callLogin() {
+		List<AuthUI.IdpConfig> providers = Arrays.asList(
+			new AuthUI.IdpConfig.EmailBuilder().build(),
+			new AuthUI.IdpConfig.GoogleBuilder().build());
+
+		// Create and launch sign-in intent
+		startActivityForResult(
+			AuthUI.getInstance()
+				.createSignInIntentBuilder()
+				.setAvailableProviders(providers)
+				.build(),
+			RC_SIGN_IN);
 	}
 
 	//sets and initializes UI for MainActivity
