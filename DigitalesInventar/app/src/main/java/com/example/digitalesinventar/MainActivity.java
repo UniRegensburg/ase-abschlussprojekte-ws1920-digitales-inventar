@@ -204,11 +204,11 @@ public class MainActivity extends AppCompatActivity {
 	private void setupSpinnerArrays() {
 		spinnerArrayLarge.add("Neueste");
 		spinnerArrayLarge.add("Älteste");
-		spinnerArrayLarge.add("Name absteigend");
 		spinnerArrayLarge.add("Name aufsteigend");
+		spinnerArrayLarge.add("Name absteigend");
 
-		spinnerArraySmall.add("Name absteigend");
 		spinnerArraySmall.add("Name aufsteigend");
+		spinnerArraySmall.add("Name absteigend");
 	}
 
 	private void setupBigSpinner() {
