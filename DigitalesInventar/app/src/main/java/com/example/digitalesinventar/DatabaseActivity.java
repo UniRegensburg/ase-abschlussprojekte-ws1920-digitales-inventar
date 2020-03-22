@@ -45,7 +45,7 @@ public class DatabaseActivity {
     private static boolean currentlyLoading = false;
 
     //ADD ITEM TO DB
-    public static void addEntry(String name, String category , String location, String buyDate, double value, boolean isChecked, final boolean newImage) {
+    public static void addEntry(String name, String category , String location, String buyDate, double value, final boolean newImage) {
         Log.d("DB addEntry", "item added");
         long tsLong = System.currentTimeMillis();
         final String ts = Long.toString(tsLong);
@@ -55,7 +55,7 @@ public class DatabaseActivity {
         entry.put("location", location);
         entry.put("buydate", buyDate);
         entry.put("value", value);
-        entry.put("checked", isChecked);
+        //entry.put("checked", isChecked);
         entry.put("ts", ts);
 
         //db.collection("items").document(ts)
@@ -82,23 +82,22 @@ public class DatabaseActivity {
     }
 
     //UPDATE EDITED ITEM IN DB
-    public static void updateEntry(final String id, String name, String category, String location, String buyDate, String value, boolean isChecked, final Long timestamp, final boolean newImage) {
-      //TODO remove timestamp as it's the same as id
+    public static void updateEntry(String name, String category, String location, String buyDate, String value, final Long timestamp, final boolean newImage) {
       Double valueWip = Double.valueOf(0);
       if (value.length() > 0) { //catch for parsing error
         valueWip = Double.parseDouble(value);
       }
-      final DataModelItemList wipItem = new DataModelItemList(name, category, location, buyDate, valueWip, isChecked, timestamp);
+      final DataModelItemList wipItem = new DataModelItemList(name, category, location, buyDate, valueWip, false, timestamp);
       //Log.d("DB updateEntry", "data:"+id+" ;"+name+" ;"+category+" ;"+location+" ;"+timestamp);
-      db.collection("users").document(MainActivity.userID).collection("items").document(id)
-        .update("name", name, "category", category, "location", location, "buydate", buyDate, "value", valueWip, "checked", isChecked,"ts", timestamp)
+      db.collection("users").document(MainActivity.userID).collection("items").document(String.valueOf(timestamp))
+        .update("name", name, "category", category, "location", location, "buydate", buyDate, "value", valueWip,"ts", timestamp)
           .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void avoid) {
               EditItemActivity.showToast(true);
               Log.d("DB updateEntry", "item updated");
               if (newImage) {
-                deleteImage(id);
+                deleteImage(String.valueOf(timestamp));
                 if (cachedBitmap != null) {
                   uploadImage(cachedBitmap, String.valueOf(timestamp));
                 }
@@ -139,7 +138,7 @@ public class DatabaseActivity {
                   for (QueryDocumentSnapshot document : task.getResult()) {
                     //add entry as DataModelItemList object
                     //to be able to reference different attributes of the object later on
-                    DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), document.get("buydate").toString(), Double.parseDouble(document.get("value").toString()), Boolean.parseBoolean(document.get("checked").toString()), Long.parseLong(document.get("ts").toString()));
+                    DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), document.get("buydate").toString(), Double.parseDouble(document.get("value").toString()), false, Long.parseLong(document.get("ts").toString()));
                     itemArray.add(0, newItem); //add item on top of the list
                     itemArrayBackup.add(0, newItem);
                   }
