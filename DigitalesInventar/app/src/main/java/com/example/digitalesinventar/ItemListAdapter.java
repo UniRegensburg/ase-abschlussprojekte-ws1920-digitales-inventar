@@ -3,6 +3,7 @@ package com.example.digitalesinventar;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -87,11 +88,11 @@ public void setData(ArrayList<DataModelItemList> data) {
                         if (item.getChecked()) {
                             item.setChecked(false);
 														MainActivityFragment.setItemCounter(getSelected().size());
-														view.setBackgroundColor(0x00999999);
+														view.setBackgroundColor(Color.WHITE);
                         }else{
                             item.setChecked(true);
 														MainActivityFragment.setItemCounter(getSelected().size());
-                            view.setBackgroundColor(0x996200EE);
+                            view.setBackgroundColor(0x09999999);
                         }
                     }
                 }
@@ -106,7 +107,7 @@ public void setData(ArrayList<DataModelItemList> data) {
                     //first Item selected with LongClick
                     MainActivityFragment.setItemCounter(1);
                     item.setChecked(true);
-                    view.setBackgroundColor(0x996200EE);
+                    view.setBackgroundColor(0x09999999);
                     return true;
                 }
             });
@@ -129,12 +130,16 @@ public void setData(ArrayList<DataModelItemList> data) {
     }
 
 
-		public void unselectAll(View viewHolder) {
+		public void unselectAll(RecyclerView viewHolder) {
 	Log.i("selectedItems", "selected: " + getSelected().toString());
 			for (int i = 0; i < dataSet.size(); i++) {
 				dataSet.get(i).setChecked(false);
 			}
 			notifyDataSetChanged();
+			//reset colors
+			for (int i = 0; i < viewHolder.getChildCount(); i++) {
+			    viewHolder.getChildAt(i).setBackgroundColor(Color.WHITE);
+      }
 		}
 
     @NonNull

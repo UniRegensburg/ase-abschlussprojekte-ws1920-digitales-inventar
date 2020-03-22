@@ -220,6 +220,10 @@ public class MainActivityFragment extends Fragment {
     static void setMultiChoiceMode(boolean on) {
     	if (on) {
 				itemListView.setBackgroundColor(0x99999999);
+				//deactivate LongClicks in childViews
+				for (int i = 0; i < itemListView.getChildCount(); i++) {
+				    itemListView.getChildAt(i).setLongClickable(false);
+        }
 				heading.setBackgroundColor(0x99999999);
 				heading.setVisibility(View.VISIBLE);
 			} else {
