@@ -53,7 +53,9 @@ public class DeleteItemsConfirmationDialogFragment extends DialogFragment {
 					public void onClick(DialogInterface dialog, int id) {
 						// The item gets deleted
 						Log.i("deleteItemConfirmDialog", "timestamps" + timestamps);
-						DatabaseActivity.deleteItemFromDatabase(timestamps.get(0));
+						if (timestamps.size() > 0) {
+							DatabaseActivity.deleteItemFromDatabase(timestamps.get(0));
+						}
 					}
 				})
 				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
