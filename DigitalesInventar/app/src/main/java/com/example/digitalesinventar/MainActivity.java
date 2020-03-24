@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
 	Integer currentCase = 0;
 
-	Spinner sortBySpinner;
+	public static Spinner sortBySpinner;
 	ArrayAdapter<String> spinnerAdapter;
 	ArrayList<String> spinnerArrayLarge = new ArrayList<>();
 	ArrayList<String> spinnerArraySmall = new ArrayList<>();

@@ -193,6 +193,8 @@ public class MainActivityFragment extends Fragment {
     static void updateList() {
         Log.i("MainActivityFragment", "adapter dataset changed");
         itemArrayAdapter.notifyDataSetChanged();
+        MainActivity.sortBySpinner.setSelection(0);
+        //sortByNewest();
     }
 
 
