@@ -76,6 +76,14 @@ public class PlaceFragment extends Fragment {
 	public static void updateList() { //TODO call at add/update item in db
 		Log.i("placeActivityFragment", "adapter dataset changed");
 		placeArrayAdapter.notifyDataSetChanged();
+		switch (MainActivity.spinnerPos) { //not really necessary as places dont update in this scope
+			case 0:
+				sortByNameDown();
+				break;
+			case 1:
+				sortByNameUp();
+				break;
+		}
 	}
 
 	private void launchPlace() {

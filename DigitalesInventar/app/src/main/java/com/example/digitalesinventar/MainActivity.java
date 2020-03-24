@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 	TabLayout tabLayout;
 
 	Integer currentCase = 0;
+	public static Integer spinnerPos = 0;
 
 	public static Spinner sortBySpinner;
 	ArrayAdapter<String> spinnerAdapter;
@@ -242,28 +243,36 @@ public class MainActivity extends AppCompatActivity {
 					case 0:
 						//Items
 						if (sortBySpinner.getSelectedItem() == "Neueste") {
+							spinnerPos = 0;
 							MainActivityFragment.sortByNewest();
 						} else if (sortBySpinner.getSelectedItem() == "Älteste") {
+							spinnerPos = 1;
 							MainActivityFragment.sortByOldest();
 						} else if (sortBySpinner.getSelectedItem() == "Name absteigend") {
-							MainActivityFragment.sortByNameDown();
-						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
+							spinnerPos = 2;
 							MainActivityFragment.sortByNameUp();
+						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
+							spinnerPos = 3;
+							MainActivityFragment.sortByNameDown();
 						}
 						break;
 					case 1:
 						//Category
 						if (sortBySpinner.getSelectedItem() == "Name absteigend") {
+							spinnerPos = 0;
 							CategoryFragment.sortByNameDown();
 						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
+							spinnerPos = 1;
 							CategoryFragment.sortByNameUp();
 						}
 						break;
 					case 2:
 						//Location
 						if (sortBySpinner.getSelectedItem() == "Name absteigend") {
+							spinnerPos = 0;
 							PlaceFragment.sortByNameDown();
 						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
+							spinnerPos = 1;
 							PlaceFragment.sortByNameUp();
 						}
 						break;
