@@ -49,11 +49,11 @@ public class ViewItemActivity extends AppCompatActivity {
 		initView();
 		setupButtons();
 		assignDataFromIntent(getIntent());
-		defaultBmp = BitmapFactory.decodeResource(this.getResources(),
-			R.drawable.img_holder);
 	}
 
 	public void initView() {
+		defaultBmp = BitmapFactory.decodeResource(this.getResources(),
+			R.drawable.img_holder);
 		//UI-ELEMENTS
 		//TEXT-VIEWS
 		textViewName = findViewById(R.id.Name);
