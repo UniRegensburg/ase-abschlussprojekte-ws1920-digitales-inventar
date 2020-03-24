@@ -83,6 +83,14 @@ public class CategoryFragment extends Fragment {
 	public static void updateList() {
 		Log.i("catActivityFragment", "adapter dataset changed");
 		catArrayAdapter.notifyDataSetChanged();
+		switch (MainActivity.spinnerPos) {
+			case 0:
+				sortByNameDown();
+				break;
+			case 1:
+				sortByNameUp();
+				break;
+		}
 	}
 
 	private void editCategory(String category){

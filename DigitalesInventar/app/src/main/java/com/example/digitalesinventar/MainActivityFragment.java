@@ -95,7 +95,7 @@ public class MainActivityFragment extends Fragment {
     }
 
 
-    static void sortByNameUp() {
+    static void sortByNameDown() {
         Log.d("mainSort", "nameUp");
         extractNames();
         Collections.sort(nameList, new Comparator<String>() {
@@ -107,7 +107,7 @@ public class MainActivityFragment extends Fragment {
         sortItemArrayBySortedNames();
     }
 
-    static void sortByNameDown() {
+    static void sortByNameUp() {
         Log.d("mainSort", "nameDown");
         extractNames();
         Collections.sort(nameList, new Comparator<String>() {
@@ -193,6 +193,21 @@ public class MainActivityFragment extends Fragment {
     static void updateList() {
         Log.i("MainActivityFragment", "adapter dataset changed");
         itemArrayAdapter.notifyDataSetChanged();
+        MainActivity.sortBySpinner.setSelection(MainActivity.spinnerPos); //also sorts
+        switch (MainActivity.spinnerPos) {
+            case 0:
+                sortByNewest();
+                break;
+            case 1:
+                sortByOldest();
+                break;
+            case 2:
+                sortByNameUp();
+                break;
+            case 3:
+                sortByNameDown();
+                break;
+        }
     }
 
 
