@@ -331,7 +331,7 @@ public class DatabaseActivity {
     });
   }
 
-  public static void downloadImage(String itemID, final ImageView view) {
+  public static void downloadImage(String itemID, final ImageView view, final Bitmap defaultBitmap) {
     String imgPath = MainActivity.userID + "/images/" + itemID + ".jpg";
     StorageReference islandRef = storageRef.child(imgPath);
 
@@ -341,7 +341,7 @@ public class DatabaseActivity {
       public void onSuccess(byte[] bytes) {
         // Data for "images/island.jpg" is returns, use this as needed
         Log.d("loadImg", "2 success from db");
-//        Log.d("currentIMG", ": " + view.getImageMatrix().toShortString());
+        //Log.d("currentIMG", ": " + view.getImageMatrix().toShortString());
         //ImageView imageView = findViewById(R.id.image_View);
         //Bitmap bitmap = MediaStore.Images.Media.
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -354,6 +354,7 @@ public class DatabaseActivity {
       @Override
       public void onFailure(@NonNull Exception exception) {
         // Handle any errors
+        view.setImageBitmap(defaultBitmap);
         Log.d("loadImg", "2 fail");
       }
     });
@@ -370,6 +371,11 @@ public class DatabaseActivity {
         public void onSuccess(Void aVoid) {
           // File deleted successfully
           Log.d("delItem", "2 success");
+          //try {
+            MainActivityFragment.updateList();
+          //} catch (Exception e) {
+          //  e.printStackTrace();
+          //}
         }
       }).addOnFailureListener(new OnFailureListener() {
         @Override

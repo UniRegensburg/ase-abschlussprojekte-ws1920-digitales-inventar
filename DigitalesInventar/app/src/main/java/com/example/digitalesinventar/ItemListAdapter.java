@@ -3,6 +3,8 @@ package com.example.digitalesinventar;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,11 +33,13 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.MultiV
     ArrayList<DataModelItemList> filteredList;
     boolean multiselect;
     @SuppressLint("RestrictedApi") DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+    static Bitmap defaultBitmap;
 
-public ItemListAdapter(Context context, ArrayList<DataModelItemList> data) {
+public ItemListAdapter(Context context, ArrayList<DataModelItemList> data, Bitmap defaultBitmap) {
     this.context = context;
     this.dataSet = data;
     this.filteredList = data;
+    this.defaultBitmap = defaultBitmap;
 }
 
 public void setData(ArrayList<DataModelItemList> data) {
@@ -70,7 +74,7 @@ public void setData(ArrayList<DataModelItemList> data) {
             textViewCategory.setText(item.getItemCategory());
             textViewDate.setText(dateFormat.format(InputChecker.formattedDate(item)));
             timestamp = item.getTimestamp();
-            DatabaseActivity.downloadImage(Long.toString(item.getTimestamp()), imageView);
+            DatabaseActivity.downloadImage(Long.toString(item.getTimestamp()), imageView, defaultBitmap);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

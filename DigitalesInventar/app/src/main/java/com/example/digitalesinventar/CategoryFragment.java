@@ -85,10 +85,10 @@ public class CategoryFragment extends Fragment {
 		catArrayAdapter.notifyDataSetChanged();
 		switch (MainActivity.spinnerPos) {
 			case 0:
-				sortByNameDown();
+				sortByNameUp();
 				break;
 			case 1:
-				sortByNameUp();
+				sortByNameDown();
 				break;
 		}
 	}

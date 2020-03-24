@@ -1,6 +1,8 @@
 package com.example.digitalesinventar;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,8 +41,14 @@ public class MainActivityFragment extends Fragment {
     private static ArrayList<DataModelItemList> filteredList;// = new ArrayList<>();
     private static ArrayList<String> nameList = new ArrayList<>();
     private static ArrayList<String> tsList = new ArrayList<>();
+    static Bitmap defaultBitmap;
 
-    public MainActivityFragment()  {
+    public MainActivityFragment(Bitmap defaultBitmap)  {
+        this.defaultBitmap = defaultBitmap;
+    }
+
+    public MainActivityFragment() {
+
     }
 
     private static void extractNames() {
@@ -101,7 +109,7 @@ public class MainActivityFragment extends Fragment {
         Collections.sort(nameList, new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
-                return s1.compareToIgnoreCase(s2);
+                return s2.compareToIgnoreCase(s1);
             }
         });
         sortItemArrayBySortedNames();
@@ -113,7 +121,7 @@ public class MainActivityFragment extends Fragment {
         Collections.sort(nameList, new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
-                return s2.compareToIgnoreCase(s1);
+                return s1.compareToIgnoreCase(s2);
             }
         });
         sortItemArrayBySortedNames();
@@ -185,7 +193,7 @@ public class MainActivityFragment extends Fragment {
 		private void setupList() {
         Log.i("MainActivityFragment", "setupList called");
         filteredList = DatabaseActivity.itemArray;
-        itemArrayAdapter = new ItemListAdapter(getActivity(), filteredList);
+        itemArrayAdapter = new ItemListAdapter(getActivity(), filteredList, defaultBitmap);
         itemListView.setAdapter(itemArrayAdapter);
         Log.i("MainActivityFragment", "listAdapter set");
     }

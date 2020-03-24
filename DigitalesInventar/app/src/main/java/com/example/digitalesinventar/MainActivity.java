@@ -6,6 +6,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 	ArrayList<String> spinnerArrayLarge = new ArrayList<>();
 	ArrayList<String> spinnerArraySmall = new ArrayList<>();
 
+	static Bitmap defaultBitmap;
+
 
 	//UI-ELEMENTS --- NOTE: wird später dann noch ausgelagert in eigenstaendiges Fragment
 	Toolbar toolbar;
@@ -84,8 +88,11 @@ public class MainActivity extends AppCompatActivity {
 		ComponentName componentName = new ComponentName(this, SearchActivity.class);
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
 
+		defaultBitmap = BitmapFactory.decodeResource(this.getResources(),
+			R.drawable.img_holder);
+
 		// setupSearchListener in Fragment class
-		MainActivityFragment fragment = new MainActivityFragment();
+		MainActivityFragment fragment = new MainActivityFragment(defaultBitmap);
 		fragment.setupSearchListener(searchView);
 		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
 		return true;
@@ -248,32 +255,32 @@ public class MainActivity extends AppCompatActivity {
 						} else if (sortBySpinner.getSelectedItem() == "Älteste") {
 							spinnerPos = 1;
 							MainActivityFragment.sortByOldest();
-						} else if (sortBySpinner.getSelectedItem() == "Name absteigend") {
+						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
 							spinnerPos = 2;
 							MainActivityFragment.sortByNameUp();
-						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
+						} else if (sortBySpinner.getSelectedItem() == "Name absteigend") {
 							spinnerPos = 3;
 							MainActivityFragment.sortByNameDown();
 						}
 						break;
 					case 1:
 						//Category
-						if (sortBySpinner.getSelectedItem() == "Name absteigend") {
+						if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
 							spinnerPos = 0;
-							CategoryFragment.sortByNameDown();
-						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
-							spinnerPos = 1;
 							CategoryFragment.sortByNameUp();
+						} else if (sortBySpinner.getSelectedItem() == "Name absteigend") {
+							spinnerPos = 1;
+							CategoryFragment.sortByNameDown();
 						}
 						break;
 					case 2:
 						//Location
-						if (sortBySpinner.getSelectedItem() == "Name absteigend") {
+						if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
 							spinnerPos = 0;
-							PlaceFragment.sortByNameDown();
-						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
-							spinnerPos = 1;
 							PlaceFragment.sortByNameUp();
+						} else if (sortBySpinner.getSelectedItem() == "Name absteigend") {
+							spinnerPos = 1;
+							PlaceFragment.sortByNameDown();
 						}
 						break;
 				}

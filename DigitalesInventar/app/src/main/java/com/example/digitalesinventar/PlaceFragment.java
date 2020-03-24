@@ -78,10 +78,10 @@ public class PlaceFragment extends Fragment {
 		placeArrayAdapter.notifyDataSetChanged();
 		switch (MainActivity.spinnerPos) { //not really necessary as places dont update in this scope
 			case 0:
-				sortByNameDown();
+				sortByNameUp();
 				break;
 			case 1:
-				sortByNameUp();
+				sortByNameDown();
 				break;
 		}
 	}

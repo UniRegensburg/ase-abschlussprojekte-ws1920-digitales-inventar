@@ -2,6 +2,8 @@ package com.example.digitalesinventar;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,7 @@ public class SearchActivity extends AppCompatActivity {
 	String searchquery;
 	TextView result;
 	Button backButton;
+	static Bitmap defaultBitmap;
 
 
 	//Important to handle Intent in onCreate AND onNewIntent!!
@@ -44,6 +47,8 @@ public class SearchActivity extends AppCompatActivity {
 			}
 		});
 		handleIntent(getIntent());
+		defaultBitmap = BitmapFactory.decodeResource(this.getResources(),
+			R.drawable.img_holder);
 	}
 
 	@Override
@@ -69,7 +74,7 @@ public class SearchActivity extends AppCompatActivity {
 	public void search(String query){
 		result.setText("Suchergebnis für '" + query + "'");
 		Log.i("SearchActivity", "query: "+ query);
-		adapter = new ItemListAdapter(this, filteredList);
+		adapter = new ItemListAdapter(this, filteredList, defaultBitmap);
 		itemListView.setAdapter(adapter);
 		dataSet = DatabaseActivity.itemArray;
 		Log.i("DoMySearch", "dataset: " + dataSet);

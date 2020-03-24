@@ -121,7 +121,7 @@ public class ViewItemActivity extends AppCompatActivity {
 			textViewValue.setText(Double.toString(currentItem.getItemValue()) + "€");
 			Log.d("Intent data: ",  "" + currentItem.getItemName());
 			if (extras.getBoolean("fromMain")) {
-				DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
+				DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView, defaultBmp);
 				imgView.invalidate();
 			}
 		} else {
@@ -147,7 +147,7 @@ public class ViewItemActivity extends AppCompatActivity {
 			if (bitmap != null) {
 				imgView.setImageBitmap(bitmap);
 			} else {
-				imgView.setImageBitmap(defaultBmp);
+				imgView.setImageBitmap(defaultBmp); //still necessary?
 			}
 			imgView.invalidate();
 		} else {

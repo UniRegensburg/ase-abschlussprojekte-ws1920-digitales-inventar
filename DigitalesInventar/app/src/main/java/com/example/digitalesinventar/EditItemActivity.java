@@ -342,7 +342,7 @@ public class EditItemActivity extends AppCompatActivity {
 				}
 			}
 
-			DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView);
+			DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView, defaultImage);
 			//downloads again after downloading in viewItemActivity
 		} else {
 			Log.d("delkat", "edit code 0");

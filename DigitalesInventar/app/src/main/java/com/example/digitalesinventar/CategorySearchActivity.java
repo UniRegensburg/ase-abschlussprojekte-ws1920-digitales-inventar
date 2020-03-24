@@ -1,6 +1,8 @@
 package com.example.digitalesinventar;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ public class CategorySearchActivity extends AppCompatActivity {
 	long timestamp;
 	Toolbar toolbar;
 	TextView result;
+	Bitmap defaultBitmap;
 
 
 	//Important to handle Intent in onCreate AND onNewIntent!!
@@ -33,7 +36,8 @@ public class CategorySearchActivity extends AppCompatActivity {
 		itemListView.setLayoutManager(new LinearLayoutManager(this));
 		result = findViewById(R.id.searchresult);
 		handleIntent(getIntent());
-		
+		defaultBitmap = BitmapFactory.decodeResource(this.getResources(),
+			R.drawable.img_holder);
 	}
 
 	@Override
@@ -53,7 +57,7 @@ public class CategorySearchActivity extends AppCompatActivity {
 	private void search(String catName) {
 		Log.i("SearchActivity", "catName: " + catName);
 		result.setText("Kategorie '" + catName + "':");
-		adapter = new ItemListAdapter(this, filteredList);
+		adapter = new ItemListAdapter(this, filteredList, defaultBitmap);
 		itemListView.setAdapter(adapter);
 		dataSet = DatabaseActivity.itemArray;
 		Log.i("DoMySearch", "dataset: " + dataSet);
