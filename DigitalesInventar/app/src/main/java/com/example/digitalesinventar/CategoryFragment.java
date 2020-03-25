@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
@@ -202,6 +203,24 @@ public class CategoryFragment extends Fragment {
 			Log.i("DoMyFilter", "catList: " + catArray);
 			catArrayAdapter.notifyDataSetChanged();
 		}
+	}
+
+	void setupSearchListener(SearchView searchView){
+		Log.i("CatActivityFragment", "setupSearchListener");
+		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				return false;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				Log.i("SetupSearchListener", "onQueryTextChange");
+				//itemArrayAdapter.getFilter().filter(newText);
+				doLiveUpdates(newText);
+				return true;
+			}
+		});
 	}
 
 	private void setupSwipeController() {

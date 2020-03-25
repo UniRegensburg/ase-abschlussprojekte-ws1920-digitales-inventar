@@ -248,6 +248,9 @@ public class MainActivity extends AppCompatActivity {
 				//Log.i("sortSpinner", "onItemSelected:case,name: "+currentCase+","+sortBySpinner.getSelectedItem());
 				switch (currentCase) {
 					case 0:
+						MainActivityFragment fragment = new MainActivityFragment(defaultBitmap);
+						fragment.setupSearchListener(searchView);
+						getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
 						//Items
 						if (sortBySpinner.getSelectedItem() == "Neueste") {
 							spinnerPos = 0;
@@ -264,6 +267,9 @@ public class MainActivity extends AppCompatActivity {
 						}
 						break;
 					case 1:
+						CategoryFragment fragment1 = new CategoryFragment();
+						fragment1.setupSearchListener(searchView);
+						getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment1).commit();
 						//Category
 						if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
 							spinnerPos = 0;
@@ -274,6 +280,9 @@ public class MainActivity extends AppCompatActivity {
 						}
 						break;
 					case 2:
+						PlaceFragment fragment2 = new PlaceFragment();
+						fragment2.setupSearchListener(searchView);
+						getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment2).commit();
 						//Location
 						if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
 							spinnerPos = 0;
