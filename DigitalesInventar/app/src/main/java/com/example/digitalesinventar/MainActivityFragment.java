@@ -2,7 +2,6 @@ package com.example.digitalesinventar;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
@@ -19,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +35,7 @@ public class MainActivityFragment extends Fragment {
     private static TextView itemCounter;
     private Button cancelMultiSelect;
     private Button deleteMultipleItems;
+    private String[] searchArray;
     private long timestamp;
     int count;
     ArrayList<String> selected_items = new ArrayList<>();
@@ -267,9 +268,56 @@ public class MainActivityFragment extends Fragment {
     	setMultiChoiceMode(false);
 		}
 
- 		void setupSearchListener(SearchView searchView){
+		private String[] getSearchArray(){
+        //searchArray = new String[]{"Baseball", "Baseballschläger", "Klopapier", "Trompete", "Volleyball", "dietrich"};
+        //Log.i("getSearchArray", "array: " + searchArray);
+        //return searchArray;
+        DatabaseActivity.loadBackup();
+        ArrayList<DataModelItemList> itemList = new ArrayList<>();
+        itemList.addAll(DatabaseActivity.itemArray);
+        Log.i("getSearchArray", "itemList: " + itemList);
+        for (int i = 0; i < itemList.size(); i++){
+            Log.i("getSearchArray", "for: " + i + " - itemName: " + itemList.get(i).itemName );
+            searchArray[i] = itemList.get(i).itemName;
+        }
+        Log.i("getSearchArray", "array: " + searchArray);
+        return searchArray;
+    }
+
+ 		void setupSearchListener(MaterialSearchView searchView){
         Log.i("MainActivityFragment", "setupSearchListener");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        DatabaseActivity.getDataFromDatabase(); //not working
+        String[] searchArray = getSearchArray();
+        Log.i("setupSearchListener", "searchArray: " + searchArray);
+        searchView.setSuggestions(searchArray);
+
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.i("SetupSearchListener", "onQueryTextChange");
+                doLiveUpdates(newText);
+                return true;
+            }
+        });
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+
+            }
+        });
+
+        /*searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -282,7 +330,7 @@ public class MainActivityFragment extends Fragment {
                 doLiveUpdates(newText);
                 return true;
             }
-        });
+        });*/
     }
 
     static void setItemCounter(int count) {

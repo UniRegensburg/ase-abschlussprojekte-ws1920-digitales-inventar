@@ -1,9 +1,6 @@
 package com.example.digitalesinventar;
 
 import android.app.AlertDialog;
-import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -39,6 +35,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 	private static final int RC_SIGN_IN = 123; //wieso
 	static FirebaseFirestore db = FirebaseFirestore.getInstance();
 	public static String userID = "defaultEmptyID";
-	private SearchView searchView;
+	private MaterialSearchView searchView;
 
 	FrameLayout frameLayout;
 	TabLayout tabLayout;
@@ -83,15 +80,20 @@ public class MainActivity extends AppCompatActivity {
 		getMenuInflater().inflate(R.menu.menu_main, menu);
 
 		// Get SearchView and set the searchable configuration
-		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		searchView = (SearchView) menu.findItem(R.id.search_bar).getActionView();
-		ComponentName componentName = new ComponentName(this, SearchActivity.class);
-		searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+		//SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		//searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+		//MenuItem item = menu.findItem(R.id.action_search);
+		//searchView.setMenuItem(item);
+		//ComponentName componentName = new ComponentName(this, SearchActivity.class);
+		//searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
 
 		defaultBitmap = BitmapFactory.decodeResource(this.getResources(),
 			R.drawable.img_holder);
 
 		// setupSearchListener in Fragment class
+		searchView = (MaterialSearchView) findViewById(R.id.search_view);
+		MenuItem menuItem = menu.findItem(R.id.action_search);
+		searchView.setMenuItem(menuItem);
 		MainActivityFragment fragment = new MainActivityFragment(defaultBitmap);
 		fragment.setupSearchListener(searchView);
 		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
@@ -101,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	public void onBackPressed() {
 		// close search view on back button pressed
-		if (!searchView.isIconified()) {
-			searchView.setIconified(true);
+		if (searchView.isSearchOpen()) {
+			searchView.closeSearch();
 			return;
 		}
 		super.onBackPressed();

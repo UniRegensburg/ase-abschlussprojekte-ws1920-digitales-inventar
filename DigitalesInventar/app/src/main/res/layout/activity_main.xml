@@ -28,6 +28,11 @@
             app:layout_anchorGravity="center"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
