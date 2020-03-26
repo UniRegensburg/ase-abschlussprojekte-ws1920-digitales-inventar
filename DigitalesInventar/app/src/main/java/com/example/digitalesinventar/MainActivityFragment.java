@@ -2,7 +2,6 @@ package com.example.digitalesinventar;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;

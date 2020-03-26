@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -65,11 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
 	static Bitmap defaultBitmap;
 
-
-	//UI-ELEMENTS --- NOTE: wird später dann noch ausgelagert in eigenstaendiges Fragment
 	Toolbar toolbar;
 	FloatingActionButton plusButton;
-	Button settingsButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
