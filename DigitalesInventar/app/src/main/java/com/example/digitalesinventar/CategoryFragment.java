@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
@@ -19,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -205,9 +206,9 @@ public class CategoryFragment extends Fragment {
 		}
 	}
 
-	void setupSearchListener(SearchView searchView){
+	void setupSearchListener(MaterialSearchView searchView){
 		Log.i("CatActivityFragment", "setupSearchListener");
-		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+		searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextSubmit(String query) {
 				return false;

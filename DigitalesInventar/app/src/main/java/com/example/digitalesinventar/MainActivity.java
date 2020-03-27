@@ -1,9 +1,6 @@
 package com.example.digitalesinventar;
 
 import android.app.AlertDialog;
-import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -38,6 +35,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 	private static final int RC_SIGN_IN = 123; //wieso
 	static FirebaseFirestore db = FirebaseFirestore.getInstance();
 	public static String userID = "defaultEmptyID";
-	private SearchView searchView;
+	private MaterialSearchView searchView;
 
 	FrameLayout frameLayout;
 	TabLayout tabLayout;
@@ -78,27 +76,17 @@ public class MainActivity extends AppCompatActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_main, menu);
 
-		// Get SearchView and set the searchable configuration
-		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		searchView = (SearchView) menu.findItem(R.id.search_bar).getActionView();
-		ComponentName componentName = new ComponentName(this, SearchActivity.class);
-		searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
-
-		defaultBitmap = BitmapFactory.decodeResource(this.getResources(),
-			R.drawable.img_holder);
-
-		// setupSearchListener in Fragment class
-		MainActivityFragment fragment = new MainActivityFragment(defaultBitmap);
-		fragment.setupSearchListener(searchView);
-		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
+		// setupSearchIcon
+		MenuItem menuItem = menu.findItem(R.id.action_search);
+		searchView.setMenuItem(menuItem);
 		return true;
 	}
 
 	@Override
 	public void onBackPressed() {
 		// close search view on back button pressed
-		if (!searchView.isIconified()) {
-			searchView.setIconified(true);
+		if (searchView.isSearchOpen()) {
+			searchView.closeSearch();
 			return;
 		}
 		super.onBackPressed();
@@ -117,7 +105,10 @@ public class MainActivity extends AppCompatActivity {
 			Log.i("logout", "logout clicked");
 			callLogin();
 			return true;
-		} else {
+		} else if(id == R.id.action_search){
+			Log.i("search", "search clicked");
+			return true;
+		} else{
 			return super.onOptionsItemSelected(item);
 		}
 	}
@@ -190,6 +181,14 @@ public class MainActivity extends AppCompatActivity {
 		setSupportActionBar(toolbar);
 		DatabaseActivity.getDataFromDatabase();
 		DatabaseActivity.getCategoriesFromDatabase();
+
+		//setupSearchListener in MainFragment and pictures
+		defaultBitmap = BitmapFactory.decodeResource(this.getResources(),
+			R.drawable.img_holder);
+		searchView = (MaterialSearchView) findViewById(R.id.search_view);
+		MainActivityFragment fragment = new MainActivityFragment(defaultBitmap);
+		fragment.setupSearchListener(searchView);
+		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
 
 		//initialise Button at the start
 		plusButton = findViewById(R.id.plusButton);

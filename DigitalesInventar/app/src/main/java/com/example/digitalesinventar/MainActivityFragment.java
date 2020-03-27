@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
@@ -18,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +35,7 @@ public class MainActivityFragment extends Fragment {
     private static TextView itemCounter;
     private Button cancelMultiSelect;
     private Button deleteMultipleItems;
+    private String[] searchArray;
     private long timestamp;
     int count;
     ArrayList<String> selected_items = new ArrayList<>();
@@ -266,9 +268,28 @@ public class MainActivityFragment extends Fragment {
     	setMultiChoiceMode(false);
 		}
 
- 		void setupSearchListener(SearchView searchView){
+		//method to extract itemNames - not working
+		private String[] getSearchArray(){
+        DatabaseActivity.loadBackup();
+        ArrayList<DataModelItemList> itemList = new ArrayList<>();
+        itemList.addAll(DatabaseActivity.itemArray);
+        Log.i("getSearchArray", "itemList: " + itemList);
+        for (int i = 0; i < itemList.size(); i++){
+            Log.i("getSearchArray", "for: " + i + " - itemName: " + itemList.get(i).itemName );
+            searchArray[i] = itemList.get(i).itemName;
+        }
+        Log.i("getSearchArray", "array: " + searchArray);
+        return searchArray;
+    }
+
+ 		void setupSearchListener(MaterialSearchView searchView){
         Log.i("MainActivityFragment", "setupSearchListener");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        //String[] searchArray = getSearchArray();
+        searchArray = new String[]{"Baseball", "Baseballschläger", "Klopapier", "Trompete", "Volleyball", "dietrich"}; //noch durch allgmeine Funktion tauschen
+
+        searchView.closeSearch();
+        searchView.setSuggestions(searchArray);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -277,7 +298,6 @@ public class MainActivityFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.i("SetupSearchListener", "onQueryTextChange");
-                //itemArrayAdapter.getFilter().filter(newText);
                 doLiveUpdates(newText);
                 return true;
             }
