@@ -12,14 +12,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <View style="@style/Divider"/>
-
         <RelativeLayout
             android:id="@+id/itemsHeading"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
-            android:visibility="invisible">
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/cancelMultiSelect"
@@ -71,6 +69,7 @@
                 android:id="@+id/fragment_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/white"
                 android:orientation="horizontal"
                 android:clipToPadding="false"
                 android:overScrollMode="never"
