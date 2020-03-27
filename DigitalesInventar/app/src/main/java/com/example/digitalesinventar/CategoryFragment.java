@@ -229,8 +229,8 @@ public class CategoryFragment extends Fragment {
 			public boolean onQueryTextChange(String newText) {
 				Log.i("SetupSearchListener", "onQueryTextChange");
 				//itemArrayAdapter.getFilter().filter(newText);
-				doLiveUpdates(newText);
-				return true;
+				//doLiveUpdates(newText);
+				return false;
 			}
 		});
 	}

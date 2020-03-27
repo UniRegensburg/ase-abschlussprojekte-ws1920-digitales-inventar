@@ -292,8 +292,8 @@ public class MainActivityFragment extends Fragment {
 
  		void setupSearchListener(MaterialSearchView searchView){
         Log.i("MainActivityFragment", "setupSearchListener");
-        //searchArray = getSearchArray();
-        searchArray = new String[]{"Baseball", "Baseballschläger", "Klopapier", "Trompete", "Volleyball", "dietrich"}; //noch durch allgmeine Funktion tauschen
+        searchArray = getSearchArray();
+        //searchArray = new String[]{"Baseball", "Baseballschläger", "Klopapier", "Trompete", "Volleyball", "dietrich"}; //noch durch allgmeine Funktion tauschen
 
         searchView.closeSearch();
         searchView.setSuggestions(searchArray);
@@ -312,8 +312,8 @@ public class MainActivityFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.i("SetupSearchListener", "onQueryTextChange");
-                doLiveUpdates(newText);
-                return true;
+                //doLiveUpdates(newText);
+                return false;
             }
         });
     }
