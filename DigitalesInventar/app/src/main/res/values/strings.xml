@@ -20,6 +20,7 @@
     <string name="cat5">Werkzeug</string>
     <string name="cat6">Weitere..</string>
     <string name="item_location">Ort des Gegenstands:</string>
+    <string name="item_category">Kategorie des Gegenstands</string>
     <string name="save">Sichern</string>
     <string name="edit">Ändern</string>
     <string name="cancel">Abbrechen</string>

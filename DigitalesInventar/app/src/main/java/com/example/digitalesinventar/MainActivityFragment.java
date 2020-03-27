@@ -252,7 +252,7 @@ public class MainActivityFragment extends Fragment {
     		itemArrayAdapter.setMultiselect(false);
 				itemListView.setBackgroundColor(0x00999999);
 				heading.setBackgroundColor(0x00999999);
-				heading.setVisibility(View.INVISIBLE);
+				heading.setVisibility(View.GONE);
 				itemArrayAdapter.unselectAll(itemListView);
 			}
     }
