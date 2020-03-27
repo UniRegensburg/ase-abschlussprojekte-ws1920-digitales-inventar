@@ -28,6 +28,7 @@
         <activity android:name=".EditItemActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".CategorySearchActivity"/>
+        <activity android:name=".PlaceSearchActivity"/>
     </application>
 <!--
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

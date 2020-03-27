@@ -270,21 +270,29 @@ public class MainActivityFragment extends Fragment {
 
 		//method to extract itemNames - not working
 		private String[] getSearchArray(){
-        DatabaseActivity.loadBackup();
+        ArrayList<String> itemList = new ArrayList<>();
+        for (int i=0; i<DatabaseActivity.itemArray.size(); i++) {
+            if (!itemList.contains(DatabaseActivity.itemArray.get(i).itemName) &&
+              DatabaseActivity.itemArray.get(i).itemName != "") {
+                itemList.add(DatabaseActivity.itemArray.get(i).itemName);
+            }
+        }
+        searchArray = itemList.toArray(new String[0]);
+        /*DatabaseActivity.loadBackup();
         ArrayList<DataModelItemList> itemList = new ArrayList<>();
         itemList.addAll(DatabaseActivity.itemArray);
         Log.i("getSearchArray", "itemList: " + itemList);
         for (int i = 0; i < itemList.size(); i++){
             Log.i("getSearchArray", "for: " + i + " - itemName: " + itemList.get(i).itemName );
             searchArray[i] = itemList.get(i).itemName;
-        }
+        }*/
         Log.i("getSearchArray", "array: " + searchArray);
         return searchArray;
     }
 
  		void setupSearchListener(MaterialSearchView searchView){
         Log.i("MainActivityFragment", "setupSearchListener");
-        //String[] searchArray = getSearchArray();
+        //searchArray = getSearchArray();
         searchArray = new String[]{"Baseball", "Baseballschläger", "Klopapier", "Trompete", "Volleyball", "dietrich"}; //noch durch allgmeine Funktion tauschen
 
         searchView.closeSearch();
@@ -292,7 +300,13 @@ public class MainActivityFragment extends Fragment {
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                Bundle extras = new Bundle();
+                extras.putString("searchQuery",query);
+                intent.putExtras(extras);
+                Log.i("MainActivity", "intent to start search created");
+                startActivity(intent);
+                return true;
             }
 
             @Override

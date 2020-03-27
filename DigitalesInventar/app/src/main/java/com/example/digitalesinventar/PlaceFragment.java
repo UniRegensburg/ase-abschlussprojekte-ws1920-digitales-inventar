@@ -23,6 +23,7 @@ public class PlaceFragment extends Fragment {
 	private static ArrayList<String> placeArray = new ArrayList<>();
 	private static PlaceListAdapter placeArrayAdapter;
 	String placeName;
+	String[] searchArray;
 
 	public PlaceFragment(){
 
@@ -63,10 +64,20 @@ public class PlaceFragment extends Fragment {
 
 	void setupSearchListener(MaterialSearchView searchView){
 		Log.i("PlaceActivityFragment", "setupSearchListener");
+		searchArray = placeArray.toArray(new String[0]);
+
+		searchView.closeSearch();
+		searchView.setSuggestions(searchArray);
 		searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				return false;
+				Intent intent = new Intent(getActivity(), PlaceSearchActivity.class);
+				Bundle extras = new Bundle();
+				extras.putString("placeName",query);
+				intent.putExtras(extras);
+				Log.i("PlaceActivity", "intent to start search created");
+				startActivity(intent);
+				return true;
 			}
 
 			@Override

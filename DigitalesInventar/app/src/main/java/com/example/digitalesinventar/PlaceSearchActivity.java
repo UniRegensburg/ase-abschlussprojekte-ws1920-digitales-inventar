@@ -16,8 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class CategorySearchActivity extends AppCompatActivity {
-
+public class PlaceSearchActivity extends AppCompatActivity {
 
 	ArrayList<DataModelItemList> dataSet;
 	ArrayList<DataModelItemList> filteredList = new ArrayList<>();
@@ -57,29 +56,29 @@ public class CategorySearchActivity extends AppCompatActivity {
 	}
 
 	private void handleIntent(Intent intent) {
-		Log.i("CategoryActivity", "handleIntent");
-		String catName = getIntent().getStringExtra("catName");
-		Log.i("handleIntent", "catName: " + catName);
-		search(catName);
+		Log.i("PlaceActivity", "handleIntent");
+		String placeName = getIntent().getStringExtra("placeName");
+		Log.i("handleIntent", "placeName: " + placeName);
+		search(placeName);
 	}
 
 
-	private void search(String catName) {
-		Log.i("SearchActivity", "catName: " + catName);
-		result.setText("Kategorie '" + catName + "':");
+	private void search(String placeName) {
+		Log.i("SearchActivity", "placeName: " + placeName);
+		result.setText("Ort '" + placeName + "':");
 		adapter = new ItemListAdapter(this, filteredList, defaultBitmap);
 		itemListView.setAdapter(adapter);
 		dataSet = DatabaseActivity.itemArray;
 		Log.i("DoMySearch", "dataset: " + dataSet);
 
-		if (catName.isEmpty()) {
+		if (placeName.isEmpty()) {
 			filteredList = dataSet; //no empty cats
 		} else {
 			filteredList.clear();
 			//Log.i("DoMySearch", "catName: "+catName);
 			for (DataModelItemList row : dataSet) {
 				//Log.i("DoMySearch", "all rows: " + row.getItemCategory());
-				if (row.getItemCategory().toLowerCase().contains(catName.toLowerCase())) { //maybe equals better but cat names longer than buttons
+				if (row.getItemLocation().toLowerCase().contains(placeName.toLowerCase())) { //maybe equals better but cat names longer than buttons
 					//Log.i("DoMySearch", "hit row: " + row.getItemCategory());
 					filteredList.add(row);
 				}

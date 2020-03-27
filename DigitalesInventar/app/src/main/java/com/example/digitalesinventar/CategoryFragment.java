@@ -32,6 +32,7 @@ public class CategoryFragment extends Fragment {
 	private static CategoryListAdapter catArrayAdapter;
 	private SwipeController swipeController = null;
 	String catName;
+	String[] searchArray;
 
 	public CategoryFragment(){
 
@@ -208,10 +209,20 @@ public class CategoryFragment extends Fragment {
 
 	void setupSearchListener(MaterialSearchView searchView){
 		Log.i("CatActivityFragment", "setupSearchListener");
+		searchArray = DatabaseActivity.categoryArray.toArray(new String[0]);
+
+		searchView.closeSearch();
+		searchView.setSuggestions(searchArray);
 		searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				return false;
+				Intent intent = new Intent(getActivity(), CategorySearchActivity.class);
+				Bundle extras = new Bundle();
+				extras.putString("catName",query);
+				intent.putExtras(extras);
+				Log.i("MainActivity", "intent to start search created");
+				startActivity(intent);
+				return true;
 			}
 
 			@Override
