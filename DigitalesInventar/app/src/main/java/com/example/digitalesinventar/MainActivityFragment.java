@@ -272,7 +272,7 @@ public class MainActivityFragment extends Fragment {
 		//method to extract itemNames - not working
 		private String[] getSearchArray(){
         ArrayList<String> itemList = new ArrayList<>();
-        for (int i=0; i<DatabaseActivity.itemArray.size(); i++) {
+        for (int i = 0; i < DatabaseActivity.itemArray.size(); i++) {
             if (!itemList.contains(DatabaseActivity.itemArray.get(i).itemName) &&
               DatabaseActivity.itemArray.get(i).itemName != "") {
                 itemList.add(DatabaseActivity.itemArray.get(i).itemName);
@@ -291,7 +291,7 @@ public class MainActivityFragment extends Fragment {
         return searchArray;
     }
 
- 		void setupSearchListener(MaterialSearchView searchView){
+ 		void setupSearchListener(final MaterialSearchView searchView){
         Log.i("MainActivityFragment", "setupSearchListener");
         searchArray = getSearchArray();
         //searchArray = new String[]{"Baseball", "Baseballschläger", "Klopapier", "Trompete", "Volleyball", "dietrich"}; //noch durch allgmeine Funktion tauschen
@@ -314,6 +314,10 @@ public class MainActivityFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 Log.i("SetupSearchListener", "onQueryTextChange");
                 //doLiveUpdates(newText);
+                if (searchArray.length == 0 && !DatabaseActivity.currentlyLoading) {
+                    searchArray = getSearchArray();
+                    searchView.setSuggestions(searchArray);
+                }
                 return false;
             }
         });

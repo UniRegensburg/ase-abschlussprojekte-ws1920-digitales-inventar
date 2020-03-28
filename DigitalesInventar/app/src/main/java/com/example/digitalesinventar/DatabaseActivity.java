@@ -42,7 +42,7 @@ public class DatabaseActivity {
     private static Bitmap cachedBitmap;
     private static Bitmap downloadedBitmap;
     //loading bool to prevent duplicating data locally
-    private static boolean currentlyLoading = false;
+    public static boolean currentlyLoading = false;
 
     //ADD ITEM TO DB
     public static void addEntry(String name, String category , String location, String buyDate, double value, final boolean newImage) {
