@@ -316,7 +316,8 @@ public class MainActivityFragment extends Fragment {
                 //doLiveUpdates(newText);
                 if (searchArray.length == 0 && !DatabaseActivity.currentlyLoading) {
                     searchArray = getSearchArray();
-                    searchView.setSuggestions(searchArray);
+                    //searchView.setSuggestions(searchArray);
+                    setupSearchListener(searchView);
                 }
                 return false;
             }
