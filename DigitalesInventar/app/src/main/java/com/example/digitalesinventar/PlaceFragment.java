@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -86,6 +87,15 @@ public class PlaceFragment extends Fragment {
 				//itemArrayAdapter.getFilter().filter(newText);
 				//doLiveUpdates(newText);
 				return false;
+			}
+		});
+		searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+															int position, long id) {
+				Intent intent = new Intent(getActivity(), SearchActivity.class);
+				intent.putExtra("searchQuery", parent.getItemAtPosition(position).toString());
+				Log.i("PlaceActivityFrag", "intent to start SearchActivity created w/ " + parent.getItemAtPosition(position).toString());
+				startActivity(intent);
 			}
 		});
 	}
