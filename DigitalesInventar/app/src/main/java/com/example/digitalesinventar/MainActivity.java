@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
 			R.drawable.img_holder);
 		searchView = (MaterialSearchView) findViewById(R.id.search_view);
 		MainActivityFragment fragment = new MainActivityFragment(defaultBitmap);
-		fragment.setupSearchListener(searchView);
+		//fragment.setupSearchListener(searchView); //kein doppelter log am anfang mehr drin aber trz doppelte suche
 		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
 
 		//initialise Button at the start

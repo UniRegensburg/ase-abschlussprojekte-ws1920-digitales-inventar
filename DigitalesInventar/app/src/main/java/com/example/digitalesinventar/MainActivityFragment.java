@@ -305,7 +305,9 @@ public class MainActivityFragment extends Fragment {
                 Bundle extras = new Bundle();
                 extras.putString("searchQuery",query);
                 intent.putExtras(extras);
-                Log.i("MainActivity", "intent to start search created");
+                //intent.putExtra("searchQuery", query);
+                Log.i("MainActivityFrag", "intent to start search created"); //doppelt
+                //bzw. wird auch bei cat und ort aufgerufen?
                 startActivity(intent);
                 return true;
             }

@@ -72,9 +72,9 @@ public class PlaceFragment extends Fragment {
 		searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				Intent intent = new Intent(getActivity(), PlaceSearchActivity.class);
+				Intent intent = new Intent(getActivity(), SearchActivity.class); //search with all items
 				Bundle extras = new Bundle();
-				extras.putString("placeName",query);
+				extras.putString("searchQuery",query);
 				intent.putExtras(extras);
 				Log.i("PlaceActivity", "intent to start search created");
 				startActivity(intent);
@@ -92,8 +92,8 @@ public class PlaceFragment extends Fragment {
 		searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 															int position, long id) {
-				Intent intent = new Intent(getActivity(), SearchActivity.class);
-				intent.putExtra("searchQuery", parent.getItemAtPosition(position).toString());
+				Intent intent = new Intent(getActivity(), PlaceSearchActivity.class); //search specifically for place
+				intent.putExtra("placeName", parent.getItemAtPosition(position).toString());
 				Log.i("PlaceActivityFrag", "intent to start SearchActivity created w/ " + parent.getItemAtPosition(position).toString());
 				startActivity(intent);
 			}
@@ -103,6 +103,7 @@ public class PlaceFragment extends Fragment {
 	//link custom adapter with ListView for db entries
 	public void setupList() {
 		Log.i("placeActivityFragment", "setupList called");
+		placeArray.clear();
 		for (int i=0; i<DatabaseActivity.itemArray.size(); i++) {
 			if (!placeArray.contains(DatabaseActivity.itemArray.get(i).itemLocation) &&
 			DatabaseActivity.itemArray.get(i).itemLocation != "") {

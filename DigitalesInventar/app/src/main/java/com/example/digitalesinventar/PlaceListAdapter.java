@@ -53,9 +53,9 @@ public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.Mult
 				public void onClick(View view) {
 
 					Log.i("PlaceListAdapter", "launchPlaceActivity called for " + item);
-					Intent intent = new Intent(context, SearchActivity.class);
+					Intent intent = new Intent(context, PlaceSearchActivity.class);
 					Bundle extras = new Bundle();
-					extras.putString("searchQuery", item);
+					extras.putString("placeName", item);
 					extras.putBoolean("fromMain", true);
 					intent.putExtras(extras);
 					Log.i("PlaceActivity", "intent to start search created");

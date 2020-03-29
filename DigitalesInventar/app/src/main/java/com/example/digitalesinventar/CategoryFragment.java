@@ -217,9 +217,9 @@ public class CategoryFragment extends Fragment {
 		searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				Intent intent = new Intent(getActivity(), CategorySearchActivity.class);
+				Intent intent = new Intent(getActivity(), SearchActivity.class); //search for all items
 				Bundle extras = new Bundle();
-				extras.putString("catName",query);
+				extras.putString("searchQuery",query);
 				intent.putExtras(extras);
 				Log.i("MainActivity", "intent to start search created");
 				startActivity(intent);
@@ -237,8 +237,8 @@ public class CategoryFragment extends Fragment {
 		searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 															int position, long id) {
-				Intent intent = new Intent(getActivity(), SearchActivity.class);
-				intent.putExtra("searchQuery", parent.getItemAtPosition(position).toString());
+				Intent intent = new Intent(getActivity(), CategorySearchActivity.class); //search for category specifically
+				intent.putExtra("catName", parent.getItemAtPosition(position).toString());
 				Log.i("CatActivityFrag", "intent to start SearchActivity created w/ " + parent.getItemAtPosition(position).toString());
 				startActivity(intent);
 			}
