@@ -48,6 +48,7 @@ public class SearchActivity extends AppCompatActivity {
 
 	@Override
 	protected void onNewIntent(Intent intent) {
+		Log.i("onNewIntent", "Intent: " + intent.getStringExtra("searchQuery"));
 		setIntent(intent);
 		handleIntent(intent);
 	}

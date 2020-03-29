@@ -73,9 +73,7 @@ public class PlaceFragment extends Fragment {
 			@Override
 			public boolean onQueryTextSubmit(String query) {
 				Intent intent = new Intent(getActivity(), SearchActivity.class); //search with all items
-				Bundle extras = new Bundle();
-				extras.putString("searchQuery",query);
-				intent.putExtras(extras);
+				intent.putExtra("searchQuery", query);
 				Log.i("PlaceActivity", "intent to start search created");
 				startActivity(intent);
 				return true;

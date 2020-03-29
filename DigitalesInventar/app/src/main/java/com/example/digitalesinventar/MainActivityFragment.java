@@ -159,7 +159,6 @@ public class MainActivityFragment extends Fragment {
         //set content-view for fragment
         View view= inflater.inflate(R.layout.fragment_main, container, false);
         Log.i("MainActivityFragment", "inflater called");
-        //rootView.findViewById(R.id.fragment_container);
         //set layout for ListView for data from db
         heading = view.findViewById(R.id.itemsHeading);
         itemCounter = view.findViewById(R.id.itemCounter);
@@ -219,7 +218,6 @@ public class MainActivityFragment extends Fragment {
                 break;
         }
     }
-
 
     private void launchViewItem() {
         Log.i("MainActivity", "launchNewItemActivity called");
@@ -301,13 +299,11 @@ public class MainActivityFragment extends Fragment {
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                Log.i("onQueryTextSubmit", "Query: " + query);
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
-                Bundle extras = new Bundle();
-                extras.putString("searchQuery",query);
-                intent.putExtras(extras);
-                //intent.putExtra("searchQuery", query);
+                intent.putExtra("searchQuery", query);
                 Log.i("MainActivityFrag", "intent to start search created"); //doppelt
-                //bzw. wird auch bei cat und ort aufgerufen?
+                //bzw. wird auch bei cat und ort aufgerufen? ---> nein, nur mainFrag, siehe Logs
                 startActivity(intent);
                 return true;
             }

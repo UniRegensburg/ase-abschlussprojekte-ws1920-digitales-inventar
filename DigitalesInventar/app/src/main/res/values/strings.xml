@@ -42,4 +42,14 @@
         <item>Hobby</item>
         <item>Werkzeug</item>
     </string-array>
+    <string-array name="sort_by_spinner_small">
+        <item>Name aufsteigend</item>
+        <item>Name absteigend</item>
+    </string-array>
+    <string-array name="sort_by_spinner_big">
+        <item>Neueste</item>
+        <item>Älteste</item>
+        <item>Name aufsteigend</item>
+        <item>Name absteigend</item>
+    </string-array>
 </resources>

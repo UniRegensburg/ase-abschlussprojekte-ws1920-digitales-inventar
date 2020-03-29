@@ -218,10 +218,8 @@ public class CategoryFragment extends Fragment {
 			@Override
 			public boolean onQueryTextSubmit(String query) {
 				Intent intent = new Intent(getActivity(), SearchActivity.class); //search for all items
-				Bundle extras = new Bundle();
-				extras.putString("searchQuery",query);
-				intent.putExtras(extras);
-				Log.i("MainActivity", "intent to start search created");
+				intent.putExtra("searchQuery", query);
+				Log.i("CategoryFragment", "intent to start search created");
 				startActivity(intent);
 				return true;
 			}

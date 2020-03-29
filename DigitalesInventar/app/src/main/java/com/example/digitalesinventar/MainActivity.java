@@ -46,23 +46,21 @@ public class MainActivity extends AppCompatActivity {
 	private static final int RC_SIGN_IN = 123; //wieso
 	static FirebaseFirestore db = FirebaseFirestore.getInstance();
 	public static String userID = "defaultEmptyID";
+
+	Toolbar toolbar;
+	FloatingActionButton plusButton;
+	static Bitmap defaultBitmap;
 	private MaterialSearchView searchView;
 
 	FrameLayout frameLayout;
 	TabLayout tabLayout;
 
-	Integer currentCase = 0;
-	public static Integer spinnerPos = 0;
-
 	public static Spinner sortBySpinner;
 	ArrayAdapter<String> spinnerAdapter;
 	ArrayList<String> spinnerArrayLarge = new ArrayList<>();
 	ArrayList<String> spinnerArraySmall = new ArrayList<>();
-
-	static Bitmap defaultBitmap;
-
-	Toolbar toolbar;
-	FloatingActionButton plusButton;
+	Integer currentCase = 0;
+	public static Integer spinnerPos = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_main, menu);
-
 		// setupSearchIcon
 		MenuItem menuItem = menu.findItem(R.id.action_search);
 		searchView.setMenuItem(menuItem);
