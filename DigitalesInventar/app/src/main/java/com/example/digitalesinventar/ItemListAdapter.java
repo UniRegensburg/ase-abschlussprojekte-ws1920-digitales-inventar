@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +40,12 @@ public ItemListAdapter(Context context, ArrayList<DataModelItemList> data, Bitma
     this.filteredList = data;
     this.defaultBitmap = defaultBitmap;
 }
+
+    public ItemListAdapter(Context context, ArrayList<DataModelItemList> data) {
+        this.context = context;
+        this.dataSet = data;
+        this.filteredList = data;
+    }
 
 public void setData(ArrayList<DataModelItemList> data) {
     this.dataSet = new ArrayList<>();
