@@ -217,6 +217,7 @@ public class CategoryFragment extends Fragment {
 		searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextSubmit(String query) {
+				Log.i("CatOnQueryTextSubmit", "Query: " + query);
 				Intent intent = new Intent(getActivity(), SearchActivity.class); //search for all items
 				intent.putExtra("searchQuery", query);
 				Log.i("CategoryFragment", "intent to start search created");

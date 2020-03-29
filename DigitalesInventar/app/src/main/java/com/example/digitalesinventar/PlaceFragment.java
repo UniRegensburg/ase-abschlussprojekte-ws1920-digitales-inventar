@@ -72,6 +72,7 @@ public class PlaceFragment extends Fragment {
 		searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextSubmit(String query) {
+				Log.i("PlaceOnQueryTextSubmit", "Query: " + query);
 				Intent intent = new Intent(getActivity(), SearchActivity.class); //search with all items
 				intent.putExtra("searchQuery", query);
 				Log.i("PlaceActivity", "intent to start search created");

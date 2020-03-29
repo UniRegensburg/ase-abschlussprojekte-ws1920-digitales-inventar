@@ -299,7 +299,7 @@ public class MainActivityFragment extends Fragment {
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.i("onQueryTextSubmit", "Query: " + query);
+                Log.i("MainOnQueryTextSubmit", "Query: " + query);
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
                 intent.putExtra("searchQuery", query);
                 Log.i("MainActivityFrag", "intent to start search created"); //doppelt

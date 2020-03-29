@@ -62,9 +62,14 @@ public class MainActivity extends AppCompatActivity {
 	Integer currentCase = 0;
 	public static Integer spinnerPos = 0;
 
+	MainActivityFragment mainActivityFragment;
+	CategoryFragment categoryFragment;
+	PlaceFragment placeFragment;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		initFragments();
 		callLogin();
 	}
 
@@ -169,6 +174,13 @@ public class MainActivity extends AppCompatActivity {
 			RC_SIGN_IN);
 	}
 
+	void initFragments() {
+		mainActivityFragment = new MainActivityFragment();
+		categoryFragment = new CategoryFragment();
+		placeFragment = new PlaceFragment();
+
+	}
+
 	//sets and initializes UI for MainActivity
 	public void setupMainMenu() {
 		setContentView(R.layout.activity_main);
@@ -182,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
 		defaultBitmap = BitmapFactory.decodeResource(this.getResources(),
 			R.drawable.img_holder);
 		searchView = (MaterialSearchView) findViewById(R.id.search_view);
-		MainActivityFragment mainActivityFragment = new MainActivityFragment();//defaultBitmap);
 		mainActivityFragment.setupSearchListener(searchView); //kein doppelter log am anfang mehr drin aber trz doppelte suche
 		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mainActivityFragment).commit();
 
@@ -241,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
 					case 0:
 						//MainActivityFragment fragment = new MainActivityFragment(defaultBitmap);
 						//fragment.setupSearchListener(searchView);
-						//getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
+						//getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
 						//------> default-Case MainActivityFragment existiert ja bereits, muss nicht neu geaddet werden
 						//Items
 						if (sortBySpinner.getSelectedItem() == "Neueste") {
@@ -259,9 +270,8 @@ public class MainActivity extends AppCompatActivity {
 						}
 						break;
 					case 1:
-						CategoryFragment categoryFragment = new CategoryFragment();
 						categoryFragment.setupSearchListener(searchView);
-						getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, categoryFragment).commit();
+						getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, categoryFragment).commit();
 						//Category
 						if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
 							spinnerPos = 0;
@@ -272,9 +282,8 @@ public class MainActivity extends AppCompatActivity {
 						}
 						break;
 					case 2:
-						PlaceFragment placeFragment = new PlaceFragment();
 						placeFragment.setupSearchListener(searchView);
-						getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, placeFragment).commit();
+						getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, placeFragment).commit();
 						//Location
 						if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
 							spinnerPos = 0;
@@ -309,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
 						currentCase = 0;
 						sortBySpinner.setAdapter(null);
 						setupBigSpinner();
-						fragment = new MainActivityFragment();
+						fragment = mainActivityFragment;
 						plusButton = findViewById(R.id.plusButton);
 						plusButton.setOnClickListener(new View.OnClickListener() {
 							@Override
@@ -324,7 +333,7 @@ public class MainActivity extends AppCompatActivity {
 						currentCase = 1;
 						sortBySpinner.setAdapter(null);
 						setupSmallSpinner();
-						fragment = new CategoryFragment();
+						fragment = categoryFragment;
 						plusButton = findViewById(R.id.plusButton);
 						plusButton.setOnClickListener(new View.OnClickListener() {
 							@Override
@@ -339,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
 						currentCase = 2;
 						sortBySpinner.setAdapter(null);
 						setupSmallSpinner();
-						fragment = new PlaceFragment();
+						fragment = placeFragment;
 						plusButton = findViewById(R.id.plusButton);
 						plusButton.hide();
 						break;

@@ -1,6 +1,5 @@
 package com.example.digitalesinventar;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -58,8 +57,8 @@ public class SearchActivity extends AppCompatActivity {
 		if (intent.getStringExtra("searchQuery") != null && !intent.getStringExtra("searchQuery").equals("")) {
 			search(intent.getStringExtra("searchQuery"));
 			searchquery = "";
-		} else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			String query = intent.getStringExtra(SearchManager.QUERY);
+		} else {
+			String query = intent.getStringExtra("searchQuery");
 			Log.i("handleIntent", "query: " + query);
 			searchquery = query;
 			search(query);
