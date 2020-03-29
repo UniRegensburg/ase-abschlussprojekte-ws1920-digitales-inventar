@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@color/white"
-    android:padding="10dp">
+    android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/list_image"
@@ -20,7 +20,6 @@
             android:layout_height="96dp"
             app:civ_border_width="2dp"
             app:civ_border_color="#FFffff"/>
-
     </LinearLayout>
 
     <LinearLayout
@@ -46,12 +45,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="30sp"
+                    android:layout_marginStart="30sp"
                     android:textStyle="bold"
                     android:textColor="@color/basis_text"
                     android:textSize="20sp"
-                    android:text="Name_des_Item"/>
-
+                    android:text="@string/item_title"/>
             </LinearLayout>
 
             <LinearLayout
@@ -61,16 +59,13 @@
                     android:id="@+id/item_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30sp"
+                    android:layout_marginStart="30sp"
+                    android:layout_marginBottom="5sp"
                     android:textColor="@color/category_text"
                     android:textSize="15sp"
-                    android:text="Kategorie_des_Item"/>
-
-
+                    android:text="@string/category"/>
             </LinearLayout>
-
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/timestamp"
@@ -83,11 +78,10 @@
                 android:id="@+id/item_ts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:textAlignment="textEnd"
-                android:layout_marginRight="30sp"
-                android:text="Time_des_Item"/>
+                android:layout_marginEnd="30sp"
+                android:text="@string/item_ts"/>
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

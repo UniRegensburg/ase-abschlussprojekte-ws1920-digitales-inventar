@@ -16,7 +16,7 @@
             android:id="@+id/searchresult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5sp"
+            android:layout_margin="5dp"
             android:textColor="@color/cardview_dark_background"
             android:text="@string/searchresult"
             android:textStyle="bold" />
