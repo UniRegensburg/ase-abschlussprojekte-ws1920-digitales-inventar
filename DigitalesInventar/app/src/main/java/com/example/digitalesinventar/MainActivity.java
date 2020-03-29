@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_main, menu);
-		// setupSearchIcon
+		//setupSearchIcon
 		MenuItem menuItem = menu.findItem(R.id.action_search);
 		searchView.setMenuItem(menuItem);
 		return true;
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
 		//set default bitmap for mainFrag
 		defaultBitmap = BitmapFactory.decodeResource(this.getResources(),
 			R.drawable.img_holder);
-		mainActivityFragment = new MainActivityFragment();
+		mainActivityFragment = new MainActivityFragment(defaultBitmap);
 		categoryFragment = new CategoryFragment();
 		placeFragment = new PlaceFragment();
 
