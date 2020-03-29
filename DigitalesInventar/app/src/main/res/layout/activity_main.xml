@@ -111,15 +111,12 @@
                 android:background="@color/primary"
                 app:layout_anchorGravity="center"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
-
         </FrameLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</com.google.android.material.appbar.AppBarLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
     <com.miguelcatalan.materialsearchview.MaterialSearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

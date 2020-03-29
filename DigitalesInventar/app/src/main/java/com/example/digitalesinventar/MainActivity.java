@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		searchView = (MaterialSearchView) findViewById(R.id.search_view);
 		initFragments();
 		callLogin();
 	}
@@ -175,6 +177,9 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	void initFragments() {
+		//set default bitmap for mainFrag
+		defaultBitmap = BitmapFactory.decodeResource(this.getResources(),
+			R.drawable.img_holder);
 		mainActivityFragment = new MainActivityFragment();
 		categoryFragment = new CategoryFragment();
 		placeFragment = new PlaceFragment();
@@ -183,20 +188,18 @@ public class MainActivity extends AppCompatActivity {
 
 	//sets and initializes UI for MainActivity
 	public void setupMainMenu() {
-		setContentView(R.layout.activity_main);
-
 		toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 		DatabaseActivity.getDataFromDatabase();
 		DatabaseActivity.getCategoriesFromDatabase();
-
 		//setupSearchListener in MainFragment and pictures
-		defaultBitmap = BitmapFactory.decodeResource(this.getResources(),
-			R.drawable.img_holder);
-		searchView = (MaterialSearchView) findViewById(R.id.search_view);
 		mainActivityFragment.setupSearchListener(searchView); //kein doppelter log am anfang mehr drin aber trz doppelte suche
-		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mainActivityFragment).commit();
-
+		//make sure user was not logged in before and frag already exists
+		if (mainActivityFragment == null) {
+			getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mainActivityFragment).commit();
+		} else {
+			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mainActivityFragment).commit();
+		}
 		//initialise Button at the start
 		plusButton = findViewById(R.id.plusButton);
 		plusButton.setOnClickListener(new View.OnClickListener() {
@@ -250,10 +253,8 @@ public class MainActivity extends AppCompatActivity {
 				//Log.i("sortSpinner", "onItemSelected:case,name: "+currentCase+","+sortBySpinner.getSelectedItem());
 				switch (currentCase) {
 					case 0:
-						//MainActivityFragment fragment = new MainActivityFragment(defaultBitmap);
-						//fragment.setupSearchListener(searchView);
-						//getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-						//------> default-Case MainActivityFragment existiert ja bereits, muss nicht neu geaddet werden
+						mainActivityFragment.setupSearchListener(searchView);
+						getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mainActivityFragment).commit();
 						//Items
 						if (sortBySpinner.getSelectedItem() == "Neueste") {
 							spinnerPos = 0;
