@@ -208,7 +208,7 @@ public class CategoryFragment extends Fragment {
 		}
 	}
 
-	void setupSearchListener(MaterialSearchView searchView){
+	void setupSearchListener(final MaterialSearchView searchView){
 		Log.i("CatActivityFragment", "setupSearchListener");
 		searchArray = DatabaseActivity.categoryArray.toArray(new String[0]);
 
@@ -222,6 +222,7 @@ public class CategoryFragment extends Fragment {
 				intent.putExtra("searchQuery", query);
 				Log.i("CategoryFragment", "intent to start search created");
 				startActivity(intent);
+				searchView.closeSearch();
 				return true;
 			}
 

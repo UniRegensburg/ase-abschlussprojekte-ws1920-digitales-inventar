@@ -305,6 +305,7 @@ public class MainActivityFragment extends Fragment {
                 Log.i("MainActivityFrag", "intent to start search created"); //doppelt
                 //bzw. wird auch bei cat und ort aufgerufen? ---> nein, nur mainFrag, siehe Logs
                 startActivity(intent);
+                searchView.closeSearch();
                 return true;
             }
 

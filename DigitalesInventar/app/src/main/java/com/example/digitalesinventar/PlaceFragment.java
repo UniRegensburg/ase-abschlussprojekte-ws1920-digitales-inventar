@@ -63,7 +63,7 @@ public class PlaceFragment extends Fragment {
 		return view;
 	}
 
-	void setupSearchListener(MaterialSearchView searchView){
+	void setupSearchListener(final MaterialSearchView searchView){
 		Log.i("PlaceActivityFragment", "setupSearchListener");
 		searchArray = placeArray.toArray(new String[0]);
 
@@ -77,6 +77,7 @@ public class PlaceFragment extends Fragment {
 				intent.putExtra("searchQuery", query);
 				Log.i("PlaceActivity", "intent to start search created");
 				startActivity(intent);
+				searchView.closeSearch();
 				return true;
 			}
 

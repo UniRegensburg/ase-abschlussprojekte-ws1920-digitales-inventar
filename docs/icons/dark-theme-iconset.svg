@@ -210,9 +210,9 @@
      inkscape:window-height="1057"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="4"
-     inkscape:cx="-94.393706"
-     inkscape:cy="-161.34091"
+     inkscape:zoom="11.313708"
+     inkscape:cx="-51.175182"
+     inkscape:cy="-169.18018"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -472,21 +472,14 @@
        id="g1045" />
   </g>
   <path
-     inkscape:connector-curvature="0"
-     d="m -16.751097,122.24475 h -0.79 l -0.28,-0.27 c 0.98,-1.14 1.57,-2.62 1.57,-4.23 0,-3.59 -2.91,-6.5 -6.5,-6.5 -3.59,0 -6.5,2.91 -6.5,6.5 0,3.59 2.91,6.5 6.5,6.5 1.61,0 3.09,-0.59 4.23,-1.57 l 0.27,0.28 v 0.79 l 5,4.99 c 0,0 0.718155,0.7292 1.463155,-0.0158 0.745,-0.745 0.02684,-1.4742 0.02684,-1.4742 z m -6,0 c -2.49,0 -4.5,-2.01 -4.5,-4.5 0,-2.49 2.01,-4.5 4.5,-4.5 2.49,0 4.5,2.01 4.5,4.5 0,2.49 -2.01,4.5 -4.5,4.5 z"
+     style="stroke-width:1.49652553"
+     d="m -18.671188,216.46447 c -5.147804,0 -9.3125,4.16469 -9.3125,9.3125 0,5.1478 4.164595,9.31055 9.3125,9.31055 2.307829,0 4.42487,-0.84363 6.058594,-2.24805 0.1668,-0.144 0.362286,-0.0313 0.515624,0.12696 l 0.404297,0.41992 c 0.0751,0.0775 0.117118,0.18116 0.117188,0.28907 l 0.05469,0.9082 7.3593743,7.3457 c 0.00131,0.001 0.00262,0.003 0.00391,0.004 0,0 0.2096416,0.20452 0.5097657,0.30273 0.300124,0.0982 0.6256204,0.13222 1.0878906,-0.33007 0.4621817,-0.46218 0.4319474,-0.79605 0.3359375,-1.10157 -0.095583,-0.30415 -0.2950905,-0.51569 -0.296875,-0.51757 l -0.00195,-0.002 -7.3417975,-7.35742 -0.9160156,-0.0469 c -0.107911,-7e-5 -0.211566,-0.0421 -0.289062,-0.11719 l -0.419922,-0.40429 c -0.158257,-0.15334 -0.263145,-0.35664 -0.11914,-0.52344 1.404429,-1.63372 2.2480466,-3.75077 2.2480466,-6.05859 0,-5.14791 -4.1627406,-9.3125 -9.3105466,-9.3125 z m 0,2.16211 c 3.950085,0 7.150391,3.2003 7.150391,7.15039 0,3.95009 -3.200306,7.15039 -7.150391,7.15039 -3.950083,0 -7.15039,-3.2003 -7.15039,-7.15039 0,-3.95009 3.200307,-7.15039 7.15039,-7.15039 z"
      id="path2-8"
-     sodipodi:nodetypes="cccsssscccczccsssss"
-     inkscape:export-filename="D:\workspace2018\ase-abschlussprojekte-ws1920-digitales-inventar\DigitalesInventar\app\src\main\res\drawable\search24px.png"
-     inkscape:export-xdpi="129.36948"
-     inkscape:export-ydpi="129.36948" />
-  <path
-     sodipodi:nodetypes="cccsssscccczccsssss"
-     id="path1056"
-     d="m -16.751097,122.24475 h -0.79 l -0.28,-0.27 c 0.98,-1.14 1.57,-2.62 1.57,-4.23 0,-3.59 -2.91,-6.5 -6.5,-6.5 -3.59,0 -6.5,2.91 -6.5,6.5 0,3.59 2.91,6.5 6.5,6.5 1.61,0 3.09,-0.59 4.23,-1.57 l 0.27,0.28 v 0.79 l 5,4.99 c 0,0 0.718155,0.7292 1.463155,-0.0158 0.745,-0.745 0.02684,-1.4742 0.02684,-1.4742 z m -6,0 c -2.49,0 -4.5,-2.01 -4.5,-4.5 0,-2.49 2.01,-4.5 4.5,-4.5 2.49,0 4.5,2.01 4.5,4.5 0,2.49 -2.01,4.5 -4.5,4.5 z"
      inkscape:connector-curvature="0"
-     inkscape:export-filename="D:\workspace2018\ase-abschlussprojekte-ws1920-digitales-inventar\DigitalesInventar\app\src\main\res\drawable\search24px.png"
-     inkscape:export-xdpi="129.36948"
-     inkscape:export-ydpi="129.36948" />
+     sodipodi:nodetypes="csscccccccccccccccccscccsssc"
+     inkscape:export-filename="D:\workspace2018\ase-abschlussprojekte-ws1920-digitales-inventar\DigitalesInventar\app\src\main\res\drawable\search.png"
+     inkscape:export-xdpi="89.189697"
+     inkscape:export-ydpi="89.189697" />
   <path
      inkscape:connector-curvature="0"
      d="m 121.7489,85.49475 h -0.79 l -0.28,-0.27 c 0.98,-1.14 1.57,-2.62 1.57,-4.23 0,-3.59 -2.91,-6.5 -6.5,-6.5 -3.59,0 -6.5,2.91 -6.5,6.5 0,3.59 2.91,6.5 6.5,6.5 1.61,0 3.09,-0.59 4.23,-1.57 l 0.27,0.28 v 0.79 l 5,4.99 c 0,0 0.71816,0.7292 1.46316,-0.0158 0.745,-0.745 0.0268,-1.4742 0.0268,-1.4742 z m -6,0 c -2.49,0 -4.5,-2.01 -4.5,-4.5 0,-2.49 2.01,-4.5 4.5,-4.5 2.49,0 4.5,2.01 4.5,4.5 0,2.49 -2.01,4.5 -4.5,4.5 z"
@@ -833,8 +826,8 @@
      id="g830"
      transform="translate(-28.80932,191.52542)"
      inkscape:export-filename="D:\workspace2018\ase-abschlussprojekte-ws1920-digitales-inventar\DigitalesInventar\app\src\main\res\drawable\logout.png"
-     inkscape:export-xdpi="90.083527"
-     inkscape:export-ydpi="90.083527">
+     inkscape:export-xdpi="97.332451"
+     inkscape:export-ydpi="97.332451">
     <path
        inkscape:connector-curvature="0"
        id="path824"
