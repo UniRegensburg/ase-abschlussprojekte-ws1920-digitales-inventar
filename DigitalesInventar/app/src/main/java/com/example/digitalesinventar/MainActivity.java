@@ -185,9 +185,9 @@ public class MainActivity extends AppCompatActivity {
 		defaultBitmap = BitmapFactory.decodeResource(this.getResources(),
 			R.drawable.img_holder);
 		searchView = (MaterialSearchView) findViewById(R.id.search_view);
-		MainActivityFragment fragment = new MainActivityFragment();//defaultBitmap);
-		//fragment.setupSearchListener(searchView); //kein doppelter log am anfang mehr drin aber trz doppelte suche
-		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
+		MainActivityFragment mainActivityFragment = new MainActivityFragment();//defaultBitmap);
+		mainActivityFragment.setupSearchListener(searchView); //kein doppelter log am anfang mehr drin aber trz doppelte suche
+		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mainActivityFragment).commit();
 
 		//initialise Button at the start
 		plusButton = findViewById(R.id.plusButton);
@@ -242,9 +242,10 @@ public class MainActivity extends AppCompatActivity {
 				//Log.i("sortSpinner", "onItemSelected:case,name: "+currentCase+","+sortBySpinner.getSelectedItem());
 				switch (currentCase) {
 					case 0:
-						MainActivityFragment fragment = new MainActivityFragment(defaultBitmap);
-						fragment.setupSearchListener(searchView);
-						getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
+						//MainActivityFragment fragment = new MainActivityFragment(defaultBitmap);
+						//fragment.setupSearchListener(searchView);
+						//getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
+						//------> default-Case MainActivityFragment existiert ja bereits, muss nicht neu geaddet werden
 						//Items
 						if (sortBySpinner.getSelectedItem() == "Neueste") {
 							spinnerPos = 0;
@@ -261,9 +262,9 @@ public class MainActivity extends AppCompatActivity {
 						}
 						break;
 					case 1:
-						CategoryFragment fragment1 = new CategoryFragment();
-						fragment1.setupSearchListener(searchView);
-						getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment1).commit();
+						CategoryFragment categoryFragment = new CategoryFragment();
+						categoryFragment.setupSearchListener(searchView);
+						getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, categoryFragment).commit();
 						//Category
 						if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
 							spinnerPos = 0;
@@ -274,9 +275,9 @@ public class MainActivity extends AppCompatActivity {
 						}
 						break;
 					case 2:
-						PlaceFragment fragment2 = new PlaceFragment();
-						fragment2.setupSearchListener(searchView);
-						getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment2).commit();
+						PlaceFragment placeFragment = new PlaceFragment();
+						placeFragment.setupSearchListener(searchView);
+						getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, placeFragment).commit();
 						//Location
 						if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
 							spinnerPos = 0;
