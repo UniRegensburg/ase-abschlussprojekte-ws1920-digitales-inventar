@@ -171,43 +171,6 @@ public class CategoryFragment extends Fragment {
 		dialog.show(getFragmentManager(),"tag");
 	}
 
-	private void launchCat() {
-		Log.i("catActivity", "launchCatActivity called for " + catName);
-		Intent intent = new Intent(getActivity(), SearchActivity.class);
-		Bundle extras = new Bundle();
-		extras.putString("searchQuery",catName);
-		extras.putBoolean("fromMain", true);
-		intent.putExtras(extras);
-		Log.i("catctivity", "intent to start search created");
-		startActivity(intent);
-	}
-
-	private void doLiveUpdates(String query) {
-		DatabaseActivity.loadBackup();
-		ArrayList<DataModelItemList> dataSet = new ArrayList<>();
-		dataSet.addAll(DatabaseActivity.itemArray);
-		Log.i("DoMyFilter", "dataset: " + dataSet);
-		catArray.clear();
-		if (query.isEmpty()) {
-			//filteredList.addAll(dataSet); //search doesn't get called on empty input
-		} else {
-			for (DataModelItemList row : dataSet) {
-				//if (row.getItemName().toLowerCase().contains(query.toLowerCase())) {
-				//	filteredList.add(row);
-				//}// else
-				if (row.getItemCategory().toLowerCase().contains(query.toLowerCase())) {
-					catArray.add(row.getItemCategory());
-				}// else if (row.getItemLocation().toLowerCase().contains(query.toLowerCase())) {
-					//    filteredList.add(row);
-					//}
-				//}
-			}
-
-			Log.i("DoMyFilter", "catList: " + catArray);
-			catArrayAdapter.notifyDataSetChanged();
-		}
-	}
-
 	void setupSearchListener(final MaterialSearchView searchView){
 		Log.i("CatActivityFragment", "setupSearchListener");
 		searchArray = DatabaseActivity.categoryArray.toArray(new String[0]);
@@ -229,8 +192,6 @@ public class CategoryFragment extends Fragment {
 			@Override
 			public boolean onQueryTextChange(String newText) {
 				Log.i("SetupSearchListener", "onQueryTextChange");
-				//itemArrayAdapter.getFilter().filter(newText);
-				//doLiveUpdates(newText);
 				return false;
 			}
 		});

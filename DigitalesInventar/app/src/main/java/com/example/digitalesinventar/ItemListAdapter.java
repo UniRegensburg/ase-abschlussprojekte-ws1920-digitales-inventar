@@ -123,7 +123,6 @@ public void setData(ArrayList<DataModelItemList> data) {
         }
     }
 
-
     public ArrayList<DataModelItemList> getAll() {
         return dataSet;
     }
@@ -137,7 +136,6 @@ public void setData(ArrayList<DataModelItemList> data) {
         }
         return selected;
     }
-
 
 		public void unselectAll(RecyclerView viewHolder) {
 	Log.i("selectedItems", "selected: " + getSelected().toString());

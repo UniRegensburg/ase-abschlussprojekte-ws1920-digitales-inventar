@@ -151,6 +151,7 @@ class SwipeController extends ItemTouchHelper.Callback {
 	private void setItemsClickable(RecyclerView recyclerView, boolean isClickable) {
 		for (int i = 0; i < recyclerView.getChildCount(); ++i) {
 			recyclerView.getChildAt(i).setClickable(isClickable);
+			recyclerView.getChildAt(i).setLongClickable(isClickable);
 		}
 	}
 

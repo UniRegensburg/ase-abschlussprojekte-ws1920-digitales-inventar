@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.MultiViewHolder> implements Filterable {
 	ArrayList<String> dataSet;
 	Context context;
-	String catName;
 
 	CategoryListAdapter(Context context, ArrayList<String> data) {
 		this.context = context;
