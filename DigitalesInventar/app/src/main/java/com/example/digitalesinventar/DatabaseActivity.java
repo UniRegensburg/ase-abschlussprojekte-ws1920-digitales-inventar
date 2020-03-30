@@ -253,11 +253,9 @@ public class DatabaseActivity {
         public void onComplete(@NonNull Task<QuerySnapshot> task) {
           if (task.isSuccessful()) {
             //Set default values for categories
-            categoryArray.add("Unterhaltungselektronik");
-            categoryArray.add("Haushaltsgegenstände");
             categoryArray.add("Einrichtung");
             categoryArray.add("Hobby");
-            categoryArray.add("Werkzeug");
+            categoryArray.add("Kleidung");
             //add user's categories
             for (QueryDocumentSnapshot document : task.getResult()) {
               String newItem = document.get("categoryName").toString();

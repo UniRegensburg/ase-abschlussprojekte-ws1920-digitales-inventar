@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,12 +33,10 @@ public class CategoryFragment extends Fragment {
 	private ArrayList<String> catArray = new ArrayList<>();
 	private static CategoryListAdapter catArrayAdapter;
 	private SwipeController swipeController = null;
-	String catName;
 	String[] searchArray;
 
-	public CategoryFragment(){
-
-	}
+//empty default-constructor
+	public CategoryFragment(){}
 
 	public static void sortByNameDown() {
 		Log.d("catSort", "nameDownn");
@@ -98,8 +97,7 @@ public class CategoryFragment extends Fragment {
 	}
 
 	private void editCategory(String category){
-		if (category.equals("Unterhaltungselektronik") || category.equals("Haushaltsgegenstände")
-			|| category.equals("Einrichtung") || category.equals("Hobby") || category.equals("Werkzeug")) {
+		if (category.equals("Einrichtung") || category.equals("Hobby") || category.equals("Kleidung")) {
 			Toast.makeText(getContext(), "Die Standardkategorie " + category + " kann nicht umbenannt werden!", Toast.LENGTH_SHORT).show();
 		}else {
 			showChangeDialog(category);
@@ -112,6 +110,7 @@ public class CategoryFragment extends Fragment {
 		alertDialog.setMessage("Gebe einen neuen Namen ein");
 
 		final EditText input = new EditText(getActivity());
+		input.setFilters(new InputFilter[] { InputChecker.filter });
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 			LinearLayout.LayoutParams.MATCH_PARENT,
 			LinearLayout.LayoutParams.MATCH_PARENT);
@@ -154,8 +153,7 @@ public class CategoryFragment extends Fragment {
 
 	private void deleteCategory(String category){
 		//make sure user does not try to delete predefined categories
-		if (category.equals("Unterhaltungselektronik") || category.equals("Haushaltsgegenstände")
-			|| category.equals("Einrichtung") || category.equals("Hobby") || category.equals("Werkzeug")) {
+		if (category.equals("Einrichtung") || category.equals("Hobby") || category.equals("Kleidung")) {
 			Toast.makeText(getContext(), "Die Standardkategorie " + category + " kann nicht gelöscht werden!", Toast.LENGTH_SHORT).show();
 		}else {
 			showConfirmDialog(category);
