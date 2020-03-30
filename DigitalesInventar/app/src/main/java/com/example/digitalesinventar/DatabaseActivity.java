@@ -46,7 +46,6 @@ public class DatabaseActivity {
 
     //ADD ITEM TO DB
     public static void addEntry(String name, String category , String location, String buyDate, double value, final boolean newImage) {
-        Log.d("DB addEntry", "item added");
         long tsLong = System.currentTimeMillis();
         final String ts = Long.toString(tsLong);
         Map<String, Object> entry = new HashMap<>();
@@ -62,7 +61,6 @@ public class DatabaseActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void avoid) {
-                      Log.d("DB addEntry", "item added to database");
                       if (newImage) {
                           uploadImage(cachedBitmap, ts);
                       } else {
@@ -73,7 +71,6 @@ public class DatabaseActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("DB addEntry", "item NOT added to database");
 
                     }
                 });
@@ -92,7 +89,6 @@ public class DatabaseActivity {
             @Override
             public void onSuccess(Void avoid) {
               EditItemActivity.showToast(true);
-              Log.d("DB updateEntry", "item updated");
               if (newImage) {
                 deleteImage(String.valueOf(timestamp));
                 if (cachedBitmap != null) {
@@ -108,7 +104,6 @@ public class DatabaseActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
               EditItemActivity.showToast(false);
-              Log.d("DB updateEntry", "item NOT updated");
             }
           });
     }
@@ -137,11 +132,9 @@ public class DatabaseActivity {
                     itemArray.add(0, newItem); //add item on top of the list
                     itemArrayBackup.add(0, newItem);
                   }
-                  Log.d("DB loadEntry", "items loaded from db");
                   currentlyLoading = false;
                   MainActivityFragment.updateList(); //update view in fragment
                 } else {
-                  Log.d("DB loadEntry", "item not loaded from db");
                   currentlyLoading = false;
                 }
               }
@@ -151,13 +144,11 @@ public class DatabaseActivity {
 
     //DELETE ITEM FROM DB
     public static void deleteItemFromDatabase(final String id) {
-        Log.d("DB del Entry", "id" + id);
         db.collection("users").document(MainActivity.userID).collection("items").document(id)
         .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void avoid) {
-                        Log.d("DB del Entry", "DocumentSnapshot successfully deleted!");
                         deleteImage(id);
                         getDataFromDatabase();
                     }
@@ -165,7 +156,6 @@ public class DatabaseActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("DB del Entry", "Error deleting document", e);
                     }
                 });
     }
@@ -184,7 +174,6 @@ public class DatabaseActivity {
 
     //ADD CATEGORY TO DB
     public static void addCategory(String catName) {
-     Log.d("DB addCategory", "category added");
      Map<String, Object> catEntry = new HashMap<>();
      catEntry.put("categoryName", catName);
      db.collection("users").document(MainActivity.userID).collection("categories").document(catName)
@@ -192,34 +181,29 @@ public class DatabaseActivity {
        .addOnSuccessListener(new OnSuccessListener<Void>() {
          @Override
          public void onSuccess(Void avoid) {
-           Log.d("DB addCategory", "category added to database");
            getCategoriesFromDatabase();
          }
        })
        .addOnFailureListener(new OnFailureListener() {
          @Override
          public void onFailure(@NonNull Exception e) {
-           Log.d("DB addCategory", "Category NOT added to database");
          }
        });
      }
 
     //DELETE CATEGORY FROM DB
     public static void deleteCategoryFromDatabase(String catName) {
-      Log.d("DB del Category", "Catname" + catName);
       db.collection("users").document(MainActivity.userID).collection("categories").document(catName)
         .delete()
         .addOnSuccessListener(new OnSuccessListener<Void>() {
           @Override
           public void onSuccess(Void avoid) {
-            Log.d("DB del category", "DocumentSnapshot successfully deleted!");
             getCategoriesFromDatabase();
           }
         })
         .addOnFailureListener(new OnFailureListener() {
           @Override
           public void onFailure(@NonNull Exception e) {
-            Log.d("DB del category", "Error deleting document", e);
           }
         });
     }
@@ -239,8 +223,6 @@ public class DatabaseActivity {
   //GET CATEGORY-DATA FROM DB
   public static void getCategoriesFromDatabase() {
     categoryArray.clear(); //clear array first to avoid multiple entries of single entry
-    Log.d("dbCollection" , "current: " + db.collection("users").document(MainActivity.userID).collection("categories")
-      .get());
     db.collection("users").document(MainActivity.userID).collection("categories")
       .get()
       .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -256,14 +238,12 @@ public class DatabaseActivity {
               String newItem = document.get("categoryName").toString();
               categoryArray.add(newItem);
             }
-            Log.d("DB loadCategories", "categories loaded from db" + categoryArray);
             try {
               CategoryFragment.updateList();
             } catch (Exception e) {
               e.printStackTrace();
             }
           } else {
-            Log.d("DB loadCategories", "categories not loaded from db");
           }
         }
       });
@@ -271,27 +251,23 @@ public class DatabaseActivity {
 
   //Update Category
   public static void updateCategoryInDatabase(String oldCat, final String newCat){
-    Log.d("DB updateCategory", "category updated");
     db.collection("users").document(MainActivity.userID).collection("categories").document(oldCat)
       .delete()
       .addOnSuccessListener(new OnSuccessListener<Void>() {
         @Override
         public void onSuccess(Void avoid) {
-          Log.d("DB del category", "DocumentSnapshot successfully deleted!");
           addCategory(newCat);
         }
       })
       .addOnFailureListener(new OnFailureListener() {
         @Override
         public void onFailure(@NonNull Exception e) {
-          Log.d("DB del category", "Error deleting document", e);
         }
       });
   }
 
   //Media
   public static void setCachedBitmap(Bitmap bitmap) {
-      Log.d("updateItemView", "0.5 db bmp cached");
       cachedBitmap = bitmap;
   }
 
@@ -308,14 +284,12 @@ public class DatabaseActivity {
       @Override
       public void onFailure(@NonNull Exception exception) {
         // Handle unsuccessful uploads
-        Log.d("uploadImg", "fail");
       }
     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
       @Override
       public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
         // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
         // ...
-        Log.d("uploadImg", "success");
         getDataFromDatabase();
       }
     });
@@ -330,7 +304,6 @@ public class DatabaseActivity {
       @Override
       public void onSuccess(byte[] bytes) {
         // Data for "images/island.jpg" is returns, use this as needed
-        Log.d("loadImg", "success from db");
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inMutable = true;
         downloadedBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
@@ -341,14 +314,12 @@ public class DatabaseActivity {
       public void onFailure(@NonNull Exception exception) {
         // Handle any errors
         view.setImageBitmap(defaultBitmap);
-        Log.d("loadImg", "fail");
       }
     });
 
   }
 
   public static void deleteImage(String itemID) {
-    Log.d("delItem", "1");
     String pathStr = MainActivity.userID + "/images/" + itemID + ".jpg";
     StorageReference deleteRef = storageRef.child(pathStr);
       // Delete the file
@@ -356,13 +327,11 @@ public class DatabaseActivity {
         @Override
         public void onSuccess(Void aVoid) {
           // File deleted successfully
-          Log.d("delItem", "success");
             MainActivityFragment.updateList();
         }
       }).addOnFailureListener(new OnFailureListener() {
         @Override
         public void onFailure(@NonNull Exception exception) {
-          Log.d("delItem", "fail");
         }
       });
   }

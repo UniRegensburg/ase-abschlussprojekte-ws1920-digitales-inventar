@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,6 @@ public class CategoryFragment extends Fragment {
 	public CategoryFragment(){}
 
 	public static void sortByNameDown() {
-		Log.d("catSort", "nameDownn");
 		Collections.sort(DatabaseActivity.categoryArray, new Comparator<String>() {
 			//kein fan davon die liste in der db zu sortieren
 			//db liste in adapter allerdings nötig für updateList()
@@ -51,7 +49,6 @@ public class CategoryFragment extends Fragment {
 	}
 
 	public static void sortByNameUp() {
-		Log.d("catSort", "nameUp");
 		Collections.sort(DatabaseActivity.categoryArray, new Comparator<String>() {
 			//kein fan davon die liste in der db zu sortieren
 			//db liste in adapter allerdings nötig für updateList()
@@ -75,15 +72,12 @@ public class CategoryFragment extends Fragment {
 
 	//link custom adapter with ListView for db entries
 	public void setupList() {
-		Log.i("catActivityFragment", "setupList called");
 		catArrayAdapter = new CategoryListAdapter(getActivity(), DatabaseActivity.categoryArray);
 		itemListView.setAdapter(catArrayAdapter);
 		itemListView.setLayoutManager(new LinearLayoutManager(getContext()));
-		Log.i("catActivityFragment", "listAdapter set");
 	}
 
 	public static void updateList() {
-		Log.i("catActivityFragment", "adapter dataset changed");
 		catArrayAdapter.notifyDataSetChanged();
 		switch (MainActivity.spinnerPos) {
 			case 0:
@@ -123,7 +117,6 @@ public class CategoryFragment extends Fragment {
 				public void onClick(DialogInterface dialog, int which) {
 					String newCategory = input.getText().toString();
 					if (InputChecker.checkEmptyInput(newCategory)) {
-						Log.i("addCat", "input not empty");
 						for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
 							//avoid multiple entries
 							if (newCategory.equals(DatabaseActivity.categoryArray.get(i))) {
@@ -131,7 +124,6 @@ public class CategoryFragment extends Fragment {
 								return;
 							}
 						}
-						Log.i("addCat", "input not twice");
 						DatabaseActivity.updateCategoryInDatabase(category, newCategory);
 						//clear input
 						input.setText("");
@@ -171,7 +163,6 @@ public class CategoryFragment extends Fragment {
 	}
 
 	void setupSearchListener(final MaterialSearchView searchView){
-		Log.i("CatActivityFragment", "setupSearchListener");
 		searchArray = DatabaseActivity.categoryArray.toArray(new String[0]);
 
 		searchView.closeSearch();
@@ -179,10 +170,8 @@ public class CategoryFragment extends Fragment {
 		searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				Log.i("CatOnQueryTextSubmit", "Query: " + query);
 				Intent intent = new Intent(getActivity(), SearchActivity.class); //search for all items
 				intent.putExtra("searchQuery", query);
-				Log.i("CategoryFragment", "intent to start search created");
 				startActivity(intent);
 				searchView.closeSearch();
 				return true;
@@ -190,7 +179,6 @@ public class CategoryFragment extends Fragment {
 
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				Log.i("SetupSearchListener", "onQueryTextChange");
 				return false;
 			}
 		});
@@ -199,7 +187,6 @@ public class CategoryFragment extends Fragment {
 															int position, long id) {
 				Intent intent = new Intent(getActivity(), CategorySearchActivity.class); //search for category specifically
 				intent.putExtra("catName", parent.getItemAtPosition(position).toString());
-				Log.i("CatActivityFrag", "intent to start SearchActivity created w/ " + parent.getItemAtPosition(position).toString());
 				startActivity(intent);
 			}
 		});
@@ -209,7 +196,6 @@ public class CategoryFragment extends Fragment {
 		swipeController = new SwipeController(getContext(), new SwipeControllerActions() {
 			@Override
 			public void onRightClicked(int position) {
-				Log.i("onMenuItemClicked", "Delete");
 				String itemCategory = catArrayAdapter.dataSet.get(position);
 				deleteCategory(itemCategory);
 				catArrayAdapter.notifyDataSetChanged();
@@ -217,7 +203,6 @@ public class CategoryFragment extends Fragment {
 
 			@Override
 			public void onLeftClicked(int position) {
-				Log.i("onMenuItemClicked", "Edit");
 				String category = catArrayAdapter.dataSet.get(position);
 				editCategory(category);
 			}

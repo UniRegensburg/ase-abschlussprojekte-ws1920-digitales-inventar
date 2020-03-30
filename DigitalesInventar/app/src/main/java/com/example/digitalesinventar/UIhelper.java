@@ -2,7 +2,6 @@ package com.example.digitalesinventar;
 
 import android.app.Activity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -26,7 +25,6 @@ public class UIhelper {
 		DisplayMetrics displaymetrics = new DisplayMetrics();
 		windowManager.getDefaultDisplay().getMetrics(displaymetrics);
 		int width = displaymetrics.widthPixels;
-		Log.i("displayMetrics", "width: " + width);
 		return width;
 	}
 }

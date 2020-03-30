@@ -71,7 +71,6 @@ public class EditItemActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.i("EditItemActivity", "onCreate");
 		super.onCreate(savedInstanceState);
 		setupView();
 	}
@@ -142,7 +141,6 @@ public class EditItemActivity extends AppCompatActivity {
 						public void onClick(DialogInterface dialog, int which) {
 							String category = input.getText().toString();
 							if (InputChecker.checkEmptyInput(category)) {
-								Log.i("addCat", "input not empty");
 								for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
 									//avoid multiple entries
 									if (category.equals(DatabaseActivity.categoryArray.get(i))) {
@@ -150,9 +148,7 @@ public class EditItemActivity extends AppCompatActivity {
 										return;
 									}
 								}
-								Log.i("addCat", "input not twice");
 								DatabaseActivity.addCategory(category);
-								//TODO set spinner selection to added category
 								//clear input
 								input.setText("");
 								//hide keyboard
@@ -214,7 +210,6 @@ public class EditItemActivity extends AppCompatActivity {
 				extras.putLong("itemTs",currentItem.getTimestamp());
 				extras.putString("searchQuery", searchquery);
 				extras.putBoolean("fromMain", false);
-				Log.d("editedItem", ":" + editTextName.getText());
 				returnIntent.putExtras(extras);
 				setResult(Activity.RESULT_OK, returnIntent);
 				//set query back to def
@@ -258,7 +253,6 @@ public class EditItemActivity extends AppCompatActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 42) { //image
-			Log.d("loadPicker", "2");
 
 			if (data != null && data.getData() != null) {
 				Uri uri = data.getData();
@@ -284,8 +278,6 @@ public class EditItemActivity extends AppCompatActivity {
 				e.printStackTrace();
 			}
 		} else if (requestCode == 333){ //code 333
-			//ohne if wird aufgerufen
-			Log.d("delkat", "edit code 333");
 			finishAndRemoveTask();
 		}
 	}
@@ -334,7 +326,6 @@ public class EditItemActivity extends AppCompatActivity {
 			DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView, defaultImage);
 			//downloads again after downloading in viewItemActivity
 		} else {
-			Log.d("delkat", "edit code 0");
 			finish();
 		}
 	}

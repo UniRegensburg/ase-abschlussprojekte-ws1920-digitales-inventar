@@ -48,19 +48,16 @@ public class CategorySearchActivity extends AppCompatActivity {
 	}
 
 	private void handleIntent(Intent intent) {
-		Log.i("CategoryActivity", "handleIntent");
-		Log.i("handleIntent", "catName: " + catName);
+		String catName = intent.getStringExtra("catName");
 		search(catName);
 	}
 
 
 	private void search(String catName) {
-		Log.i("SearchActivity", "catName: " + catName);
 		result.setText("Kategorie '" + catName + "':");
 		adapter = new ItemListAdapter(this, filteredList);
 		itemListView.setAdapter(adapter);
 		dataSet = DatabaseActivity.itemArray;
-		Log.i("DoMySearch", "dataset: " + dataSet);
 
 		if (catName.isEmpty()) {
 			filteredList = dataSet; //no empty cats
@@ -72,7 +69,6 @@ public class CategorySearchActivity extends AppCompatActivity {
 				}
 			}
 		}
-		Log.i("DoMySearch", "filteredList: " + filteredList);
 		adapter.notifyDataSetChanged();
 	}
 

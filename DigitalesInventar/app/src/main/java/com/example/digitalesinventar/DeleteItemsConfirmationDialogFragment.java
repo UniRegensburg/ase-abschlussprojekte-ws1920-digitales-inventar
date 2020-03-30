@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -24,16 +23,13 @@ public class DeleteItemsConfirmationDialogFragment extends DialogFragment {
 		final String count = args.getString(ARG_COUNT);
 
 		int totalCount = Integer.parseInt(count);
-		Log.i("deleteItemConfirmDialog", "totalCount" + totalCount);
 
 		if (totalCount > 1){
-			Log.i("deleteItemConfirmDialog", "hier" + totalCount);
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setMessage("Wirklich alle Items löschen?")
 				.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						// The item gets deleted
-						Log.i("deleteItemConfirmDialog", "timestamps" + timestamps);
 						for (String timestamp: timestamps) {
 							DatabaseActivity.deleteItemFromDatabase(timestamp);
 						}
@@ -46,13 +42,11 @@ public class DeleteItemsConfirmationDialogFragment extends DialogFragment {
 				});
 			return builder.create();
 		} else {
-			Log.i("deleteItemConfirmDialog", "dort" + totalCount);
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setMessage("Wirklich dieses Item löschen?")
 				.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						// The item gets deleted
-						Log.i("deleteItemConfirmDialog", "timestamps" + timestamps);
 						if (timestamps.size() > 0) {
 							DatabaseActivity.deleteItemFromDatabase(timestamps.get(0));
 						}

@@ -83,13 +83,11 @@ public void setData(ArrayList<DataModelItemList> data) {
                 @Override
                 public void onClick(View view) {
                     if (!multiselect) {
-                        Log.i("ItemListAdapter", "launchNewItemActivity called");
                         Intent intent = new Intent(context, ViewItemActivity.class);
                         Bundle extras = new Bundle();
                         extras.putLong("itemTs",timestamp);
                         extras.putBoolean("fromMain", true);
                         intent.putExtras(extras);
-                        Log.i("MainActivity", "intent to start viewItem created");
                         context.startActivity(intent);
                     }else {
                         if (item.getChecked()) {
@@ -136,7 +134,6 @@ public void setData(ArrayList<DataModelItemList> data) {
     }
 
 		public void unselectAll(RecyclerView viewHolder) {
-	Log.i("selectedItems", "selected: " + getSelected().toString());
 			for (int i = 0; i < dataSet.size(); i++) {
 				dataSet.get(i).setChecked(false);
 			}

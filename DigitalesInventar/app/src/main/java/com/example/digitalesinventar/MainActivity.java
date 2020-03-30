@@ -103,11 +103,9 @@ public class MainActivity extends AppCompatActivity {
 		//noinspection SimplifiableIfStatement
 		if (id == R.id.action_logout) {
 			FirebaseAuth.getInstance().signOut();
-			Log.i("logout", "logout clicked");
 			callLogin();
 			return true;
 		} else if(id == R.id.action_search){
-			Log.i("search", "search clicked");
 			return true;
 		} else{
 			return super.onOptionsItemSelected(item);
@@ -120,13 +118,9 @@ public class MainActivity extends AppCompatActivity {
 
 		if (requestCode == RC_SIGN_IN) {
 			IdpResponse response = IdpResponse.fromResultIntent(data);
-			Log.d("loginTag", "second");
-
 			if (resultCode == RESULT_OK) {
 				// Successfully signed in
-				Log.d("loginTag", "third");
 				FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-				Log.d("loginTag", user.getUid());
 				userID = user.getUid();
 				setupMainMenu();
 			} else {
@@ -134,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
 				// sign-in flow using the back button. Otherwise check
 				// response.getError().getErrorCode() and handle the error.
 				// ..
-				Log.d("loginTag", "error");
 				Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 				handleSignInResult(task);
 			}
@@ -203,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
 		plusButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Log.i("MainActivity", "plusButton clicked");
 				launchNewItemActivity();
 			}
 		});
@@ -310,7 +302,6 @@ public class MainActivity extends AppCompatActivity {
 				Fragment fragment = null;
 				switch (tab.getPosition()) {
 					case 0:
-						Log.i("onTabSelected", "case 0");
 						currentCase = 0;
 						sortBySpinner.setAdapter(null);
 						setupBigSpinner();
@@ -319,13 +310,11 @@ public class MainActivity extends AppCompatActivity {
 						plusButton.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View view) {
-								Log.i("MainActivity", "plusButton clicked");
 								launchNewItemActivity();
 							}
 						});
 						break;
 					case 1:
-						Log.i("onTabSelected", "case 1");
 						currentCase = 1;
 						sortBySpinner.setAdapter(null);
 						setupSmallSpinner();
@@ -334,13 +323,11 @@ public class MainActivity extends AppCompatActivity {
 						plusButton.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View view) {
-								Log.i("MainActivity", "plusButton clicked");
 								launchNewCategoryActivity();
 							}
 						});
 						break;
 					case 2:
-						Log.i("onTabSelected", "case 2");
 						currentCase = 2;
 						sortBySpinner.setAdapter(null);
 						setupSmallSpinner();
@@ -377,7 +364,6 @@ public class MainActivity extends AppCompatActivity {
 
 	//onClick action for plusButton when category is selected --> launches alertDialog for Category
 	private void launchNewCategoryActivity() {
-		Log.i("MainActivity", "launchNewItemActivity called");
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
 		alertDialog.setTitle("Kategorie hinzufügen");
 		alertDialog.setMessage("Geben sie einen Namen ein");
@@ -396,7 +382,6 @@ public class MainActivity extends AppCompatActivity {
 				public void onClick(DialogInterface dialog, int which) {
 					String category = input.getText().toString();
 					if (InputChecker.checkEmptyInput(category)) {
-						Log.i("addCat", "input not empty");
 						for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
 							//avoid multiple entries
 							if (category.equals(DatabaseActivity.categoryArray.get(i))) {
@@ -404,7 +389,6 @@ public class MainActivity extends AppCompatActivity {
 								return;
 							}
 						}
-						Log.i("addCat", "input not twice");
 						DatabaseActivity.addCategory(category);
 						//clear input
 						input.setText("");

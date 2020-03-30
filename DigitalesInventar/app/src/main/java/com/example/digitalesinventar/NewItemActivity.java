@@ -59,7 +59,6 @@ public class NewItemActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.i("NewItemActivity", "onCreate");
 		super.onCreate(savedInstanceState);
 		setupView();
 	}
@@ -68,7 +67,6 @@ public class NewItemActivity extends AppCompatActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (requestCode == 42) { //image
-			Log.d("loadPicker", "2");
 			if (data != null && data.getData() != null) {
 
 				Uri uri = data.getData();
@@ -97,9 +95,7 @@ public class NewItemActivity extends AppCompatActivity {
 	}
 
 	public void setupView() {
-		Log.i("NewItemActivity", "setupView called");
 		setContentView(R.layout.activity_add_item);
-		Log.i("NewItemActivity", "xml file linked");
 		initView();
 		setupButtons();
 		setupSpinner();
@@ -157,7 +153,6 @@ public class NewItemActivity extends AppCompatActivity {
 						public void onClick(DialogInterface dialog, int which) {
 							String category = input.getText().toString();
 							if (InputChecker.checkEmptyInput(category)) {
-								Log.i("addCat", "input not empty");
 								for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
 									//avoid multiple entries
 									if (category.equals(DatabaseActivity.categoryArray.get(i))) {
@@ -165,9 +160,7 @@ public class NewItemActivity extends AppCompatActivity {
 										return;
 									}
 								}
-								Log.i("addCat", "input not twice");
 								DatabaseActivity.addCategory(category);
-								//TODO set spinner selection to added category
 								//clear input
 								input.setText("");
 								//hide keyboard
@@ -269,7 +262,6 @@ public class NewItemActivity extends AppCompatActivity {
 			String selectedCategory = "";
 			if (categorySpinner.getSelectedItem() != null) {
 				selectedCategory = categorySpinner.getSelectedItem().toString();
-				Log.i("selectedCategory: ", " " + selectedCategory);
 			}
 			//add item to database
 			double value;

@@ -37,7 +37,6 @@ public class ViewItemActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.i("NewItemActivity", "onCreate");
 		super.onCreate(savedInstanceState);
 		//make sure no old values are in searchquery
 		searchquery = "";
@@ -95,7 +94,6 @@ public class ViewItemActivity extends AppCompatActivity {
 				Bundle extras = intentA.getExtras();
 				Intent intentB = new Intent(getApplicationContext(),EditItemActivity.class);
 				//get bundle from MainActivity and pass the timestamp to EditItemActivity
-				Log.d("extras","extras: " + extras.toString());
 				intentB.putExtras(extras);
 				startActivityForResult(intentB, 666);
 			}
@@ -119,19 +117,16 @@ public class ViewItemActivity extends AppCompatActivity {
 			textViewLocation.setText(currentItem.getItemLocation());
 			textViewBuyDate.setText(currentItem.getItemBuyDate());
 			textViewValue.setText(Double.toString(currentItem.getItemValue()) + "€");
-			Log.d("Intent data: ",  "" + currentItem.getItemName());
 			if (extras.getBoolean("fromMain")) {
 				DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView, defaultBmp);
 				imgView.invalidate();
 			}
 		} else {
-			Log.d("delkat", "view code 0");
 			finish();
 		}
 	}
 
 	public static void updateDataAfterEdit(DataModelItemList currentItem, boolean newImage, Bitmap bitmap) {
-		Log.d("updateItemView", "1");
 		//name & cat
 		textViewName.setText(currentItem.getItemName());
 		textViewCategory.setText(currentItem.getItemCategory());
@@ -141,7 +136,6 @@ public class ViewItemActivity extends AppCompatActivity {
 		textViewBuyDate.setText(currentItem.getItemBuyDate());
 		textViewValue.setText(Double.toString(currentItem.getItemValue()) + "€");
 		if (newImage) {
-			Log.d("updateItemView", "2 new img");
 			if (bitmap != null) {
 				imgView.setImageBitmap(bitmap);
 			} else {
@@ -149,23 +143,19 @@ public class ViewItemActivity extends AppCompatActivity {
 			}
 			imgView.invalidate();
 		} else {
-			Log.d("updateItemView", "2 no new img");
 		}
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.d("onActivityResult", "called");
 		// Check which request we're responding to
 		if (requestCode == 666) {
 			// Make sure the request was successful
 			if (resultCode == Activity.RESULT_OK) {
 				Bundle extras = data.getExtras();
-				Log.d("onActivityResult", "Intent data" + extras.toString());
 				assignDataFromIntent(data);
 			}
 		} else { //code 333
-			Log.d("delkat", "view code 333");
 			finishAndRemoveTask();
 		}
 	}

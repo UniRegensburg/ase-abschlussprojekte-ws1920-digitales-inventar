@@ -47,21 +47,16 @@ public class PlaceSearchActivity extends AppCompatActivity {
 	}
 
 	private void handleIntent(Intent intent) {
-		Log.i("PlaceActivity", "handleIntent");
 		String placeName = getIntent().getStringExtra("placeName");
-		Log.i("handleIntent", "placeName: " + placeName);
 		search(placeName);
 	}
 
 
 	private void search(String placeName) {
-		Log.i("SearchActivity", "placeName: " + placeName);
 		result.setText("Ort '" + placeName + "':");
 		adapter = new ItemListAdapter(this, filteredList);
 		itemListView.setAdapter(adapter);
 		dataSet = DatabaseActivity.itemArray;
-		Log.i("DoMySearch", "dataset: " + dataSet);
-
 		if (placeName.isEmpty()) {
 			filteredList = dataSet; //no empty cats
 		} else {
@@ -72,8 +67,6 @@ public class PlaceSearchActivity extends AppCompatActivity {
 				}
 			}
 		}
-
-		Log.i("DoMySearch", "filteredList: " + filteredList);
 		adapter.notifyDataSetChanged();
 	}
 }

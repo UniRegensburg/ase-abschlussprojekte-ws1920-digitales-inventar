@@ -2,7 +2,6 @@ package com.example.digitalesinventar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,7 +20,6 @@ public class SearchActivity extends AppCompatActivity {
 	public ArrayList<DataModelItemList> filteredList = new ArrayList<>();
 	ItemListAdapter adapter;
 	RecyclerView itemListView;
-	long timestamp;
 	String searchquery;
 	TextView result;
 	Button backButton;
@@ -47,19 +45,16 @@ public class SearchActivity extends AppCompatActivity {
 
 	@Override
 	protected void onNewIntent(Intent intent) {
-		Log.i("onNewIntent", "Intent: " + intent.getStringExtra("searchQuery"));
 		setIntent(intent);
 		handleIntent(intent);
 	}
 
 	private void handleIntent(Intent intent) {
-		Log.i("SearchActivity", "handleIntent");
 		if (intent.getStringExtra("searchQuery") != null && !intent.getStringExtra("searchQuery").equals("")) {
 			search(intent.getStringExtra("searchQuery"));
 			searchquery = "";
 		} else {
 			String query = intent.getStringExtra("searchQuery");
-			Log.i("handleIntent", "query: " + query);
 			searchquery = query;
 			search(query);
 		}
@@ -68,12 +63,9 @@ public class SearchActivity extends AppCompatActivity {
 
 	public void search(String query){
 		result.setText("Suchergebnis für '" + query + "'");
-		Log.i("SearchActivity", "query: "+ query);
 		adapter = new ItemListAdapter(this, filteredList);
 		itemListView.setAdapter(adapter);
 		dataSet = DatabaseActivity.itemArray;
-		Log.i("DoMySearch", "dataset: " + dataSet);
-
 		if (query.isEmpty()){
 			filteredList = dataSet; //search doesn't get called on empty input
 		} else {
@@ -88,7 +80,6 @@ public class SearchActivity extends AppCompatActivity {
 				}
 			}
 		}
-		Log.i("DoMySearch", "filteredList: " + filteredList);
 		adapter.notifyDataSetChanged();
 	}
 }

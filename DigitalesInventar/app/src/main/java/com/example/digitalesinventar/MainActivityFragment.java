@@ -65,7 +65,6 @@ public class MainActivityFragment extends Fragment {
     }
 
     private static void sortItemArrayBySortedNames() {
-        Log.d("mainSort", "sortName");
         DatabaseActivity.loadBackup();
         ArrayList<DataModelItemList> wipItemArray = new ArrayList<>();
         wipItemArray.addAll(DatabaseActivity.itemArray);
@@ -77,33 +76,26 @@ public class MainActivityFragment extends Fragment {
                 }
             }
         }
-        Log.d("mainSort", "" + filteredList);
         itemArrayAdapter.notifyDataSetChanged();
     }
 
     private static void sortItemArrayBySortedTs() {
-        Log.d("mainSort", "sortTs");
         DatabaseActivity.loadBackup();
         ArrayList<DataModelItemList> wipItemArray = new ArrayList<>();
         wipItemArray.addAll(DatabaseActivity.itemArray);
         filteredList.clear();
         for (String sortTs : tsList) {
-            Log.d("mainSort", "outsideFor" + sortTs);
             for (DataModelItemList sortingItem : wipItemArray) {
-                Log.d("mainSort", "insideFor" + sortingItem.getTimestamp());
                 if (Long.valueOf(sortTs) == sortingItem.getTimestamp()) {
-                    Log.d("mainSort", "hit");
                     filteredList.add(sortingItem);
                 }
             }
         }
-        Log.d("mainSort", "" + filteredList);
         itemArrayAdapter.notifyDataSetChanged();
     }
 
 
     static void sortByNameDown() {
-        Log.d("mainSort", "nameUp");
         extractNames();
         Collections.sort(nameList, new Comparator<String>() {
             @Override
@@ -115,7 +107,6 @@ public class MainActivityFragment extends Fragment {
     }
 
     static void sortByNameUp() {
-        Log.d("mainSort", "nameDown");
         extractNames();
         Collections.sort(nameList, new Comparator<String>() {
             @Override
@@ -127,7 +118,6 @@ public class MainActivityFragment extends Fragment {
     }
 
     static void sortByOldest() {
-        Log.d("mainSort", "alt");
         extractTimestamps();
         Collections.sort(tsList, new Comparator<String>() {
             @Override
@@ -139,7 +129,6 @@ public class MainActivityFragment extends Fragment {
     }
 
     static void sortByNewest() {
-        Log.d("mainSort", "neu");
         extractTimestamps();
         Collections.sort(tsList, new Comparator<String>() {
             @Override
@@ -155,7 +144,6 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         //set content-view for fragment
         View view= inflater.inflate(R.layout.fragment_main, container, false);
-        Log.i("MainActivityFragment", "inflater called");
         //set layout for ListView for data from db
         heading = view.findViewById(R.id.itemsHeading);
         itemCounter = view.findViewById(R.id.itemCounter);
@@ -163,11 +151,9 @@ public class MainActivityFragment extends Fragment {
         cancelMultiSelect = view.findViewById(R.id.cancelMultiSelect);
         itemListView = view.findViewById(R.id.fragment_list);
         itemListView.setLayoutManager(new LinearLayoutManager(getContext()));
-        Log.i("MainActivityFragment", "listView: ");
-	      setupSwipeController();
+        setupSwipeController();
 				setupButtons();
         setupList();
-        Log.i("MainActivityFragment", "setupList called");
         return view;
     }
 
@@ -189,15 +175,12 @@ public class MainActivityFragment extends Fragment {
 
     //link custom adapter with ListView for db entries
 		private void setupList() {
-        Log.i("MainActivityFragment", "setupList called");
         filteredList = DatabaseActivity.itemArray;
         itemArrayAdapter = new ItemListAdapter(getActivity(), filteredList, defaultBitmap);
         itemListView.setAdapter(itemArrayAdapter);
-        Log.i("MainActivityFragment", "listAdapter set");
     }
 
     static void updateList() {
-        Log.i("MainActivityFragment", "adapter dataset changed");
         itemArrayAdapter.notifyDataSetChanged();
         MainActivity.sortBySpinner.setSelection(MainActivity.spinnerPos); //also sorts
         switch (MainActivity.spinnerPos) {
@@ -263,12 +246,10 @@ public class MainActivityFragment extends Fragment {
             }
         }
         searchArray = itemList.toArray(new String[0]);
-        Log.i("getSearchArray", "array: " + searchArray);
         return searchArray;
     }
 
  		void setupSearchListener(final MaterialSearchView searchView){
-        Log.i("MainActivityFragment", "setupSearchListener");
         searchArray = getSearchArray();
 
         searchView.closeSearch();
@@ -276,10 +257,8 @@ public class MainActivityFragment extends Fragment {
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.i("MainOnQueryTextSubmit", "Query: " + query);
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
                 intent.putExtra("searchQuery", query);
-                Log.i("MainActivityFrag", "intent to start search created");
                 startActivity(intent);
                 searchView.closeSearch();
                 return true;
@@ -287,7 +266,6 @@ public class MainActivityFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Log.i("SetupSearchListener", "onQueryTextChange");
                 if (searchArray.length == 0 && !DatabaseActivity.currentlyLoading) {
                     searchArray = getSearchArray();
                     setupSearchListener(searchView);
@@ -300,7 +278,6 @@ public class MainActivityFragment extends Fragment {
                                     int position, long id) {
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
                 intent.putExtra("searchQuery", parent.getItemAtPosition(position).toString());
-                Log.i("MainActivityFrag", "intent to start SearchActivity created w/ " + parent.getItemAtPosition(position).toString());
                 startActivity(intent);
             }
         });

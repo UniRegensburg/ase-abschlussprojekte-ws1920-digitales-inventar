@@ -44,19 +44,16 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 		}
 
 		void bind(final String item) {
-			Log.i("CatListAdapter", "ITEM" + item);
 			textViewCategory.setText(item);
 
 			itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					Log.i("CatListAdapter", "launchCatActivity called for " + item);
 					Intent intent = new Intent(context, CategorySearchActivity.class);
 					Bundle extras = new Bundle();
 					extras.putString("catName", item);
 					extras.putBoolean("fromMain", true);
 					intent.putExtras(extras);
-					Log.i("catActivity", "intent to start search created");
 					context.startActivity(intent);
 				}
 			});
