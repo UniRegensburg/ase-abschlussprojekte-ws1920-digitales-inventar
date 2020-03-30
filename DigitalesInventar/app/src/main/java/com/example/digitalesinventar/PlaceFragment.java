@@ -127,43 +127,4 @@ public class PlaceFragment extends Fragment {
 				break;
 		}
 	}
-
-	private void launchPlace() {
-		Log.i("placeActivity", "launchPlaceActivity called for " + placeName);
-		Intent intent = new Intent(getActivity(), SearchActivity.class);
-		Bundle extras = new Bundle();
-		extras.putString("searchQuery",placeName);
-		extras.putBoolean("fromMain", true);
-		intent.putExtras(extras);
-		Log.i("placeActivity", "intent to start search created");
-		startActivity(intent);
-	}
-
-
-	private void doLiveUpdates(String query) {
-		DatabaseActivity.loadBackup();
-		ArrayList<DataModelItemList> dataSet = new ArrayList<>();
-		dataSet.addAll(DatabaseActivity.itemArray);
-		Log.i("DoMyFilter", "dataset: " + dataSet);
-		placeArray.clear();
-		if (query.isEmpty()) {
-			//filteredList.addAll(dataSet); //search doesn't get called on empty input
-		} else {
-			for (DataModelItemList row : dataSet) {
-				//if (row.getItemName().toLowerCase().contains(query.toLowerCase())) {
-				//	filteredList.add(row);
-				//}// else
-				//if (row.getItemCategory().toLowerCase().contains(query.toLowerCase())) {
-				//	catArray.add(row.getItemCategory());
-				//} else
-				if (row.getItemLocation().toLowerCase().contains(query.toLowerCase())) {
-					    placeArray.add(row.getItemLocation());
-					//}
-				}
-			}
-
-			Log.i("DoMyFilter", "placeList: " + placeArray);
-			placeArrayAdapter.notifyDataSetChanged();
-		}
-	}
 }

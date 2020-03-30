@@ -91,17 +91,4 @@ public class SearchActivity extends AppCompatActivity {
 		Log.i("DoMySearch", "filteredList: " + filteredList);
 		adapter.notifyDataSetChanged();
 	}
-
-	private void launchViewItem() {
-		Log.i("SearchActivity", "launchNewItemActivity called");
-		Intent intent = new Intent(this, ViewItemActivity.class);
-		Bundle extras = new Bundle();
-		extras.putLong("itemTs",timestamp);
-		extras.putString("searchQuery", searchquery);
-		intent.putExtras(extras);
-		Log.i("SearchActivity", "intent to start viewItem created");
-		startActivity(intent);
-		finish();
-	}
-
 }

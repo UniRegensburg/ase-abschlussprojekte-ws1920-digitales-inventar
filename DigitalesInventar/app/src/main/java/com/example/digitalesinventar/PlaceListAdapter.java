@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class PlaceListAdapter extends RecyclerView.Adapter<PlaceListAdapter.MultiViewHolder> implements Filterable {
 	ArrayList<String> dataSet;
 	Context context;
-	String placeName;
 
 	public PlaceListAdapter(Context context, ArrayList<String> data) {
 		this.context = context;

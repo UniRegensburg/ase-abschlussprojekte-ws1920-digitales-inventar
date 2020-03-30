@@ -55,17 +55,14 @@ public class DatabaseActivity {
         entry.put("location", location);
         entry.put("buydate", buyDate);
         entry.put("value", value);
-        //entry.put("checked", isChecked);
         entry.put("ts", ts);
 
-        //db.collection("items").document(ts)
         db.collection("users").document(MainActivity.userID).collection("items").document(ts)
                 .set(entry)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void avoid) {
                       Log.d("DB addEntry", "item added to database");
-                      //getDataFromDatabase(); //  contained in uploadImage
                       if (newImage) {
                           uploadImage(cachedBitmap, ts);
                       } else {
@@ -77,6 +74,7 @@ public class DatabaseActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.d("DB addEntry", "item NOT added to database");
+
                     }
                 });
     }
@@ -88,7 +86,6 @@ public class DatabaseActivity {
         valueWip = Double.parseDouble(value);
       }
       final DataModelItemList wipItem = new DataModelItemList(name, category, location, buyDate, valueWip, false, timestamp);
-      //Log.d("DB updateEntry", "data:"+id+" ;"+name+" ;"+category+" ;"+location+" ;"+timestamp);
       db.collection("users").document(MainActivity.userID).collection("items").document(String.valueOf(timestamp))
         .update("name", name, "category", category, "location", location, "buydate", buyDate, "value", valueWip,"ts", timestamp)
           .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -105,7 +102,6 @@ public class DatabaseActivity {
                 getDataFromDatabase();
               }
               ViewItemActivity.updateDataAfterEdit(wipItem, newImage, cachedBitmap);
-              //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString()); //crashed app
             }
           })
           .addOnFailureListener(new OnFailureListener() {
@@ -128,7 +124,6 @@ public class DatabaseActivity {
           currentlyLoading = true;
           itemArray.clear(); //clear array first to avoid multiple entries of single entry
           itemArrayBackup.clear();
-          //db.collection("items")
           db.collection("users").document(MainActivity.userID).collection("items")
             .get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -283,7 +278,6 @@ public class DatabaseActivity {
         @Override
         public void onSuccess(Void avoid) {
           Log.d("DB del category", "DocumentSnapshot successfully deleted!");
-          //getCategoriesFromDatabase();
           addCategory(newCat);
         }
       })
@@ -304,7 +298,6 @@ public class DatabaseActivity {
   public static void uploadImage(Bitmap bitmap, final String itemID) {
     String pathStr = MainActivity.userID + "/images/" + itemID + ".jpg";
     StorageReference imagesRef = storageRef.child(pathStr);
-    //Log.d("uploadImg", "1.5: "+ pathStr);
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -316,7 +309,6 @@ public class DatabaseActivity {
       public void onFailure(@NonNull Exception exception) {
         // Handle unsuccessful uploads
         Log.d("uploadImg", "fail");
-
       }
     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
       @Override
@@ -338,22 +330,18 @@ public class DatabaseActivity {
       @Override
       public void onSuccess(byte[] bytes) {
         // Data for "images/island.jpg" is returns, use this as needed
-        Log.d("loadImg", "2 success from db");
-        //Log.d("currentIMG", ": " + view.getImageMatrix().toShortString());
-        //ImageView imageView = findViewById(R.id.image_View);
-        //Bitmap bitmap = MediaStore.Images.Media.
+        Log.d("loadImg", "success from db");
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inMutable = true;
         downloadedBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
         view.setImageBitmap(downloadedBitmap);
-        ///imageView.setImageBitmap(bitmap);
       }
     }).addOnFailureListener(new OnFailureListener() {
       @Override
       public void onFailure(@NonNull Exception exception) {
         // Handle any errors
         view.setImageBitmap(defaultBitmap);
-        Log.d("loadImg", "2 fail");
+        Log.d("loadImg", "fail");
       }
     });
 
@@ -368,18 +356,13 @@ public class DatabaseActivity {
         @Override
         public void onSuccess(Void aVoid) {
           // File deleted successfully
-          Log.d("delItem", "2 success");
-          //try {
+          Log.d("delItem", "success");
             MainActivityFragment.updateList();
-          //} catch (Exception e) {
-          //  e.printStackTrace();
-          //}
         }
       }).addOnFailureListener(new OnFailureListener() {
         @Override
         public void onFailure(@NonNull Exception exception) {
-          // Uh-oh, an error occurred!
-          Log.d("delItem", "2, fail");
+          Log.d("delItem", "fail");
         }
       });
   }

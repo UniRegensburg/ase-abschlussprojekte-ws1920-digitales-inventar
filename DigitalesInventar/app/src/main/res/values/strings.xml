@@ -14,12 +14,6 @@
     <string name="least_items">Neueste: </string>
     <string name="sort_items">Sortieren nach: </string>
     <string name="editCategories">Kategorien bearbeiten</string>
-    <string name="cat1">Unterhaltung </string>
-    <string name="cat2">Haushalt</string>
-    <string name="cat3">Einrichtung</string>
-    <string name="cat4">Hobby</string>
-    <string name="cat5">Werkzeug</string>
-    <string name="cat6">Weitere..</string>
     <string name="item_location">Ort des Gegenstands</string>
     <string name="item_category">Kategorie des Gegenstands</string>
     <string name="save">Sichern</string>
@@ -36,13 +30,6 @@
     <string name="tab_text_2">Kategorien</string>
     <string name="tab_text_3">Orte</string>
     <string name="multiselect"> Items ausgewählt</string>
-    <string-array name="categories_spinner">
-        <item>Unterhaltungselektronik</item>
-        <item>Haushaltsgegenstände</item>
-        <item>Einrichtung</item>
-        <item>Hobby</item>
-        <item>Werkzeug</item>
-    </string-array>
     <string-array name="sort_by_spinner_small">
         <item>Name aufsteigend</item>
         <item>Name absteigend</item>

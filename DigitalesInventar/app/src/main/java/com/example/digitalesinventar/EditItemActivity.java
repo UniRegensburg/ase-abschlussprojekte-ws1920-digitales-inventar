@@ -36,7 +36,6 @@ public class EditItemActivity extends AppCompatActivity {
 	//TEXT-VIEWS
 	TextView textViewName;
 	TextView textViewTime;
-	TextView textViewTimeInfo;
 	TextView textViewLocation;
 	TextView textViewCategory;
 	static TextView textViewBuyDate;
@@ -68,7 +67,6 @@ public class EditItemActivity extends AppCompatActivity {
 	String searchquery;
 
 	boolean newImage = false;
-	//Bitmap cachedBitmap;
 
 
 	@Override
@@ -91,7 +89,6 @@ public class EditItemActivity extends AppCompatActivity {
 		//TEXT-VIEWS
 		textViewName = findViewById(R.id.itemName);
 		textViewTime = findViewById(R.id.itemTime);
-		//textViewTimeInfo = findViewById(R.id.textViewTime);
 		textViewLocation = findViewById(R.id.textViewLocation);
 		textViewCategory = findViewById(R.id.textViewCategory);
 		textViewBuyDate = findViewById(R.id.itemBuyDate);
@@ -210,11 +207,7 @@ public class EditItemActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				context = getApplicationContext();
-				//Log.d("new-ui-debug", "edit save, ts "+ currentItem.getTimestamp() + "; name " + editTextName.getText() + "; cat " + categorySpinner.getSelectedItem() + "; ort " + editTextLocation.getText() + "; date " + textViewBuyDate.getText() + "; wert " + editTextValue.getText());
 				DatabaseActivity.updateEntry(editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), textViewBuyDate.getText().toString(), editTextValue.getText().toString(), currentItem.getTimestamp(), newImage);
-				//^ TODO crashes     java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String java.lang.Object.toString()' on a null object reference
-				//reproduce: edit item -> edit kat -> new cat -> back -> save item (no new cat) -> edit item -> edit cat -> del new cat w/ items -> save
-				//zur not: try & catch
 				newImage = false;
 				Intent returnIntent = new Intent(context, ViewItemActivity.class);
 				Bundle extras = new Bundle();
@@ -271,8 +264,6 @@ public class EditItemActivity extends AppCompatActivity {
 				Uri uri = data.getData();
 				try {
 					Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-					//scale bitmap down before compressing to handle larger images
-					//TODO crop to square
 					bitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, false);
 					DatabaseActivity.setCachedBitmap(bitmap);
 					imgView.setImageBitmap(bitmap);
@@ -285,8 +276,6 @@ public class EditItemActivity extends AppCompatActivity {
 			try {
 				Bundle extras = data.getExtras();
 				Bitmap bitmap = (Bitmap) extras.get("data");
-				//scale bitmap down before compressing to handle larger images
-				//TODO crop to square
 				bitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, false);
 				DatabaseActivity.setCachedBitmap(bitmap);
 				imgView.setImageBitmap(bitmap);
@@ -347,7 +336,6 @@ public class EditItemActivity extends AppCompatActivity {
 		} else {
 			Log.d("delkat", "edit code 0");
 			finish();
-			//finishAndRemoveTask();
 		}
 	}
 

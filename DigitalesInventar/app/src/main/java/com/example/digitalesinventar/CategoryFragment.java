@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,14 +24,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class CategoryFragment extends Fragment {
 
 	static RecyclerView itemListView;
-	private ArrayList<String> catArray = new ArrayList<>();
 	private static CategoryListAdapter catArrayAdapter;
 	private SwipeController swipeController = null;
 	String[] searchArray;
@@ -115,6 +114,8 @@ public class CategoryFragment extends Fragment {
 			LinearLayout.LayoutParams.MATCH_PARENT,
 			LinearLayout.LayoutParams.MATCH_PARENT);
 		input.setLayoutParams(lp);
+		input.setMaxLines(1);
+		input.setInputType(InputType.TYPE_CLASS_TEXT);
 		alertDialog.setView(input);
 
 		alertDialog.setPositiveButton(R.string.edit,

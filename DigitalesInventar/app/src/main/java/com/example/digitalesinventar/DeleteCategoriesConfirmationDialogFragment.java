@@ -26,7 +26,6 @@ public class DeleteCategoriesConfirmationDialogFragment extends DialogFragment {
 				public void onClick(DialogInterface dialog, int id) {
 					// TODO delete all items with the called category
 					DatabaseActivity.deleteItemsByCategory(category);
-					//DatabaseActivity.deleteCategoryFromDatabase(category); //categories already deleted in deleteItemsByCategory
 					Toast.makeText(getActivity(), "Kategorie " + category + " wurde mit allen Items gelöscht!", Toast.LENGTH_SHORT).show();
 					Intent intentA = new Intent(getContext(), EditItemActivity.class);
 					intentA.putExtra("itemTs", 0);
@@ -34,7 +33,6 @@ public class DeleteCategoriesConfirmationDialogFragment extends DialogFragment {
 					Intent intentB = new Intent(getContext(), ViewItemActivity.class);
 					intentB.putExtra("itemTs", 0);
 					startActivityForResult(intentB, 333);
-					//was wenn wir in new Item sind?
 				}
 			})
 			.setNegativeButton("Items behalten", new DialogInterface.OnClickListener() {

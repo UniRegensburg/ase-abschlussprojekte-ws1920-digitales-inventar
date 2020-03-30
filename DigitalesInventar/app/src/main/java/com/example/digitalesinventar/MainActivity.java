@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +34,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -43,8 +43,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-	private static final int RC_SIGN_IN = 123; //wieso
-	static FirebaseFirestore db = FirebaseFirestore.getInstance();
+	private static final int RC_SIGN_IN = 123;
 	public static String userID = "defaultEmptyID";
 
 	Toolbar toolbar;
@@ -79,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_main, menu);
-		//setupSearchIcon
 		MenuItem menuItem = menu.findItem(R.id.action_search);
 		searchView.setMenuItem(menuItem);
 		return true;
@@ -193,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
 		DatabaseActivity.getDataFromDatabase();
 		DatabaseActivity.getCategoriesFromDatabase();
 		//setupSearchListener in MainFragment and pictures
-		mainActivityFragment.setupSearchListener(searchView); //kein doppelter log am anfang mehr drin aber trz doppelte suche
+		mainActivityFragment.setupSearchListener(searchView);
 		//make sure user was not logged in before and frag already exists
 		if (mainActivityFragment == null) {
 			getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mainActivityFragment).commit();
@@ -249,8 +247,6 @@ public class MainActivity extends AppCompatActivity {
 		sortBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-				// your code here
-				//Log.i("sortSpinner", "onItemSelected:case,name: "+currentCase+","+sortBySpinner.getSelectedItem());
 				switch (currentCase) {
 					case 0:
 						mainActivityFragment.setupSearchListener(searchView);
@@ -299,7 +295,6 @@ public class MainActivity extends AppCompatActivity {
 
 			@Override
 			public void onNothingSelected(AdapterView<?> parentView) {
-				// your code here
 			}
 
 		});
@@ -392,6 +387,8 @@ public class MainActivity extends AppCompatActivity {
 			LinearLayout.LayoutParams.MATCH_PARENT,
 			LinearLayout.LayoutParams.MATCH_PARENT);
 		input.setLayoutParams(lp);
+		input.setMaxLines(1);
+		input.setInputType(InputType.TYPE_CLASS_TEXT);
 		alertDialog.setView(input);
 
 		alertDialog.setPositiveButton(R.string.add,
@@ -435,14 +432,5 @@ public class MainActivity extends AppCompatActivity {
         Log.i("MainActivity", "intent to start newItemActivity created");
         startActivity(intent);
     }
-
-    private void launchCategorySearchActivity(String catName) {
-        Log.i("MainActivity", "launchCategorySearchActivity called w/: "+catName);
-        Intent intent = new Intent(this, CategorySearchActivity.class);
-        intent.putExtra("catName", catName);
-        Log.i("MainActivity", "intent to start CategorySearchActivity created");
-        startActivity(intent);
-    }
-
 
 }

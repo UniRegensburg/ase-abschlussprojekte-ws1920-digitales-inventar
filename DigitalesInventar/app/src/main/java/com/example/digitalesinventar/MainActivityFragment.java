@@ -37,10 +37,7 @@ public class MainActivityFragment extends Fragment {
     private Button cancelMultiSelect;
     private Button deleteMultipleItems;
     private String[] searchArray;
-    private long timestamp;
-    int count;
-    ArrayList<String> selected_items = new ArrayList<>();
-    private static ArrayList<DataModelItemList> filteredList;// = new ArrayList<>();
+    private static ArrayList<DataModelItemList> filteredList;
     private static ArrayList<String> nameList = new ArrayList<>();
     private static ArrayList<String> tsList = new ArrayList<>();
     static Bitmap defaultBitmap;
@@ -219,17 +216,6 @@ public class MainActivityFragment extends Fragment {
         }
     }
 
-    private void launchViewItem() {
-        Log.i("MainActivity", "launchNewItemActivity called");
-        Intent intent = new Intent(getActivity(), ViewItemActivity.class);
-        Bundle extras = new Bundle();
-        extras.putLong("itemTs",timestamp);
-        extras.putBoolean("fromMain", true);
-        intent.putExtras(extras);
-        Log.i("MainActivity", "intent to start viewItem created");
-        startActivity(intent);
-    }
-
     private void showConfirmDialog(ArrayList timestamps, String itemCount){
         //Create Dialog
         Bundle args = new Bundle();
@@ -277,14 +263,6 @@ public class MainActivityFragment extends Fragment {
             }
         }
         searchArray = itemList.toArray(new String[0]);
-        /*DatabaseActivity.loadBackup();
-        ArrayList<DataModelItemList> itemList = new ArrayList<>();
-        itemList.addAll(DatabaseActivity.itemArray);
-        Log.i("getSearchArray", "itemList: " + itemList);
-        for (int i = 0; i < itemList.size(); i++){
-            Log.i("getSearchArray", "for: " + i + " - itemName: " + itemList.get(i).itemName );
-            searchArray[i] = itemList.get(i).itemName;
-        }*/
         Log.i("getSearchArray", "array: " + searchArray);
         return searchArray;
     }
@@ -292,7 +270,6 @@ public class MainActivityFragment extends Fragment {
  		void setupSearchListener(final MaterialSearchView searchView){
         Log.i("MainActivityFragment", "setupSearchListener");
         searchArray = getSearchArray();
-        //searchArray = new String[]{"Baseball", "Baseballschläger", "Klopapier", "Trompete", "Volleyball", "dietrich"}; //noch durch allgmeine Funktion tauschen
 
         searchView.closeSearch();
         searchView.setSuggestions(searchArray);
@@ -302,8 +279,7 @@ public class MainActivityFragment extends Fragment {
                 Log.i("MainOnQueryTextSubmit", "Query: " + query);
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
                 intent.putExtra("searchQuery", query);
-                Log.i("MainActivityFrag", "intent to start search created"); //doppelt
-                //bzw. wird auch bei cat und ort aufgerufen? ---> nein, nur mainFrag, siehe Logs
+                Log.i("MainActivityFrag", "intent to start search created");
                 startActivity(intent);
                 searchView.closeSearch();
                 return true;
@@ -312,10 +288,8 @@ public class MainActivityFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.i("SetupSearchListener", "onQueryTextChange");
-                //doLiveUpdates(newText);
                 if (searchArray.length == 0 && !DatabaseActivity.currentlyLoading) {
                     searchArray = getSearchArray();
-                    //searchView.setSuggestions(searchArray);
                     setupSearchListener(searchView);
                 }
                 return false;
@@ -371,29 +345,5 @@ public class MainActivityFragment extends Fragment {
                 swipeController.onDraw(c);
             }
         });
-    }
-
-    private void doLiveUpdates(String query) {
-        DatabaseActivity.loadBackup();
-        ArrayList<DataModelItemList> dataSet = new ArrayList<>();
-        dataSet.addAll(DatabaseActivity.itemArray);
-        Log.i("DoMyFilter", "dataset: " + dataSet);
-        filteredList.clear();
-        if (query.isEmpty()){
-            filteredList.addAll(dataSet); //search doesn't get called on empty input
-        } else {
-            for (DataModelItemList row : dataSet) {
-                if (row.getItemName().toLowerCase().contains(query.toLowerCase())) {
-                    filteredList.add(row);
-                }// else if (row.getItemCategory().toLowerCase().contains(query.toLowerCase())) {
-                //    filteredList.add(row);
-                //} else if (row.getItemLocation().toLowerCase().contains(query.toLowerCase())) {
-                //    filteredList.add(row);
-                //}
-            }
-        }
-
-        Log.i("DoMyFilter", "filteredList: " + filteredList);
-        itemArrayAdapter.notifyDataSetChanged();
     }
 }

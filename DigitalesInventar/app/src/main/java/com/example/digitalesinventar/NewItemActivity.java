@@ -74,8 +74,6 @@ public class NewItemActivity extends AppCompatActivity {
 				Uri uri = data.getData();
 				try {
 					Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-					//scale bitmap down before compressing to handle larger images
-					//TODO crop to square
 					bitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, false);
 					DatabaseActivity.setCachedBitmap(bitmap);
 					imgView.setImageBitmap(bitmap);
@@ -88,8 +86,6 @@ public class NewItemActivity extends AppCompatActivity {
 			try {
 				Bundle extras = data.getExtras();
 				Bitmap imageBitmap = (Bitmap) extras.get("data");
-				//scale bitmap down before compressing to handle larger images
-				//TODO crop to square
 				imageBitmap = Bitmap.createScaledBitmap(imageBitmap, 200, 200, false);
 				imgView.setImageBitmap(imageBitmap);
 				DatabaseActivity.setCachedBitmap(imageBitmap);
@@ -229,7 +225,6 @@ public class NewItemActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				if (getNewItem()) {
 					Toast.makeText(getApplicationContext(), "Neues Item hinzugefügt!", Toast.LENGTH_SHORT).show();
-					//TODO wait for database to return toast(?)
 					finish();
 				}else{
 					//show toast

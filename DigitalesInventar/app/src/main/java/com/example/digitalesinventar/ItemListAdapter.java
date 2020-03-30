@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormat;
@@ -27,7 +26,6 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 //custom ListAdapter to display an object of type "DataModelItemList" which holds a database entry
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.MultiViewHolder> implements Filterable {
     ArrayList<DataModelItemList> dataSet;
-    FragmentActivity fragActivity;//functions as "context"
     Context context;
     ArrayList<DataModelItemList> filteredList;
     boolean multiselect;

@@ -127,7 +127,6 @@ public class ViewItemActivity extends AppCompatActivity {
 		} else {
 			Log.d("delkat", "view code 0");
 			finish();
-			//finishAndRemoveTask();
 		}
 	}
 
@@ -141,8 +140,7 @@ public class ViewItemActivity extends AppCompatActivity {
 		textViewLocation.setText(currentItem.getItemLocation());
 		textViewBuyDate.setText(currentItem.getItemBuyDate());
 		textViewValue.setText(Double.toString(currentItem.getItemValue()) + "€");
-		if (newImage) { //check logs for updateItemView: image is cached, bool works
-			//but view is only sometimes updated, sometimes even w/ no new img log
+		if (newImage) {
 			Log.d("updateItemView", "2 new img");
 			if (bitmap != null) {
 				imgView.setImageBitmap(bitmap);
@@ -153,7 +151,6 @@ public class ViewItemActivity extends AppCompatActivity {
 		} else {
 			Log.d("updateItemView", "2 no new img");
 		}
-		//TODO also check for deleted images (compare edititem todo)
 	}
 
 	@Override

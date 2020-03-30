@@ -2,13 +2,11 @@ package com.example.digitalesinventar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,8 +19,6 @@ public class CategorySearchActivity extends AppCompatActivity {
 	ArrayList<DataModelItemList> filteredList = new ArrayList<>();
 	ItemListAdapter adapter;
 	RecyclerView itemListView;
-	long timestamp;
-	Toolbar toolbar;
 	TextView result;
 	Button backButton;
 
@@ -53,7 +49,6 @@ public class CategorySearchActivity extends AppCompatActivity {
 
 	private void handleIntent(Intent intent) {
 		Log.i("CategoryActivity", "handleIntent");
-		String catName = getIntent().getStringExtra("catName");
 		Log.i("handleIntent", "catName: " + catName);
 		search(catName);
 	}
@@ -71,37 +66,14 @@ public class CategorySearchActivity extends AppCompatActivity {
 			filteredList = dataSet; //no empty cats
 		} else {
 			filteredList.clear();
-			//Log.i("DoMySearch", "catName: "+catName);
 			for (DataModelItemList row : dataSet) {
-				//Log.i("DoMySearch", "all rows: " + row.getItemCategory());
-				if (row.getItemCategory().toLowerCase().contains(catName.toLowerCase())) { //maybe equals better but cat names longer than buttons
-					//Log.i("DoMySearch", "hit row: " + row.getItemCategory());
+				if (row.getItemCategory().toLowerCase().contains(catName.toLowerCase())) {
 					filteredList.add(row);
 				}
 			}
 		}
-
 		Log.i("DoMySearch", "filteredList: " + filteredList);
 		adapter.notifyDataSetChanged();
-	/*	itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent,
-															View view, int position, long id) {
-				DataModelItemList itemTs = (DataModelItemList) parent.getItemAtPosition(position);
-				timestamp = itemTs.getTimestamp();
-				Log.i("SearchActItemOnClick", "" + timestamp);
-				launchViewItem();
-			}
-		});
-*/
 	}
-	/*private void launchViewItem() {
-		Log.i("SearchActivity", "launchNewItemActivity called");
-		Intent intent = new Intent(this, ViewItemActivity.class);
-		Bundle extras = new Bundle();
-		extras.putLong("itemTs",timestamp);
-		intent.putExtras(extras);
-		Log.i("SearchActivity", "intent to start viewItem created");
-		startActivity(intent);
-	}*/
+
 }

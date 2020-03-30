@@ -40,6 +40,4 @@ public class InputChecker {
 		Date resultdate = new Date(itemTs);
 		return resultdate;
 	}
-	//set date
-
 }
