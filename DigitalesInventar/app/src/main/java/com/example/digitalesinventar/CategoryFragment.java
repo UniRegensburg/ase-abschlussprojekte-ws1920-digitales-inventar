@@ -36,7 +36,7 @@ public class CategoryFragment extends Fragment {
 //empty default-constructor
 	public CategoryFragment(){}
 
-	public static void sortByNameDown() {
+	static void sortByNameDown() {
 		Collections.sort(DatabaseActivity.categoryArray, new Comparator<String>() {
 			//kein fan davon die liste in der db zu sortieren
 			//db liste in adapter allerdings nötig für updateList()
@@ -48,7 +48,7 @@ public class CategoryFragment extends Fragment {
 		catArrayAdapter.notifyDataSetChanged();
 	}
 
-	public static void sortByNameUp() {
+	static void sortByNameUp() {
 		Collections.sort(DatabaseActivity.categoryArray, new Comparator<String>() {
 			//kein fan davon die liste in der db zu sortieren
 			//db liste in adapter allerdings nötig für updateList()
@@ -71,13 +71,13 @@ public class CategoryFragment extends Fragment {
 	}
 
 	//link custom adapter with ListView for db entries
-	public void setupList() {
+	void setupList() {
 		catArrayAdapter = new CategoryListAdapter(getActivity(), DatabaseActivity.categoryArray);
 		itemListView.setAdapter(catArrayAdapter);
 		itemListView.setLayoutManager(new LinearLayoutManager(getContext()));
 	}
 
-	public static void updateList() {
+	static void updateList() {
 		catArrayAdapter.notifyDataSetChanged();
 		switch (MainActivity.spinnerPos) {
 			case 0:
