@@ -5,11 +5,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -182,20 +182,13 @@ class SwipeController extends ItemTouchHelper.Callback {
 		}
 	}
 
-		private void drawText(String text, Canvas c, RectF button, Paint p) {
-		float textSize = 60;
-		p.setColor(Color.WHITE);
-		p.setAntiAlias(true);
-		p.setTextSize(textSize);
-
-		float textWidth = p.measureText(text);
-		c.drawText(text, button.centerX()-(textWidth/2), button.centerY()+(textSize/2), p);
-	}
-
-
 	public void onDraw(Canvas c) {
-		if (currentItemViewHolder != null) {
-			drawButtons(c, currentItemViewHolder);
+		try {
+				TextView name = currentItemViewHolder.itemView.findViewById(R.id.item_name1);
+				if (currentItemViewHolder != null && !name.getText().equals("Hobby") && !name.getText().equals("Einrichtung") && !name.getText().equals("Kleidung")) {
+					drawButtons(c, currentItemViewHolder);
+				}
+			} catch (NullPointerException e) {
 		}
 	}
 

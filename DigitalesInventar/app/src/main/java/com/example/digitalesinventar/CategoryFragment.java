@@ -210,7 +210,6 @@ public class CategoryFragment extends Fragment {
 
 		ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
 		itemTouchhelper.attachToRecyclerView(itemListView);
-
 		itemListView.addItemDecoration(new RecyclerView.ItemDecoration() {
 			@Override
 			public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
@@ -218,5 +217,4 @@ public class CategoryFragment extends Fragment {
 			}
 		});
 	}
-
 }
