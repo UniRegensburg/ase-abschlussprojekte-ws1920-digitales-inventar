@@ -2,6 +2,7 @@ package com.example.digitalesinventar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
 		void bind(final String item) {
 			textViewCategory.setText(item);
-
 			itemView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
@@ -74,6 +74,16 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 		@Override
 		public void onBindViewHolder(@NonNull MultiViewHolder multiViewHolder, int position) {
 			multiViewHolder.bind(dataSet.get(position));
+			try {
+				TextView catName = multiViewHolder.itemView.findViewById(R.id.item_name1);
+				String text = catName.getText().toString();
+				if (text.equals("Hobby") || text.equals("Kleidung") || text.equals("Einrichtung")) {
+					catName.setTextColor(Color.GRAY);
+				}
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
+
 		}
 
 		@Override
