@@ -204,11 +204,13 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void setupSpinnerArrays() {
+		spinnerArrayLarge.clear();
 		spinnerArrayLarge.add("Neueste");
 		spinnerArrayLarge.add("Älteste");
 		spinnerArrayLarge.add("Name aufsteigend");
 		spinnerArrayLarge.add("Name absteigend");
 
+		spinnerArraySmall.clear();
 		spinnerArraySmall.add("Name aufsteigend");
 		spinnerArraySmall.add("Name absteigend");
 	}
@@ -418,6 +420,12 @@ public class MainActivity extends AppCompatActivity {
 				public void onClick(DialogInterface dialog, int which) {
 					Toast.makeText(getApplicationContext(), "Sie werden abgemeldet", Toast.LENGTH_SHORT).show();
 					FirebaseAuth.getInstance().signOut();
+					/// puts tab back to #0
+					tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+					TabLayout.Tab tab = tabLayout.getTabAt(0);
+					tab.select();
+					currentCase = 0;
+					///
 					callLogin();
 				}
 			});
