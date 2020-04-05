@@ -102,8 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
 		//noinspection SimplifiableIfStatement
 		if (id == R.id.action_logout) {
-			FirebaseAuth.getInstance().signOut();
-			callLogin();
+			handleLogout();
 			return true;
 		} else if(id == R.id.action_search){
 			return true;
@@ -398,6 +397,28 @@ public class MainActivity extends AppCompatActivity {
 					} else {
 						Toast.makeText(getApplicationContext(), "Sie müssen einen Namen eingeben", Toast.LENGTH_SHORT).show();
 					}
+				}
+			});
+		alertDialog.setNegativeButton(R.string.cancel,
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			});
+		alertDialog.show();
+	}
+
+	private void handleLogout(){
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+		alertDialog.setTitle("Abmelden");
+		alertDialog.setMessage("Wollen Sie sich wirklich abmelden?");
+
+		alertDialog.setPositiveButton(R.string.logout,
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					Toast.makeText(getApplicationContext(), "Sie werden abgemeldet", Toast.LENGTH_SHORT).show();
+					FirebaseAuth.getInstance().signOut();
+					callLogin();
 				}
 			});
 		alertDialog.setNegativeButton(R.string.cancel,

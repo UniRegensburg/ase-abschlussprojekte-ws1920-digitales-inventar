@@ -23,6 +23,7 @@
     <string name="back">Zurück</string>
     <string name="add">Hinzufügen</string>
     <string name="remove">Entfernen</string>
+    <string name="logout">Abmelden</string>
     <string name="search">Suche</string>
     <string name="search_hint">Eintippen...</string>
     <string name="searchresult">Suchergebnis:</string>

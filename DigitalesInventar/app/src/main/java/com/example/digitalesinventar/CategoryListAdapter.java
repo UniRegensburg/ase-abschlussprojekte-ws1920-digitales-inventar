@@ -79,6 +79,8 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 				String text = catName.getText().toString();
 				if (text.equals("Hobby") || text.equals("Kleidung") || text.equals("Einrichtung")) {
 					catName.setTextColor(Color.GRAY);
+				} else{
+					catName.setTextColor(Color.BLACK);
 				}
 			} catch (NullPointerException e) {
 				e.printStackTrace();
