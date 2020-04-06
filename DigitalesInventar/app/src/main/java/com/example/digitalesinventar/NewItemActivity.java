@@ -1,6 +1,7 @@
 package com.example.digitalesinventar;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -8,13 +9,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +44,10 @@ public class NewItemActivity extends AppCompatActivity {
 	//ADAPTER
 	static ArrayAdapter<String> adapter;
 	//BUTTONS
-	ImageButton addImage;
+	ImageButton addImageByCamera;
+	ImageButton addImageByPicker;
+	Button editCategories;
+	Button deleteCategory;
 	Button addBuyDate;
 	Button save;
 	Button cancel;
@@ -113,7 +117,10 @@ public class NewItemActivity extends AppCompatActivity {
 		//SPINNER
 		categorySpinner = (Spinner) findViewById(R.id.spinnerCategory);
 		//BUTTONS
-		addImage = findViewById(R.id.imageButton);
+		//addImageByCamera = findViewById(R.id.cameraButton);
+		//addImageByPicker = findViewById(R.id.pickerButton);
+		editCategories = findViewById(R.id.addCatButton);
+		deleteCategory = findViewById(R.id.deleteCat);
 		addBuyDate = findViewById(R.id.addBuyDateButton);
 		save = findViewById(R.id.addItemSave);
 		cancel = findViewById(R.id.addItemCancel);
@@ -126,6 +133,70 @@ public class NewItemActivity extends AppCompatActivity {
 	}
 
 	public void setupButtons() {
+		editCategories.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewItemActivity.this);
+				alertDialog.setTitle("Kategorie hinzufügen");
+				alertDialog.setMessage("Gebe einen Namen ein");
+
+				final EditText input = new EditText(NewItemActivity.this);
+				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.MATCH_PARENT);
+				input.setLayoutParams(lp);
+				alertDialog.setView(input);
+
+				alertDialog.setPositiveButton(R.string.add,
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							String category = input.getText().toString();
+							if (InputChecker.checkEmptyInput(category)) {
+								for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
+									//avoid multiple entries
+									if (category.equals(DatabaseActivity.categoryArray.get(i))) {
+										Toast.makeText(getApplicationContext(), "Kategorie " + category + " existiert bereits!", Toast.LENGTH_SHORT).show();
+										return;
+									}
+								}
+								DatabaseActivity.addCategory(category);
+								//clear input
+								input.setText("");
+								//hide keyboard
+								UIhelper.hideKeyboard(NewItemActivity.this);
+								Toast.makeText(getApplicationContext(), "Kategorie " + category + " wurde erfolgreich hinzugefügt!", Toast.LENGTH_SHORT).show();
+							} else {
+								Toast.makeText(getApplicationContext(), "Sie müssen einen Namen eingeben", Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
+				 alertDialog.setNegativeButton(R.string.cancel,
+					 new DialogInterface.OnClickListener() {
+											public void onClick(DialogInterface dialog, int which) {
+												dialog.cancel();
+											}
+										});
+
+				 alertDialog.show();
+									}
+
+				});
+
+		deleteCategory.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String selectedCategory = categorySpinner.getSelectedItem().toString();
+				//make sure user does not try to delete predefined categories
+				if (selectedCategory.equals("Unterhaltungselektronik") || selectedCategory.equals("Haushaltsgegenstände")
+					|| selectedCategory.equals("Einrichtung") || selectedCategory.equals("Hobby") || selectedCategory.equals("Werkzeug")) {
+					Toast.makeText(getApplicationContext(), "Die Standardkategorie " + selectedCategory + " kann nicht gelöscht werden!", Toast.LENGTH_SHORT).show();
+				}else {
+					showConfirmDialog(selectedCategory);
+				}
+			}
+		});
+
+
 		addBuyDate.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -154,41 +225,24 @@ public class NewItemActivity extends AppCompatActivity {
 			}
 		});
 
-		addImage.setOnClickListener(new View.OnClickListener() {
+		/*addImageByCamera.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				LayoutInflater layoutInflater = LayoutInflater.from(NewItemActivity.this);
-				View imgView = layoutInflater.inflate(R.layout.add_image, null);
-
-				AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewItemActivity.this);
-				alertDialog.setTitle("Bild auswählen");
-				ImageButton camera = imgView.findViewById(R.id.cameraButton);
-				ImageButton gallery = imgView.findViewById(R.id.galleryButton);
-
-				camera.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-						if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-							startActivityForResult(takePictureIntent, 999);
-						}
-					}
-				});
-
-				gallery.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Intent intent = new Intent();
-						intent.setType("image/*");
-						intent.setAction(Intent.ACTION_GET_CONTENT);
-						startActivityForResult(Intent.createChooser(intent, "Select Picture"), 42);
-					}
-				});
-
-				alertDialog.setView(imgView);
-				alertDialog.show();
+				Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+				if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+					startActivityForResult(takePictureIntent, 999);
+				}
 			}
 		});
+		addImageByPicker.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setType("image/*");
+				intent.setAction(Intent.ACTION_GET_CONTENT);
+				startActivityForResult(Intent.createChooser(intent, "Select Picture"), 42);
+			}
+		});*/
 	}
 
 	public void setupSpinner() {
