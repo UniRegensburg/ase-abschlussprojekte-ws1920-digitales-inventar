@@ -51,10 +51,8 @@ public class EditItemActivity extends AppCompatActivity {
 	//ADAPTER
 	static ArrayAdapter<String> adapter;
 	//BUTTONS
-	ImageButton addImage;
+	ImageButton editImage;
 	Button editBuyDate;
-	Button editCategories;
-	Button deleteCategory;
 	Button save;
 	Button cancel;
 	//IMAGE VIEW
@@ -106,9 +104,7 @@ public class EditItemActivity extends AppCompatActivity {
 		//SPINNER
 		categorySpinner = findViewById(R.id.spinnerCategory);
 		//BUTTONS
-		addImage = findViewById(R.id.imageButton);
-		editCategories = findViewById(R.id.addCatButton);
-		deleteCategory = findViewById(R.id.deleteCat);
+		editImage = findViewById(R.id.imageButton);
 		editBuyDate = findViewById(R.id.addBuyDateButton);
 		save = findViewById(R.id.addItemSave);
 		cancel = findViewById(R.id.addItemCancel);
@@ -121,71 +117,6 @@ public class EditItemActivity extends AppCompatActivity {
 	}
 
 	public void setupButtons() {
-		//ClickListener BUTTONS
-		/*editCategories.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditItemActivity.this);
-				alertDialog.setTitle("Kategorie hinzufügen");
-				alertDialog.setMessage("Geben Sie eine Kategorie ein");
-
-				final EditText input = new EditText(EditItemActivity.this);
-				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT,
-					LinearLayout.LayoutParams.MATCH_PARENT);
-				input.setLayoutParams(lp);
-				alertDialog.setView(input);
-
-				alertDialog.setPositiveButton(R.string.add,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-							String category = input.getText().toString();
-							if (InputChecker.checkEmptyInput(category)) {
-								for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
-									//avoid multiple entries
-									if (category.equals(DatabaseActivity.categoryArray.get(i))) {
-										Toast.makeText(getApplicationContext(), "Kategorie " + category + " existiert bereits!", Toast.LENGTH_SHORT).show();
-										return;
-									}
-								}
-								DatabaseActivity.addCategory(category);
-								//clear input
-								input.setText("");
-								//hide keyboard
-								UIhelper.hideKeyboard(EditItemActivity.this);
-								Toast.makeText(getApplicationContext(), "Kategorie " + category + " erfolgreich hinzugefügt!", Toast.LENGTH_SHORT).show();
-							} else {
-								Toast.makeText(getApplicationContext(), "Sie müssen einen Namen eingeben", Toast.LENGTH_SHORT).show();
-							}
-						}
-					});
-				alertDialog.setNegativeButton(R.string.cancel,
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.cancel();
-						}
-					});
-
-				alertDialog.show();
-			}
-
-		});
-		 */
-
-		deleteCategory.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String selectedCategory = categorySpinner.getSelectedItem().toString();
-				//make sure user does not try to delete predefined categories
-				if (selectedCategory.equals("Unterhaltungselektronik") || selectedCategory.equals("Haushaltsgegenstände")
-					|| selectedCategory.equals("Einrichtung") || selectedCategory.equals("Hobby") || selectedCategory.equals("Werkzeug")) {
-					Toast.makeText(getApplicationContext(), "Die Standardkategorie " + selectedCategory + " kann nicht gelöscht werden!", Toast.LENGTH_SHORT).show();
-				}	else {
-					showConfirmDialog(selectedCategory);
-				}
-			}
-		});
-
 		editBuyDate.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -219,7 +150,7 @@ public class EditItemActivity extends AppCompatActivity {
 			}
 		});
 
-		addImage.setOnClickListener(new View.OnClickListener() {
+		editImage.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				LayoutInflater layoutInflater = LayoutInflater.from(EditItemActivity.this);
