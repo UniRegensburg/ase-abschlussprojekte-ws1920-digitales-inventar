@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -184,11 +185,20 @@ class SwipeController extends ItemTouchHelper.Callback {
 
 	public void onDraw(Canvas c) {
 		try {
-				TextView name = currentItemViewHolder.itemView.findViewById(R.id.item_name1);
-				if (currentItemViewHolder != null && !name.getText().equals("Hobby") && !name.getText().equals("Einrichtung") && !name.getText().equals("Kleidung")) {
-					drawButtons(c, currentItemViewHolder);
-				}
-			} catch (NullPointerException e) {
+			TextView name = currentItemViewHolder.itemView.findViewById(R.id.item_name1);
+			if (!name.getText().equals("Hobby") && !name.getText().equals("Einrichtung") && !name.getText().equals("Kleidung")) {
+				drawButtons(c, currentItemViewHolder);
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			Log.d("FAIL", "NULL");
+		}
+		try {
+			if (currentItemViewHolder.itemView.findViewById(R.id.item_img) != null) {
+				drawButtons(c, currentItemViewHolder);
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
 		}
 	}
 
