@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -48,9 +49,7 @@ public class EditItemActivity extends AppCompatActivity {
 	//ADAPTER
 	static ArrayAdapter<String> adapter;
 	//BUTTONS
-	ImageButton addImageByCamera;
-	ImageButton addImageByPicker;
-	ImageButton deleteImage;
+	ImageButton addImage;
 	Button editBuyDate;
 	Button editCategories;
 	Button deleteCategory;
@@ -103,9 +102,7 @@ public class EditItemActivity extends AppCompatActivity {
 		//SPINNER
 		categorySpinner = findViewById(R.id.spinnerCategory);
 		//BUTTONS
-		//addImageByCamera = findViewById(R.id.cameraButton);
-		//addImageByPicker = findViewById(R.id.pickerButton);
-		//deleteImage = findViewById(R.id.deleteButton);
+		addImage = findViewById(R.id.imageButton);
 		editCategories = findViewById(R.id.addCatButton);
 		deleteCategory = findViewById(R.id.deleteCat);
 		editBuyDate = findViewById(R.id.addBuyDateButton);
@@ -217,36 +214,58 @@ public class EditItemActivity extends AppCompatActivity {
 			}
 		});
 
-		/*addImageByCamera.setOnClickListener(new View.OnClickListener() {
+		addImage.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-				if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-					startActivityForResult(takePictureIntent, 999);
-				}
+				LayoutInflater layoutInflater = LayoutInflater.from(EditItemActivity.this);
+				View imgView = layoutInflater.inflate(R.layout.add_image, null);
+
+				final AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditItemActivity.this);
+				alertDialog.setTitle("Bild auswählen");
+				ImageButton delete = imgView.findViewById(R.id.deleteButton);
+				delete.setVisibility(View.VISIBLE);
+				ImageButton camera = imgView.findViewById(R.id.cameraButton);
+				ImageButton gallery = imgView.findViewById(R.id.galleryButton);
+
+				delete.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						DatabaseActivity.deleteImage(String.valueOf(currentItem.getTimestamp()));
+						//set imgView back to default
+						DatabaseActivity.setCachedBitmap(null);
+						newImage = true;
+						//imgView.setImageBitmap(defaultImage);
+					}
+				});
+
+				camera.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+						if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+							startActivityForResult(takePictureIntent, 999);
+						}
+					}
+				});
+
+				gallery.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent();
+						intent.setType("image/*");
+						intent.setAction(Intent.ACTION_GET_CONTENT);
+						startActivityForResult(Intent.createChooser(intent, "Select Picture"), 42);
+					}
+				});
+
+				alertDialog.setView(imgView);
+				alertDialog.show();
 			}
 		});
-
-		addImageByPicker.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setType("image/*");
-				intent.setAction(Intent.ACTION_GET_CONTENT);
-				startActivityForResult(Intent.createChooser(intent, "Select Picture"), 42);
-			}
-		});
-
-		deleteImage.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				DatabaseActivity.deleteImage(String.valueOf(currentItem.getTimestamp()));
-				//set imgView back to default
-				DatabaseActivity.setCachedBitmap(null);
-				newImage = true;
-				imgView.setImageBitmap(defaultImage);
-			}
-		});*/
+		//not working
+		if (newImage){
+			imgView.setImageBitmap(defaultImage);
+		}
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

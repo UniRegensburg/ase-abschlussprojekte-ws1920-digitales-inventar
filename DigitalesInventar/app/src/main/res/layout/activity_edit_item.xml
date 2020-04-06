@@ -31,7 +31,7 @@
             android:id="@+id/imageButton"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginStart="-50dp"
+            android:layout_marginStart="-60dp"
             android:elevation="20dp"
             android:layout_gravity="end|bottom"
             android:background="@drawable/camera30px" />
