@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -104,9 +103,9 @@ public class EditItemActivity extends AppCompatActivity {
 		//SPINNER
 		categorySpinner = findViewById(R.id.spinnerCategory);
 		//BUTTONS
-		addImageByCamera = findViewById(R.id.cameraButton);
-		addImageByPicker = findViewById(R.id.pickerButton);
-		deleteImage = findViewById(R.id.deleteButton);
+		//addImageByCamera = findViewById(R.id.cameraButton);
+		//addImageByPicker = findViewById(R.id.pickerButton);
+		//deleteImage = findViewById(R.id.deleteButton);
 		editCategories = findViewById(R.id.addCatButton);
 		deleteCategory = findViewById(R.id.deleteCat);
 		editBuyDate = findViewById(R.id.addBuyDateButton);
@@ -218,7 +217,7 @@ public class EditItemActivity extends AppCompatActivity {
 			}
 		});
 
-		addImageByCamera.setOnClickListener(new View.OnClickListener() {
+		/*addImageByCamera.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -247,7 +246,7 @@ public class EditItemActivity extends AppCompatActivity {
 				newImage = true;
 				imgView.setImageBitmap(defaultImage);
 			}
-		});
+		});*/
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

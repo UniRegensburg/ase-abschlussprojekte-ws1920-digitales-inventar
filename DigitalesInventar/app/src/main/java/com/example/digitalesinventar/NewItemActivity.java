@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -118,8 +117,8 @@ public class NewItemActivity extends AppCompatActivity {
 		//SPINNER
 		categorySpinner = (Spinner) findViewById(R.id.spinnerCategory);
 		//BUTTONS
-		addImageByCamera = findViewById(R.id.cameraButton);
-		addImageByPicker = findViewById(R.id.pickerButton);
+		//addImageByCamera = findViewById(R.id.cameraButton);
+		//addImageByPicker = findViewById(R.id.pickerButton);
 		editCategories = findViewById(R.id.addCatButton);
 		deleteCategory = findViewById(R.id.deleteCat);
 		addBuyDate = findViewById(R.id.addBuyDateButton);
@@ -226,7 +225,7 @@ public class NewItemActivity extends AppCompatActivity {
 			}
 		});
 
-		addImageByCamera.setOnClickListener(new View.OnClickListener() {
+		/*addImageByCamera.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -243,7 +242,7 @@ public class NewItemActivity extends AppCompatActivity {
 				intent.setAction(Intent.ACTION_GET_CONTENT);
 				startActivityForResult(Intent.createChooser(intent, "Select Picture"), 42);
 			}
-		});
+		});*/
 	}
 
 	public void setupSpinner() {
