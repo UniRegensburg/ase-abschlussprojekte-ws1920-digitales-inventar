@@ -12,8 +12,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 //Activity for editing existing entries in the database
 public class EditItemActivity extends AppCompatActivity {
@@ -65,6 +66,8 @@ public class EditItemActivity extends AppCompatActivity {
 	//Context
 	public static Context context;
 	String searchquery;
+	ArrayList<String> catArray = new ArrayList<>();
+
 
 	boolean newImage = false;
 
@@ -122,7 +125,7 @@ public class EditItemActivity extends AppCompatActivity {
 
 	public void setupButtons() {
 		//ClickListener BUTTONS
-		editCategories.setOnClickListener(new View.OnClickListener() {
+		/*editCategories.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditItemActivity.this);
@@ -170,6 +173,7 @@ public class EditItemActivity extends AppCompatActivity {
 			}
 
 		});
+		 */
 
 		deleteCategory.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -179,7 +183,7 @@ public class EditItemActivity extends AppCompatActivity {
 				if (selectedCategory.equals("Unterhaltungselektronik") || selectedCategory.equals("Haushaltsgegenstände")
 					|| selectedCategory.equals("Einrichtung") || selectedCategory.equals("Hobby") || selectedCategory.equals("Werkzeug")) {
 					Toast.makeText(getApplicationContext(), "Die Standardkategorie " + selectedCategory + " kann nicht gelöscht werden!", Toast.LENGTH_SHORT).show();
-				}else {
+				}	else {
 					showConfirmDialog(selectedCategory);
 				}
 			}
@@ -282,6 +286,55 @@ public class EditItemActivity extends AppCompatActivity {
 		}
 	}
 
+
+	private void setupAddCat() {
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditItemActivity.this);
+		alertDialog.setTitle("Kategorie hinzufügen");
+		alertDialog.setMessage("Gebe einen Namen ein");
+
+		final EditText input = new EditText(EditItemActivity.this);
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+			LinearLayout.LayoutParams.MATCH_PARENT,
+			LinearLayout.LayoutParams.MATCH_PARENT);
+		input.setLayoutParams(lp);
+		alertDialog.setView(input);
+
+		alertDialog.setPositiveButton(R.string.add,
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					String category = input.getText().toString();
+					if (InputChecker.checkEmptyInput(category)) {
+						for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
+							//avoid multiple entries
+							if (category.equals(DatabaseActivity.categoryArray.get(i))) {
+								Toast.makeText(getApplicationContext(), "Kategorie " + category + " existiert bereits!", Toast.LENGTH_SHORT).show();
+								return;
+							}
+						}
+						DatabaseActivity.addCategory(category);
+						catArray.add(category);
+						adapter.notifyDataSetChanged();
+						categorySpinner.setSelection(catArray.size()); //letzter index der spinners
+						//clear input
+						input.setText("");
+						//hide keyboard
+						UIhelper.hideKeyboard(EditItemActivity.this);
+						Toast.makeText(getApplicationContext(), "Kategorie " + category + " wurde erfolgreich hinzugefügt!", Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(getApplicationContext(), "Sie müssen einen Namen eingeben", Toast.LENGTH_SHORT).show();
+					}
+				}
+			});
+		alertDialog.setNegativeButton(R.string.cancel,
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			});
+
+		alertDialog.show();
+	}
+
 	public static void showToast(boolean success) {
 		if (success) {
 			Toast.makeText(context, "Item erfolgreich geändert!", Toast.LENGTH_SHORT).show();
@@ -292,11 +345,29 @@ public class EditItemActivity extends AppCompatActivity {
 
 	public void setupSpinner() {
 		// Create an ArrayAdapter for the spinner using the string array and a default spinner layout
-		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, DatabaseActivity.categoryArray);
+		catArray.clear();
+		catArray.add("neue Kategorie hinzufügen");
+		catArray.addAll(DatabaseActivity.categoryArray);
+		adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, catArray);
 		// Specify the layout to use when the list of choices appears
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
 		categorySpinner.setAdapter(adapter);
+		categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+		{
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+			{
+				String selectedItem = parent.getItemAtPosition(position).toString();
+				if(selectedItem.equals("neue Kategorie hinzufügen"))
+				{
+					setupAddCat();
+				}
+			} // to close the onItemSelected
+			public void onNothingSelected(AdapterView<?> parent)
+			{
+
+			}
+		});
 	}
 
 	public void assignDataFromIntent() {
@@ -318,8 +389,8 @@ public class EditItemActivity extends AppCompatActivity {
 			editTextValue.setText(Double.toString(currentItem.getItemValue()));
 			//set spinner item
 			for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
-				if (categorySpinner.getItemAtPosition(i).equals(currentItem.getItemCategory())) {
-					categorySpinner.setSelection(i);
+				if (categorySpinner.getItemAtPosition(i+1).equals(currentItem.getItemCategory())) {
+					categorySpinner.setSelection(i+1);
 				}
 			}
 
