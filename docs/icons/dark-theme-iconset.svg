@@ -210,14 +210,32 @@
      inkscape:window-height="1057"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="11.313708"
-     inkscape:cx="-51.175182"
-     inkscape:cy="-169.18018"
+     inkscape:zoom="3.9999998"
+     inkscape:cx="-310.18242"
+     inkscape:cy="-67.817785"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg6"
      showguides="false" />
+  <circle
+     style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:5.29133844;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+     id="path944"
+     cx="-342.75003"
+     cy="125.75001"
+     r="17.75"
+     inkscape:export-filename="D:\workspace2018\ase-abschlussprojekte-ws1920-digitales-inventar\DigitalesInventar\app\src\main\res\drawable\camera30px.png"
+     inkscape:export-xdpi="65"
+     inkscape:export-ydpi="65" />
+  <circle
+     style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:5.73412848;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+     id="path942"
+     cx="-297.93753"
+     cy="29.687504"
+     r="16.187502"
+     inkscape:export-filename="D:\workspace2018\ase-abschlussprojekte-ws1920-digitales-inventar\DigitalesInventar\app\src\main\res\drawable\add_pic_from_cam40px.png"
+     inkscape:export-xdpi="104"
+     inkscape:export-ydpi="104" />
   <path
      inkscape:connector-curvature="0"
      style="opacity:1;fill:#e3d7f4;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:15.11351776;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal;filter:url(#filter1115)"
