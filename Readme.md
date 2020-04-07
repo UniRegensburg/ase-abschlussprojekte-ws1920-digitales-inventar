@@ -8,6 +8,7 @@ Der/Die Nutzer/in kann verschiedene Kategorien erstellen, benennen und verwalten
 
 ![Screenshot](./docs/images/Screenshot.PNG)
 
+[dritte Veröffentlichung](./docs/APK/DigitalesInventarV03.apk)\
 [zweite Veröffentlichung](./docs/APK/DigitalesInventarV02.apk)\
 [erste Veröffentlichung](./docs/APK/DigitalesInventarV01.apk)
 
@@ -40,15 +41,27 @@ laura.zeilbeck@stud.uni-regensburg.de\
 
 ## Beschreibung
 
-Das Digitale Inventar erlaubt es zum derzeitigen Standpunkt dem Nutzer/in Gegenstände zu seinem/ihrem Inventar
+Das Digitale Inventar erlaubt es dem Nutzer/in Gegenstände zu seinem/ihrem Inventar
 hinzuzufügen und diese wieder zu entfernen.\
 Eine individuelle Anmeldung ist durch eine Email-Adresse notwendig.
-Dabei kann ein Name, ein Ort und eine Kategorie für den Gegenstand vergeben werden.\
-Der/Die Nutzer/in kann seine/ihre Gegenstände nach dem Erstellen bearbeiten und Name, Ort und Kategorie ändern.
-Der/Die Nutzer/in kann seine/ihre Gegenstände nach dem Erstellungsdatum aufgelistet einsehen.
+Dem Gegenstand kann ein Name, ein Ort, eine Kategorie, das Kaufdatum und ein Wert in € gegeben werden.
 Das Erstelldatum wird automatisch vom System hinzugefügt.\
-Der/Die Nutzer/in kann einen oder mehrere Gegenstände aus dem System löschen.\
-Der/Die Nutzer/in kann die Gegenstandsliste nach Name, Ort und Kategorie durchsuchen.\
-Der/ Die Nutzer/in kann seine/ihre Gegenstände nach den Kategorien filtern lassen.
+Der/Die Nutzer/in kann seine/ihre Gegenstände nach dem Erstellen bearbeiten und Name, Ort, Kategorie, Kaufdatum und Wert ändern.\
+Der/Die Nutzer/in kann seine/ihre Gegenstände aufgelistet sehen.\
+Der/Die Nutzer/in kann seine/ihre Gegenstände nach "Neueste", "Älteste", "Name absteigend" und "Name aufsteigend" sortieren.\
+Der/Die Nutzer/in kann einen Gegenstand durch swipen löschen.
+Der/Die Nutzer/in kann mehrere Gegenstände durch einen LongClick aus dem System löschen.\
+Der/Die Nutzer/in kann die Gegenstandsliste durchsuchen. Dabei werden Suchvorschläge vorgegeben.\
+Der/Die Nutzer/in kann die Kategorien aufgelistet sehen.\
+Der/Die Nutzer/in kann neue Kategorien hinzufügen.\
+Der/Die Nutzer/in kann eigene Kategorien neu benennen.\
+Der/Die Nutzer/in kann seine/ihre Kategorien nach "Name absteigend" und "Name aufsteigend" sortieren.\
+Der/Die Nutzer/in kann eine eigene Kategorie durch swipen löschen.\
+Der/Die Nutzer/in kann seine/ihre Gegenstände nach den Kategorien filtern lassen.\
+Der/Die Nutzer/in kann die Kategorienliste durchsuchen. Dabei werden Suchvorschläge vorgegeben.\
+Der/Die Nutzer/in kann die Orte aufgelistet sehen.\
+Der/Die Nutzer/in kann seine/ihre Gegenstände nach den Orten filtern lassen.\
+Der/Die Nutzer/in kann die Ortliste durchsuchen. Dabei werden Suchvorschläge vorgegeben.\
+
 
 ![Demo-Video](./docs/demo/2nd-Release.gif)
