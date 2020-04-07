@@ -160,6 +160,8 @@ public class EditItemActivity extends AppCompatActivity {
 				alertDialog.setTitle("Bild auswählen");
 				ImageButton delete = imgView.findViewById(R.id.deleteButton);
 				delete.setVisibility(View.VISIBLE);
+				TextView deleteText = imgView.findViewById(R.id.deleteButtonText);
+				deleteText.setVisibility(View.VISIBLE);
 				ImageButton camera = imgView.findViewById(R.id.cameraButton);
 				ImageButton gallery = imgView.findViewById(R.id.galleryButton);
 

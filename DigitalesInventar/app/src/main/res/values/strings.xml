@@ -30,6 +30,8 @@
     <string name="tab_text_1">Items</string>
     <string name="tab_text_2">Kategorien</string>
     <string name="tab_text_3">Orte</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Gallerie</string>
     <string name="multiselect"> Items ausgewählt</string>
     <string-array name="sort_by_spinner_small">
         <item>Name aufsteigend</item>
