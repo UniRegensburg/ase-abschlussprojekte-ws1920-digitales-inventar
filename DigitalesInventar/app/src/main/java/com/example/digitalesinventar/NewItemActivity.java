@@ -165,7 +165,8 @@ public class NewItemActivity extends AppCompatActivity {
 				LayoutInflater layoutInflater = LayoutInflater.from(NewItemActivity.this);
 				View imgView = layoutInflater.inflate(R.layout.add_image, null);
 
-				AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewItemActivity.this);
+				AlertDialog.Builder builder = new AlertDialog.Builder(NewItemActivity.this);
+				final AlertDialog alertDialog = builder.create();
 				alertDialog.setTitle("Bild auswählen");
 				ImageButton camera = imgView.findViewById(R.id.cameraButton);
 				ImageButton gallery = imgView.findViewById(R.id.galleryButton);
@@ -177,6 +178,7 @@ public class NewItemActivity extends AppCompatActivity {
 						if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 							startActivityForResult(takePictureIntent, 999);
 						}
+						alertDialog.dismiss();
 					}
 				});
 
@@ -187,6 +189,7 @@ public class NewItemActivity extends AppCompatActivity {
 						intent.setType("image/*");
 						intent.setAction(Intent.ACTION_GET_CONTENT);
 						startActivityForResult(Intent.createChooser(intent, "Select Picture"), 42);
+						alertDialog.dismiss();
 					}
 				});
 

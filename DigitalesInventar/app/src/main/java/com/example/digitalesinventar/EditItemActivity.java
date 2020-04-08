@@ -156,7 +156,8 @@ public class EditItemActivity extends AppCompatActivity {
 				LayoutInflater layoutInflater = LayoutInflater.from(EditItemActivity.this);
 				View imgView = layoutInflater.inflate(R.layout.add_image, null);
 
-				final AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditItemActivity.this);
+				AlertDialog.Builder builder = new AlertDialog.Builder(EditItemActivity.this);
+				final AlertDialog alertDialog = builder.create();
 				alertDialog.setTitle("Bild auswählen");
 				ImageButton delete = imgView.findViewById(R.id.deleteButton);
 				delete.setVisibility(View.VISIBLE);
@@ -172,7 +173,8 @@ public class EditItemActivity extends AppCompatActivity {
 						//set imgView back to default
 						DatabaseActivity.setCachedBitmap(null);
 						newImage = true;
-						//imgView.setImageBitmap(defaultImage);
+						resetShownImage();
+						alertDialog.dismiss();
 					}
 				});
 
@@ -183,6 +185,7 @@ public class EditItemActivity extends AppCompatActivity {
 						if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 							startActivityForResult(takePictureIntent, 999);
 						}
+						alertDialog.dismiss();
 					}
 				});
 
@@ -193,6 +196,7 @@ public class EditItemActivity extends AppCompatActivity {
 						intent.setType("image/*");
 						intent.setAction(Intent.ACTION_GET_CONTENT);
 						startActivityForResult(Intent.createChooser(intent, "Select Picture"), 42);
+						alertDialog.dismiss();
 					}
 				});
 
@@ -201,9 +205,13 @@ public class EditItemActivity extends AppCompatActivity {
 			}
 		});
 		//not working
-		if (newImage){
-			imgView.setImageBitmap(defaultImage);
-		}
+		//if (newImage){ //why?
+		//	imgView.setImageBitmap(defaultImage);
+		//}
+	}
+
+	private void resetShownImage() {
+		imgView.setImageBitmap(defaultImage);
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
