@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -53,6 +54,7 @@ public class NewItemActivity extends AppCompatActivity {
 	Button cancel;
 	//IMAGE VIEW
 	ImageView imgView;
+	Bitmap defaultImage;
 //IMG-HELPER
 	boolean newImage = false;
 	ArrayList<String> catArray = new ArrayList<>();
@@ -111,6 +113,8 @@ public class NewItemActivity extends AppCompatActivity {
 		textViewValue = findViewById(R.id.textViewValue);
 		//IMG_VIEW
 		imgView = findViewById(R.id.imgView);
+		defaultImage = BitmapFactory.decodeResource(this.getResources(),
+			R.drawable.img_holder);
 		//EDIT-TEXTS
 		editTextName = findViewById(R.id.itemName);
 		editTextLocation = findViewById(R.id.itemLocation);
@@ -168,6 +172,7 @@ public class NewItemActivity extends AppCompatActivity {
 				AlertDialog.Builder builder = new AlertDialog.Builder(NewItemActivity.this);
 				final AlertDialog alertDialog = builder.create();
 				alertDialog.setTitle("Bild auswählen");
+				ImageButton delete = imgView.findViewById(R.id.deleteButton);
 				ImageButton camera = imgView.findViewById(R.id.cameraButton);
 				ImageButton gallery = imgView.findViewById(R.id.galleryButton);
 
@@ -193,10 +198,24 @@ public class NewItemActivity extends AppCompatActivity {
 					}
 				});
 
+				delete.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						//set imgView back to default
+						DatabaseActivity.setCachedBitmap(null);
+						resetShownImage();
+						alertDialog.dismiss();
+					}
+				});
+
 				alertDialog.setView(imgView);
 				alertDialog.show();
 			}
 		});
+	}
+
+	private void resetShownImage() {
+		imgView.setImageBitmap(defaultImage);
 	}
 
 	private void setupAddCat() {

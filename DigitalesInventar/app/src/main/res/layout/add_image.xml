@@ -13,8 +13,7 @@
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:layout_margin="10dp"
-            android:background="@drawable/delete30px"
-            android:visibility="gone"/>
+            android:background="@drawable/delete30px"/>
 
         <TextView
             android:id="@+id/deleteButtonText"
@@ -23,8 +22,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="-10dp"
             android:layout_marginBottom="10dp"
-            android:text="@string/remove"
-            android:visibility="gone"/>
+            android:text="@string/remove"/>
     </LinearLayout>
 
     <LinearLayout
