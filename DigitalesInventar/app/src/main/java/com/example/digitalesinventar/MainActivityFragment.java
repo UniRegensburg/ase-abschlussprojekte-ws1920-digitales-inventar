@@ -1,5 +1,6 @@
 package com.example.digitalesinventar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -303,6 +304,15 @@ public class MainActivityFragment extends Fragment {
             public void onLeftClicked(int position) {
                 Log.i("onMenuItemClicked", "Edit");
                 DataModelItemList itemDelete = itemArrayAdapter.dataSet.get(position);
+                //start viewItem
+                Context context = getContext();
+                Intent intent1 = new Intent(context, ViewItemActivity.class);
+                Bundle extras1 = new Bundle();
+                extras1.putLong("itemTs",itemDelete.getTimestamp());
+                extras1.putBoolean("fromMain", true);
+                intent1.putExtras(extras1);
+                context.startActivity(intent1);
+                //start editItem
                 String itemTimestamp = String.valueOf(itemDelete.getTimestamp());
                 Intent intent = new Intent(getActivity(),EditItemActivity.class);
                 Bundle extras = new Bundle();
