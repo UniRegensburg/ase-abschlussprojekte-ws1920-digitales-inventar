@@ -134,19 +134,21 @@ public class EditItemActivity extends AppCompatActivity {
 		save.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				context = getApplicationContext();
-				DatabaseActivity.updateEntry(editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), textViewBuyDate.getText().toString(), editTextValue.getText().toString(), currentItem.getTimestamp(), newImage);
-				newImage = false;
-				Intent returnIntent = new Intent(context, ViewItemActivity.class);
-				Bundle extras = new Bundle();
-				extras.putLong("itemTs",currentItem.getTimestamp());
-				extras.putString("searchQuery", searchquery);
-				extras.putBoolean("fromMain", false);
-				returnIntent.putExtras(extras);
-				setResult(Activity.RESULT_OK, returnIntent);
-				//set query back to def
-				searchquery = "";
-				finish();
+				if (currentItem != null) {
+					context = getApplicationContext();
+					DatabaseActivity.updateEntry(editTextName.getText().toString(), categorySpinner.getSelectedItem().toString(), editTextLocation.getText().toString(), textViewBuyDate.getText().toString(), editTextValue.getText().toString(), currentItem.getTimestamp(), newImage);
+					newImage = false;
+					Intent returnIntent = new Intent(context, ViewItemActivity.class);
+					Bundle extras = new Bundle();
+					extras.putLong("itemTs", currentItem.getTimestamp());
+					extras.putString("searchQuery", searchquery);
+					extras.putBoolean("fromMain", false);
+					returnIntent.putExtras(extras);
+					setResult(Activity.RESULT_OK, returnIntent);
+					//set query back to def
+					searchquery = "";
+					finish();
+				}
 			}
 		});
 
@@ -169,12 +171,14 @@ public class EditItemActivity extends AppCompatActivity {
 				delete.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						DatabaseActivity.deleteImage(String.valueOf(currentItem.getTimestamp()));
-						//set imgView back to default
-						DatabaseActivity.setCachedBitmap(null);
-						newImage = true;
-						resetShownImage();
-						alertDialog.dismiss();
+						if (currentItem != null) {
+							DatabaseActivity.deleteImage(String.valueOf(currentItem.getTimestamp()));
+							//set imgView back to default
+							DatabaseActivity.setCachedBitmap(null);
+							newImage = true;
+							resetShownImage();
+							alertDialog.dismiss();
+						}
 					}
 				});
 
@@ -341,21 +345,23 @@ public class EditItemActivity extends AppCompatActivity {
 		if (itemID != 0) {
 			//retrieve data from db
 			currentItem = DatabaseActivity.getItemFromDatabase(itemID);
-			editTextName.setText(currentItem.getItemName());
-			editTextLocation.setText(currentItem.getItemLocation());
-			//format and set date
-			textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
-			textViewBuyDate.setText(currentItem.getItemBuyDate());
-			editTextValue.setText(Double.toString(currentItem.getItemValue()));
-			//set spinner item
-			for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
-				if (categorySpinner.getItemAtPosition(i+1).equals(currentItem.getItemCategory())) {
-					categorySpinner.setSelection(i+1);
+			if (currentItem != null) {
+				editTextName.setText(currentItem.getItemName()); //currentitem sometimes null, when db slower than expected
+				editTextLocation.setText(currentItem.getItemLocation());
+				//format and set date
+				textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
+				textViewBuyDate.setText(currentItem.getItemBuyDate());
+				editTextValue.setText(Double.toString(currentItem.getItemValue()));
+				//set spinner item
+				for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
+					if (categorySpinner.getItemAtPosition(i+1).equals(currentItem.getItemCategory())) {
+						categorySpinner.setSelection(i+1);
+					}
 				}
-			}
 
-			DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView, defaultImage);
-			//downloads again after downloading in viewItemActivity
+				DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView, defaultImage);
+				//downloads again after downloading in viewItemActivity
+			}
 		} else {
 			finish();
 		}

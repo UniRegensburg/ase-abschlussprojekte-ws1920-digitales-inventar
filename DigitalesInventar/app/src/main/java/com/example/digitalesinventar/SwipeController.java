@@ -191,7 +191,7 @@ class SwipeController extends ItemTouchHelper.Callback {
 			}
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			Log.d("FAIL", "NULL");
+			Log.d("FAIL", "NULL 0");
 		}
 		try {
 			if (currentItemViewHolder.itemView.findViewById(R.id.item_img) != null) {
@@ -199,6 +199,7 @@ class SwipeController extends ItemTouchHelper.Callback {
 			}
 		} catch (NullPointerException e) {
 			e.printStackTrace();
+			Log.d("FAIL", "NULL 1");
 		}
 	}
 
