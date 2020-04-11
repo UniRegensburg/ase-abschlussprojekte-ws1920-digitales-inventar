@@ -10,8 +10,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.InputFilter;
 import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -108,12 +108,24 @@ public class EditItemActivity extends AppCompatActivity {
 		editBuyDate = findViewById(R.id.addBuyDateButton);
 		save = findViewById(R.id.addItemSave);
 		cancel = findViewById(R.id.addItemCancel);
-
-		//setting input filters
-		editTextName.setFilters(new InputFilter[] { InputChecker.filter });
-		editTextLocation.setFilters(new InputFilter[] { InputChecker.filter });
 		//numbers only for value
 		editTextValue.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+		final EditText [] editTexts = new EditText[]{editTextName, editTextLocation, editTextName};
+
+		for (EditText editText : editTexts) {
+			editText.setOnKeyListener(new View.OnKeyListener() {
+				public boolean onKey(View v, int keyCode, KeyEvent event) {
+					// If the event is a key-down event on the "enter" button
+					if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+						(keyCode == KeyEvent.KEYCODE_ENTER)) {
+						UIhelper.hideKeyboard(EditItemActivity.this);
+						return true;
+					}
+					return false;
+				}
+			});
+		}
 	}
 
 	public void setupButtons() {
