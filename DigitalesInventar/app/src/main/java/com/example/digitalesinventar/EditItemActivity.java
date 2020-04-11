@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -59,10 +60,15 @@ public class EditItemActivity extends AppCompatActivity {
 	ImageView imgView;
 	//IMAGE
 	Bitmap defaultImage;
+	//ITEM
 	DataModelItemList currentItem;
-	//Context
+	//CONTESXT
 	public static Context context;
+	//ACTIVITY
+	static Activity activity;
+	//SEARCH
 	String searchquery;
+	//CATEGORY ARRAY
 	ArrayList<String> catArray = new ArrayList<>();
 
 
@@ -72,6 +78,7 @@ public class EditItemActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		activity = EditItemActivity.this;
 		setupView();
 	}
 
@@ -108,6 +115,9 @@ public class EditItemActivity extends AppCompatActivity {
 		editBuyDate = findViewById(R.id.addBuyDateButton);
 		save = findViewById(R.id.addItemSave);
 		cancel = findViewById(R.id.addItemCancel);
+		//setting input filters
+		editTextName.setFilters(new InputFilter[] { InputChecker.filter });
+		editTextLocation.setFilters(new InputFilter[] { InputChecker.filter });
 		//numbers only for value
 		editTextValue.setInputType(InputType.TYPE_CLASS_NUMBER);
 
@@ -126,6 +136,10 @@ public class EditItemActivity extends AppCompatActivity {
 				}
 			});
 		}
+	}
+
+	public static void hideKeyboard() {
+		UIhelper.hideKeyboard(activity);
 	}
 
 	public void setupButtons() {

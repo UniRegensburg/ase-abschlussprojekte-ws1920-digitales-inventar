@@ -1,5 +1,6 @@
 package com.example.digitalesinventar;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -55,13 +57,17 @@ public class NewItemActivity extends AppCompatActivity {
 	//IMAGE VIEW
 	ImageView imgView;
 	Bitmap defaultImage;
-//IMG-HELPER
+	//IMG-HELPER
 	boolean newImage = false;
+	//CATEGORY-ARRAY
 	ArrayList<String> catArray = new ArrayList<>();
+	//ACTIVITY
+	static Activity activity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		activity = NewItemActivity.this;
 		setupView();
 	}
 
@@ -126,6 +132,9 @@ public class NewItemActivity extends AppCompatActivity {
 		addBuyDate = findViewById(R.id.addBuyDateButton);
 		save = findViewById(R.id.addItemSave);
 		cancel = findViewById(R.id.addItemCancel);
+		//setting input filters
+		editTextName.setFilters(new InputFilter[] { InputChecker.filter });
+		editTextLocation.setFilters(new InputFilter[] { InputChecker.filter });
 		//numbers only for value
 		editTextValue.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
@@ -144,6 +153,10 @@ public class NewItemActivity extends AppCompatActivity {
 				}
 			});
 		}
+	}
+
+	public static void hideKeyboard() {
+		UIhelper.hideKeyboard(activity);
 	}
 
 	public void setupButtons() {
