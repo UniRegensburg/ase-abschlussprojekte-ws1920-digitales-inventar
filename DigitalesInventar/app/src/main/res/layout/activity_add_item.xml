@@ -37,7 +37,7 @@
             android:layout_marginStart="-50dp"
             android:elevation="20dp"
             android:layout_gravity="end|bottom"
-            android:background="@drawable/add_pic_from_cam40px"/>
+            android:background="@drawable/add_pic_from_cam50px"/>
     </LinearLayout>
 
 

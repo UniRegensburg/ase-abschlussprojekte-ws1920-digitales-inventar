@@ -119,7 +119,7 @@ public class EditItemActivity extends AppCompatActivity {
 		editTextName.setFilters(new InputFilter[] { InputChecker.filter });
 		editTextLocation.setFilters(new InputFilter[] { InputChecker.filter });
 		//numbers only for value
-		editTextValue.setInputType(InputType.TYPE_CLASS_NUMBER);
+		editTextValue.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
 		final EditText [] editTexts = new EditText[]{editTextName, editTextLocation, editTextName};
 
@@ -234,10 +234,6 @@ public class EditItemActivity extends AppCompatActivity {
 				alertDialog.show();
 			}
 		});
-		//not working
-		//if (newImage){ //why?
-		//	imgView.setImageBitmap(defaultImage);
-		//}
 	}
 
 	private void resetShownImage() {
