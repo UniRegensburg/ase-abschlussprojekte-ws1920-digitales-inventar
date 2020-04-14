@@ -186,7 +186,7 @@ public class DatabaseActivity {
     public static void addCategory(String catName) {
      Map<String, Object> catEntry = new HashMap<>();
      catEntry.put("categoryName", removeSpaces(catName));
-     db.collection("users").document(MainActivity.userID).collection("categories").document(catName)
+     db.collection("users").document(MainActivity.userID).collection("categories").document(removeSpaces(catName))
        .set(catEntry)
        .addOnSuccessListener(new OnSuccessListener<Void>() {
          @Override
