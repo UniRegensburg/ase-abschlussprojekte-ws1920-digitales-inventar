@@ -43,7 +43,7 @@ public class DatabaseActivity {
     //loading bool to prevent duplicating data locally
     public static boolean currentlyLoading = false;
 
-    /*private static String removeSpaces(String inputStr) {
+    private static String removeSpaces(String inputStr) {
       String returnStr = inputStr;
       if (inputStr.charAt(0) == ' ') {
         returnStr = returnStr.substring(1, returnStr.length());
@@ -52,16 +52,16 @@ public class DatabaseActivity {
         returnStr = returnStr.substring(0, returnStr.length() - 1);
       }
       return returnStr;
-    }*/
+    }
 
     //ADD ITEM TO DB
     public static void addEntry(String name, String category , String location, String buyDate, double value, final boolean newImage) {
         long tsLong = System.currentTimeMillis();
         final String ts = Long.toString(tsLong);
         Map<String, Object> entry = new HashMap<>();
-        entry.put("name", name);//removeSpaces(name));
-        entry.put("category", category);//removeSpaces(category));
-        entry.put("location", location);//removeSpaces(location));
+        entry.put("name", removeSpaces(name));
+        entry.put("category", removeSpaces(category));
+        entry.put("location", removeSpaces(location));
         entry.put("buydate", buyDate);
         entry.put("value", value);
         entry.put("ts", ts);
@@ -92,10 +92,9 @@ public class DatabaseActivity {
       if (value.length() > 0) { //catch for parsing error
         valueWip = Double.parseDouble(value);
       }
-      //final DataModelItemList wipItem = new DataModelItemList(removeSpaces(name), removeSpaces(category), removeSpaces(location), buyDate, valueWip, false, timestamp);
-      final DataModelItemList wipItem = new DataModelItemList(name, category, location, buyDate, valueWip, false, timestamp);
+      final DataModelItemList wipItem = new DataModelItemList(removeSpaces(name), removeSpaces(category), removeSpaces(location), buyDate, valueWip, false, timestamp);
       db.collection("users").document(MainActivity.userID).collection("items").document(String.valueOf(timestamp))
-        .update("name", name, "category", category, "location", location, "buydate", buyDate, "value", valueWip,"ts", timestamp)
+        .update("name", removeSpaces(name), "category", removeSpaces(category), "location", removeSpaces(location), "buydate", buyDate, "value", valueWip,"ts", timestamp)
           .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void avoid) {
@@ -186,7 +185,7 @@ public class DatabaseActivity {
     //ADD CATEGORY TO DB
     public static void addCategory(String catName) {
      Map<String, Object> catEntry = new HashMap<>();
-     catEntry.put("categoryName", catName);//removeSpaces(catName));
+     catEntry.put("categoryName", removeSpaces(catName));
      db.collection("users").document(MainActivity.userID).collection("categories").document(catName)
        .set(catEntry)
        .addOnSuccessListener(new OnSuccessListener<Void>() {
