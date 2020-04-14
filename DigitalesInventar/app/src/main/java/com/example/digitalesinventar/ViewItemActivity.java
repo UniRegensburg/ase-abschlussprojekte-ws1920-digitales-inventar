@@ -116,7 +116,7 @@ public class ViewItemActivity extends AppCompatActivity {
 			textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 			textViewLocation.setText(currentItem.getItemLocation());
 			textViewBuyDate.setText(currentItem.getItemBuyDate());
-			textViewValue.setText(Double.toString(currentItem.getItemValue()) + "€");
+			textViewValue.setText(String.format("%.2f", currentItem.getItemValue())+ "€");
 			if (extras.getBoolean("fromMain")) {
 				DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView, defaultBmp);
 				imgView.invalidate();
@@ -134,7 +134,7 @@ public class ViewItemActivity extends AppCompatActivity {
 		textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 		textViewLocation.setText(currentItem.getItemLocation());
 		textViewBuyDate.setText(currentItem.getItemBuyDate());
-		textViewValue.setText(Double.toString(currentItem.getItemValue()) + "€");
+		textViewValue.setText(String.format("%.2f", currentItem.getItemValue())+ "€");
 		if (newImage) {
 			if (bitmap != null) {
 				imgView.setImageBitmap(bitmap);
@@ -149,6 +149,7 @@ public class ViewItemActivity extends AppCompatActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// Check which request we're responding to
+		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 666) {
 			// Make sure the request was successful
 			if (resultCode == Activity.RESULT_OK) {

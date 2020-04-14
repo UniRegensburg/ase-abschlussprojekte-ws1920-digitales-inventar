@@ -373,7 +373,7 @@ public class EditItemActivity extends AppCompatActivity {
 				//format and set date
 				textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 				textViewBuyDate.setText(currentItem.getItemBuyDate());
-				editTextValue.setText(Double.toString(currentItem.getItemValue()));
+				editTextValue.setText(String.format("%.2f", currentItem.getItemValue()));
 				//set spinner item
 				for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
 					if (categorySpinner.getItemAtPosition(i+1).equals(currentItem.getItemCategory())) {
