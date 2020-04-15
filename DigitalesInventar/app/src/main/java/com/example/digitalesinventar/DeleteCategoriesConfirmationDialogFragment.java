@@ -21,7 +21,7 @@ public class DeleteCategoriesConfirmationDialogFragment extends DialogFragment {
 		final String category = args.getString(ARG_CATEGORY);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setMessage("Wollen sie diese Kategorie mit allen Items löschen?")
+		builder.setMessage("Wollen Sie diese Kategorie mit allen Items löschen?")
 			.setPositiveButton("Items löschen", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					// TODO delete all items with the called category
