@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,12 +31,12 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.MultiV
     @SuppressLint("RestrictedApi") DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
     static Bitmap defaultBitmap;
 
-public ItemListAdapter(Context context, ArrayList<DataModelItemList> data, Bitmap defaultBitmap) {
-    this.context = context;
-    this.dataSet = data;
-    this.filteredList = data;
-    this.defaultBitmap = defaultBitmap;
-}
+    public ItemListAdapter(Context context, ArrayList<DataModelItemList> data, Bitmap defaultBitmap) {
+        this.context = context;
+        this.dataSet = data;
+        this.filteredList = data;
+        this.defaultBitmap = defaultBitmap;
+    }
 
     public ItemListAdapter(Context context, ArrayList<DataModelItemList> data) {
         this.context = context;
@@ -45,11 +44,13 @@ public ItemListAdapter(Context context, ArrayList<DataModelItemList> data, Bitma
         this.filteredList = data;
     }
 
-public void setData(ArrayList<DataModelItemList> data) {
-    this.dataSet = new ArrayList<>();
-    this.dataSet = data;
-    notifyDataSetChanged();
-}
+    public ItemListAdapter() {}
+
+    public void setData(ArrayList<DataModelItemList> data) {
+        this.dataSet = new ArrayList<>();
+        this.dataSet = data;
+        notifyDataSetChanged();
+    }
 
     @Override
     public Filter getFilter() {
