@@ -6,7 +6,7 @@ Der/Die Nutzer/in kann seine/ihre Gegenstände erfassen, benennen und verschiede
 Der/Die Nutzer/in kann verschiedene Kategorien erstellen, benennen und verwalten.
 Änderungen des Bestands können über Löschungen und Editierungen an den Gegenständen und Kategorien nachvollzogen werden.
 
-![Screenshot](./docs/images/Screenshot.jpg)
+![Screenshot](./docs/images/Screenshot.png)
 
 [dritte Veröffentlichung](./docs/APK/DigitalesInventarV03.apk)\
 [zweite Veröffentlichung](./docs/APK/DigitalesInventarV02.apk)\
