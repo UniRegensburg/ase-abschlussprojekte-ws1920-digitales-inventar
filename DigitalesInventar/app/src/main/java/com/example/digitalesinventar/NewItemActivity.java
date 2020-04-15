@@ -249,6 +249,7 @@ public class NewItemActivity extends AppCompatActivity {
 		alertDialog.setMessage("Gebe einen Namen ein");
 
 		final EditText input = new EditText(NewItemActivity.this);
+		input.setFilters(new InputFilter[] { InputChecker.filter });
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 			LinearLayout.LayoutParams.MATCH_PARENT,
 			LinearLayout.LayoutParams.MATCH_PARENT);
