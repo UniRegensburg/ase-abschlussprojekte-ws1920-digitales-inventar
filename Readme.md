@@ -26,6 +26,7 @@ fabian.feldmeier@stud.uni-regensburg.de\
 lucas.haberl@stud.uni-regensburg.de\
 [HaberlPre](https://github.com/HaberlPre)
 
+
 #### Tanja Gehr
 <img src="./docs/images/TanjaGehr.jpg" width="300" height="300">\
 tanja.gehr@stud.uni-regensburg.de\
@@ -62,6 +63,5 @@ Der/Die Nutzer/in kann die Kategorienliste durchsuchen. Dabei werden Suchvorschl
 Der/Die Nutzer/in kann die Orte aufgelistet sehen.\
 Der/Die Nutzer/in kann seine/ihre Gegenstände nach den Orten filtern lassen.\
 Der/Die Nutzer/in kann die Ortliste durchsuchen. Dabei werden Suchvorschläge vorgegeben.\
-
 
 ![Demo-Video](./docs/demo/3rd-Release.gif)
