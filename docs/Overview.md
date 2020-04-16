@@ -14,12 +14,8 @@ Um dieses Problem zu minimieren, soll die "Digitales Inventar" - App dem Nutzer 
     * Bild des Gegenstands
     * Art des Gegenstands (Vorgegebene Arten, aber auch Freitext-Arten möglich)
     * Ort des Gegenstands (Vorgegebene Orte, aber auch Freitext-Orte möglich)
-    * Alter des Gegenstands
+    * Kaufdatum des Gegenstands
     * Wert des Gegenstands
-    * Menge des Gegenstands
-    * Häufigkeit der Verwendung
-    * Weitere Unterkategorien für verschiedene Annotationen (z.B. ** Ablaufdatum für Essen)
-    * Weitere frei wählbare Annotationen
 * Gegenstände entfernen
 * Suchfunktion
 
