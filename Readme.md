@@ -8,7 +8,7 @@ Der/Die Nutzer/in kann verschiedene Kategorien erstellen, benennen und verwalten
 
 ![Screenshot](./docs/images/Screenshot.png)
 
-[dritte Veröffentlichung](./docs/APK/DigitalesInventarV03.apk)\
+[dritte Veröffentlichung](https://github.com/UniRegensburg/ase-abschlussprojekte-ws1920-digitales-inventar/releases/tag/v1)\
 [zweite Veröffentlichung](./docs/APK/DigitalesInventarV02.apk)\
 [erste Veröffentlichung](./docs/APK/DigitalesInventarV01.apk)
 
