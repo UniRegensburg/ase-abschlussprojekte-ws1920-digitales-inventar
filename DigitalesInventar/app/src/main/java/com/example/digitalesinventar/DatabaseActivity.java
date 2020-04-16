@@ -45,11 +45,13 @@ public class DatabaseActivity {
 
     private static String removeSpaces(String inputStr) {
       String returnStr = inputStr;
-      if (inputStr.charAt(0) == ' ') {
-        returnStr = returnStr.substring(1, returnStr.length());
-      }
-      if (inputStr.charAt(inputStr.length()-1) == ' ') {
-        returnStr = returnStr.substring(0, returnStr.length() - 1);
+      if (inputStr != "") {
+        if (inputStr.charAt(0) == ' ') {
+          returnStr = returnStr.substring(1, returnStr.length());
+        }
+        if (inputStr.charAt(inputStr.length() - 1) == ' ') {
+          returnStr = returnStr.substring(0, returnStr.length() - 1);
+        }
       }
       return returnStr;
     }
@@ -61,7 +63,7 @@ public class DatabaseActivity {
         Map<String, Object> entry = new HashMap<>();
         entry.put("name", removeSpaces(name));
         entry.put("category", removeSpaces(category));
-        entry.put("location", removeSpaces(location));
+        entry.put("location", removeSpaces(location + ""));
         entry.put("buydate", buyDate);
         entry.put("value", value);
         entry.put("ts", ts);
@@ -92,9 +94,9 @@ public class DatabaseActivity {
       if (value.length() > 0) { //catch for parsing error
         valueWip = Double.parseDouble(value);
       }
-      final DataModelItemList wipItem = new DataModelItemList(removeSpaces(name), removeSpaces(category), removeSpaces(location), buyDate, valueWip, false, timestamp);
+      final DataModelItemList wipItem = new DataModelItemList(removeSpaces(name), removeSpaces(category), removeSpaces(location + ""), buyDate, valueWip, false, timestamp);
       db.collection("users").document(MainActivity.userID).collection("items").document(String.valueOf(timestamp))
-        .update("name", removeSpaces(name), "category", removeSpaces(category), "location", removeSpaces(location), "buydate", buyDate, "value", valueWip,"ts", timestamp)
+        .update("name", removeSpaces(name), "category", removeSpaces(category), "location", removeSpaces(location + ""), "buydate", buyDate, "value", valueWip,"ts", timestamp)
           .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void avoid) {
