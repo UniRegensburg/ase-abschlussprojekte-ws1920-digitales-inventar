@@ -26,4 +26,11 @@ public class SignInFailedActivity extends AppCompatActivity {
 			}
 		});
 	}
+
+	@Override
+	public void onBackPressed() {
+		finish();
+		Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+		startActivity(intent);
+	}
 }

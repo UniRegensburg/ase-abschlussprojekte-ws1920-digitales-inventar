@@ -1,19 +1,27 @@
 package com.example.digitalesinventar;
 
-import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.SearchView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -23,220 +31,419 @@ import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int RC_SIGN_IN = 123; //wieso
-    static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public static String userID = "defaultEmptyID";
-    private SearchView searchView;
+	private static final int RC_SIGN_IN = 123;
+	public static String userID = "defaultEmptyID";
 
-    //UI-ELEMENTS --- NOTE: wird später dann noch ausgelagert in eigenstaendiges Fragment
-    Button firstCat;
-    Button secondCat;
-    Button thirdCat;
-    Button fourthCat;
-    Button fifthCat;
-    Button sixthCat;
-    Toolbar toolbar;
-    FloatingActionButton plusButton;
-    Button[] catButtonArray = new Button[6];//will need to be reworked for custom category buttons
-    //HELPERS
-    int screenWidth;
+	Toolbar toolbar;
+	FloatingActionButton plusButton;
+	static Bitmap defaultBitmap;
+	private MaterialSearchView searchView;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	FrameLayout frameLayout;
+	TabLayout tabLayout;
 
-        // Choose authentication providers //v1
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-          new AuthUI.IdpConfig.EmailBuilder().build());//,
-        //new AuthUI.IdpConfig.GoogleBuilder().build());
+	public static Spinner sortBySpinner;
+	ArrayAdapter<String> spinnerAdapter;
+	ArrayList<String> spinnerArrayLarge = new ArrayList<>();
+	ArrayList<String> spinnerArraySmall = new ArrayList<>();
+	Integer currentCase = 0;
+	public static Integer spinnerPos = 0;
 
-        // Create and launch sign-in intent
-        startActivityForResult(
-          AuthUI.getInstance()
-            .createSignInIntentBuilder()
-            .setAvailableProviders(providers)
-            .build(),
-          RC_SIGN_IN);
-    }
+	MainActivityFragment mainActivityFragment;
+	CategoryFragment categoryFragment;
+	PlaceFragment placeFragment;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		searchView = (MaterialSearchView) findViewById(R.id.search_view);
+		initFragments();
+		callLogin();
+	}
 
-        // Get SearchView and set the searchable configuration
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.search_bar).getActionView();
-        ComponentName componentName = new ComponentName(this, SearchActivity.class);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_main, menu);
+		MenuItem menuItem = menu.findItem(R.id.action_search);
+		searchView.setMenuItem(menuItem);
+		return true;
+	}
 
-        // setupSearchListener in Fragment class
-        MainActivityFragment fragment = new MainActivityFragment();
-        fragment.setupSearchListener(searchView);
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,fragment).commit();
-        return true;
-    }
+	@Override
+	public void onBackPressed() {
+		// close search view on back button pressed
+		if (searchView.isSearchOpen()) {
+			searchView.closeSearch();
+			return;
+		}
+		super.onBackPressed();
+	}
 
-    @Override
-    public void onBackPressed() {
-        // close search view on back button pressed
-        if (!searchView.isIconified()) {
-            searchView.setIconified(true);
-            return;
-        }
-        super.onBackPressed();
-    }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+		//noinspection SimplifiableIfStatement
+		if (id == R.id.action_logout) {
+			handleLogout();
+			return true;
+		} else if(id == R.id.action_search){
+			return true;
+		} else{
+			return super.onOptionsItemSelected(item);
+		}
+	}
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == RC_SIGN_IN) {
+			IdpResponse response = IdpResponse.fromResultIntent(data);
+			if (resultCode == RESULT_OK) {
+				// Successfully signed in
+				FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+				userID = user.getUid();
+				setupMainMenu();
+			} else {
+				// Sign in failed. If response is null the user canceled the
+				// sign-in flow using the back button. Otherwise check
+				// response.getError().getErrorCode() and handle the error.
+				// ..
+				Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+				handleSignInResult(task);
+			}
+		}
+	}
 
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-            Log.d("loginTag", "second");
+	private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+		GoogleSignInAccount account = null;
+		try {
+			account = completedTask.getResult(ApiException.class);
+		} catch (ApiException e) {
+			if (e.getStatusCode() != GoogleSignInStatusCodes.SIGN_IN_CANCELLED) {
+				// cancelled
+				Log.d("SignIn", "cancelled");
+				launchSignInFailedActivity();
+			} else {
+				// error
+				Log.d("SingIn", "Error");
+			}
+		}
+		if (account != null) {
+			// ok
+		}
+	}
 
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                Log.d("loginTag", "third");
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                Log.d("loginTag", user.getUid());
-                userID = user.getUid();
-                setupMainMenu();
-            } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ..
-                Log.d("loginTag", "error");
-                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                handleSignInResult(task);
-            }
-        }
-    }
+	private void callLogin() {
+		List<AuthUI.IdpConfig> providers = Arrays.asList(
+			new AuthUI.IdpConfig.EmailBuilder().build(),
+			new AuthUI.IdpConfig.GoogleBuilder().build());
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        GoogleSignInAccount account = null;
-        try {
-            account = completedTask.getResult(ApiException.class);
-        } catch (ApiException e) {
-            if (e.getStatusCode() != GoogleSignInStatusCodes.SIGN_IN_CANCELLED) {
-                // cancelled
-                Log.d("SignIn", "cancelled");
-                launchSignInFailedActivity();
-            } else {
-                // error
-                Log.d("SingIn", "Error");
-            }
-        }
-        if (account != null) {
-            // ok
-        }
-    }
+		// Create and launch sign-in intent
+		startActivityForResult(
+			AuthUI.getInstance()
+				.createSignInIntentBuilder()
+				.setAvailableProviders(providers)
+				.build(),
+			RC_SIGN_IN);
+	}
 
-    //sets and initializes UI for MainActivity
-    public void setupMainMenu() {
-        setContentView(R.layout.activity_main);
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        DatabaseActivity.getDataFromDatabase();
-        DatabaseActivity.getCategoriesFromDatabase();
+	void initFragments() {
+		//set default bitmap for mainFrag
+		defaultBitmap = BitmapFactory.decodeResource(this.getResources(),
+			R.drawable.img_holder);
+		mainActivityFragment = new MainActivityFragment(defaultBitmap);
+		categoryFragment = new CategoryFragment();
+		placeFragment = new PlaceFragment();
 
-        plusButton = findViewById(R.id.plusButton);
-        plusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("MainActivity", "plusButton clicked");
-                launchNewItemActivity();
-            }
-        });
-        setupCategories();
-    }
+	}
 
-    private void setupCategories() {
-        firstCat = findViewById(R.id.cat1);
-        secondCat = findViewById(R.id.cat2);
-        thirdCat = findViewById(R.id.cat3);
-        fourthCat = findViewById(R.id.cat4);
-        fifthCat= findViewById(R.id.cat5);
-        sixthCat = findViewById(R.id.cat6);
-        //Log.i("MainActivity", "btn.add: "+firstCat.toString());
-        catButtonArray[0] = firstCat;
-        catButtonArray[1] = secondCat;
-        catButtonArray[2] = thirdCat;
-        catButtonArray[3] = fourthCat;
-        catButtonArray[4] = fifthCat;
-        catButtonArray[5] = sixthCat;
-        //set width of Buttons
-        screenWidth = UIhelper.screenWidth(getWindowManager());
-        //firstCat.setHeight(screenWidth/3);
-        secondCat.setWidth(screenWidth/3);
-        //secondCat.setHeight(screenWidth/3);
-        firstCat.setWidth(screenWidth/3);
-        //thirdCat.setHeight(screenWidth/3);
-        thirdCat.setWidth(screenWidth/3);
-        //fourthCat.setHeight(screenWidth/3);
-        fourthCat.setWidth(screenWidth/3);
-        //fifthCat.setHeight(screenWidth/3);
-        fifthCat.setWidth(screenWidth/3);
-        //sixthCat.setHeight(screenWidth/3);
-        sixthCat.setWidth(screenWidth/3);
+	//sets and initializes UI for MainActivity
+	public void setupMainMenu() {
+		toolbar = findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+		DatabaseActivity.getDataFromDatabase();
+		DatabaseActivity.getCategoriesFromDatabase();
+		//setupSearchListener in MainFragment and pictures
+		mainActivityFragment.setupSearchListener(searchView);
+		//make sure user was not logged in before and frag already exists
+		if (mainActivityFragment == null) {
+			getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mainActivityFragment).commit();
+		} else {
+			getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mainActivityFragment).commit();
+		}
+		//initialise Button at the start
+		plusButton = findViewById(R.id.plusButton);
+		plusButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				launchNewItemActivity();
+			}
+		});
 
-        for (final Button cat : catButtonArray){
-            cat.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    //Log.i("CatMainActivity", "btn: "+cat.getText().toString());
-                    launchCategorySearchActivity(cat.getText().toString());
-                }
-            });
-        }
-    }
+		setupSortedSpinner();
+		setupTabLayout();
+	}
 
-    //onClick action for plusButton --> launches newItemActivity
-    private void launchNewItemActivity() {
-        Log.i("MainActivity", "launchNewItemActivity called");
-        Intent intent = new Intent(this, NewItemActivity.class);
-        Log.i("MainActivity", "intent to start newItemActivity created");
-        startActivity(intent);
-    }
+	private void setupSpinnerArrays() {
+		spinnerArrayLarge.clear();
+		spinnerArrayLarge.add("Neueste");
+		spinnerArrayLarge.add("Älteste");
+		spinnerArrayLarge.add("Name aufsteigend");
+		spinnerArrayLarge.add("Name absteigend");
 
-    private void launchSignInFailedActivity() {
+		spinnerArraySmall.clear();
+		spinnerArraySmall.add("Name aufsteigend");
+		spinnerArraySmall.add("Name absteigend");
+	}
+
+	private void setupBigSpinner() {
+		// Create an ArrayAdapter for the spinner using the string array and a default spinner layout
+		spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerArrayLarge);
+		// Specify the layout to use when the list of choices appears
+		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		sortBySpinner.setAdapter(spinnerAdapter);
+	}
+
+	private void setupSmallSpinner() {
+		// Create an ArrayAdapter for the spinner using the string array and a default spinner layout
+		spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerArraySmall);
+		// Specify the layout to use when the list of choices appears
+		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		sortBySpinner.setAdapter(spinnerAdapter);
+	}
+
+	private void setupSortedSpinner() {
+		setupSpinnerArrays();
+		sortBySpinner = findViewById(R.id.spinnerSortBy);
+		setupBigSpinner();
+		sortBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				switch (currentCase) {
+					case 0:
+						mainActivityFragment.setupSearchListener(searchView);
+						getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mainActivityFragment).commit();
+						//Items
+						if (sortBySpinner.getSelectedItem() == "Neueste") {
+							spinnerPos = 0;
+							MainActivityFragment.sortByNewest();
+						} else if (sortBySpinner.getSelectedItem() == "Älteste") {
+							spinnerPos = 1;
+							MainActivityFragment.sortByOldest();
+						} else if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
+							spinnerPos = 2;
+							MainActivityFragment.sortByNameUp();
+						} else if (sortBySpinner.getSelectedItem() == "Name absteigend") {
+							spinnerPos = 3;
+							MainActivityFragment.sortByNameDown();
+						}
+						break;
+					case 1:
+						categoryFragment.setupSearchListener(searchView);
+						getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, categoryFragment).commit();
+						//Category
+						if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
+							spinnerPos = 0;
+							CategoryFragment.sortByNameUp();
+						} else if (sortBySpinner.getSelectedItem() == "Name absteigend") {
+							spinnerPos = 1;
+							CategoryFragment.sortByNameDown();
+						}
+						break;
+					case 2:
+						placeFragment.setupSearchListener(searchView);
+						getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, placeFragment).commit();
+						//Location
+						if (sortBySpinner.getSelectedItem() == "Name aufsteigend") {
+							spinnerPos = 0;
+							PlaceFragment.sortByNameUp();
+						} else if (sortBySpinner.getSelectedItem() == "Name absteigend") {
+							spinnerPos = 1;
+							PlaceFragment.sortByNameDown();
+						}
+						break;
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parentView) {
+			}
+
+		});
+	}
+
+	private void setupTabLayout() {
+		tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+		frameLayout = (FrameLayout) findViewById(R.id.fragment_container);
+
+		tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+			@Override
+			public void onTabSelected(TabLayout.Tab tab) {
+				Fragment fragment = null;
+				switch (tab.getPosition()) {
+					case 0:
+						currentCase = 0;
+						sortBySpinner.setAdapter(null);
+						setupBigSpinner();
+						fragment = mainActivityFragment;
+						plusButton = findViewById(R.id.plusButton);
+						plusButton.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View view) {
+								launchNewItemActivity();
+							}
+						});
+						break;
+					case 1:
+						currentCase = 1;
+						sortBySpinner.setAdapter(null);
+						setupSmallSpinner();
+						fragment = categoryFragment;
+						plusButton = findViewById(R.id.plusButton);
+						plusButton.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View view) {
+								launchNewCategoryActivity();
+							}
+						});
+						break;
+					case 2:
+						currentCase = 2;
+						sortBySpinner.setAdapter(null);
+						setupSmallSpinner();
+						fragment = placeFragment;
+						plusButton = findViewById(R.id.plusButton);
+						plusButton.hide();
+						break;
+				}
+				getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+			}
+
+			@Override
+			public void onTabUnselected(TabLayout.Tab tab) {
+				if (tab.getPosition() == 2) {
+					plusButton = findViewById(R.id.plusButton);
+					plusButton.show();
+				}
+			}
+
+			@Override
+			public void onTabReselected(TabLayout.Tab tab) {
+
+			}
+		});
+	}
+
+	//onClick action for plusButton when item is selected--> launches newItemActivity
+	private void launchNewItemActivity() {
+		Log.i("MainActivity", "launchNewItemActivity called");
+		Intent intent = new Intent(this, NewItemActivity.class);
+		Log.i("MainActivity", "intent to start newItemActivity created");
+		startActivity(intent);
+	}
+
+	//onClick action for plusButton when category is selected --> launches alertDialog for Category
+	private void launchNewCategoryActivity() {
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+		alertDialog.setTitle("Kategorie hinzufügen");
+		alertDialog.setMessage("Geben sie einen Namen ein");
+
+		final EditText input = new EditText(MainActivity.this);
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+			LinearLayout.LayoutParams.MATCH_PARENT,
+			LinearLayout.LayoutParams.MATCH_PARENT);
+		input.setLayoutParams(lp);
+		input.setMaxLines(1);
+		input.setInputType(InputType.TYPE_CLASS_TEXT);
+		alertDialog.setView(input);
+
+		alertDialog.setPositiveButton(R.string.add,
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					String category = input.getText().toString();
+					if (InputChecker.checkEmptyInput(category)) {
+						for (int i = 0; i < DatabaseActivity.categoryArray.size(); i++) {
+							//avoid multiple entries
+							if (category.equals(DatabaseActivity.categoryArray.get(i))) {
+								Toast.makeText(getApplicationContext(), "Kategorie " + category + " existiert bereits!", Toast.LENGTH_SHORT).show();
+								return;
+							}
+						}
+						DatabaseActivity.addCategory(category);
+						//clear input
+						input.setText("");
+						//hide keyboard
+						UIhelper.hideKeyboard(MainActivity.this);
+						Toast.makeText(getApplicationContext(), "Kategorie " + category + " wurde erfolgreich hinzugefügt!", Toast.LENGTH_SHORT).show();
+					} else {
+						Toast.makeText(getApplicationContext(), "Sie müssen einen Namen eingeben", Toast.LENGTH_SHORT).show();
+					}
+				}
+			});
+		alertDialog.setNegativeButton(R.string.cancel,
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			});
+		alertDialog.show();
+	}
+
+	private void handleLogout(){
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+		alertDialog.setTitle("Abmelden");
+		alertDialog.setMessage("Wollen Sie sich wirklich abmelden?");
+
+		alertDialog.setPositiveButton(R.string.logout,
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					Toast.makeText(getApplicationContext(), "Sie werden abgemeldet", Toast.LENGTH_SHORT).show();
+					FirebaseAuth.getInstance().signOut();
+					/// puts tab back to #0
+					tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+					TabLayout.Tab tab = tabLayout.getTabAt(0);
+					tab.select();
+					currentCase = 0;
+					///
+					callLogin();
+				}
+			});
+		alertDialog.setNegativeButton(R.string.cancel,
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			});
+		alertDialog.show();
+	}
+
+
+		private void launchSignInFailedActivity() {
         Log.i("MainActivity", "launchNewItemActivity called");
         Intent intent = new Intent(this, SignInFailedActivity.class);
         Log.i("MainActivity", "intent to start newItemActivity created");
         startActivity(intent);
     }
-
-    private void launchCategorySearchActivity(String catName) {
-        Log.i("MainActivity", "launchCategorySearchActivity called w/: "+catName);
-        Intent intent = new Intent(this, CategorySearchActivity.class);
-        intent.putExtra("catName", catName);
-        Log.i("MainActivity", "intent to start CategorySearchActivity created");
-        startActivity(intent);
-    }
-
 
 }

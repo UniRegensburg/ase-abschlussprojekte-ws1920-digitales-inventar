@@ -2,10 +2,13 @@ package com.example.digitalesinventar;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,20 +20,23 @@ public class ViewItemActivity extends AppCompatActivity {
 	static TextView textViewTime;
 	static TextView textViewCategory;
 	static TextView textViewLocation;
+	static TextView textViewBuyDate;
+	static TextView textViewValue;
 	TextView infoViewName;
 	TextView infoViewTime;
 	TextView infoViewCategory;
 	TextView infoViewLocation;
+	//IMAGE VIEW
+	static ImageView imgView;
 	//BUTTONS
 	Button edit;
 	Button back;
-	//SCREEN WIDTH
-	int screenWidth;
 	String searchquery;
+	//Default Image
+	static Bitmap defaultBmp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Log.i("NewItemActivity", "onCreate");
 		super.onCreate(savedInstanceState);
 		//make sure no old values are in searchquery
 		searchquery = "";
@@ -40,39 +46,30 @@ public class ViewItemActivity extends AppCompatActivity {
 	public void setupView() {
 		setContentView(R.layout.activity_view_item);
 		initView();
-		setWidths();
 		setupButtons();
 		assignDataFromIntent(getIntent());
 	}
 
 	public void initView() {
+		defaultBmp = BitmapFactory.decodeResource(this.getResources(),
+			R.drawable.img_holder);
 		//UI-ELEMENTS
 		//TEXT-VIEWS
 		textViewName = findViewById(R.id.Name);
 		textViewCategory = findViewById(R.id.Category);
 		textViewTime = findViewById(R.id.Time);
 		textViewLocation = findViewById(R.id.Location);
+		textViewBuyDate = findViewById(R.id.BuyDate);
+		textViewValue = findViewById(R.id.Value);
 		infoViewName = findViewById(R.id.Name_Item);
 		infoViewCategory = findViewById(R.id.Category_Item);
 		infoViewTime = findViewById(R.id.Time_Item);
 		infoViewLocation = findViewById(R.id.Location_Item);
+		//IMG_VIEW
+		imgView = findViewById(R.id.imgView);
 		//BUTTONS
 		edit = findViewById(R.id.editItemButton);
 		back = findViewById(R.id.backButton);
-	}
-
-	public void setWidths() {
-		screenWidth = UIhelper.screenWidth(getWindowManager());
-		textViewName.setWidth(screenWidth/2);
-		textViewCategory.setWidth(screenWidth/2);
-		textViewTime.setWidth(screenWidth/2);
-		textViewLocation.setWidth(screenWidth/2);
-		infoViewName.setWidth(screenWidth/2);
-		infoViewCategory.setWidth(screenWidth/2);
-		infoViewTime.setWidth(screenWidth/2);
-		infoViewLocation.setWidth(screenWidth/2);
-		back.setWidth(screenWidth/2);
-		edit.setWidth(screenWidth/2);
 	}
 
 	public void setupButtons() {
@@ -97,7 +94,6 @@ public class ViewItemActivity extends AppCompatActivity {
 				Bundle extras = intentA.getExtras();
 				Intent intentB = new Intent(getApplicationContext(),EditItemActivity.class);
 				//get bundle from MainActivity and pass the timestamp to EditItemActivity
-				Log.d("extras","extras: " + extras.toString());
 				intentB.putExtras(extras);
 				startActivityForResult(intentB, 666);
 			}
@@ -110,36 +106,58 @@ public class ViewItemActivity extends AppCompatActivity {
 		Bundle extras = intent.getExtras();
 		long itemID = extras.getLong("itemTs");
 		searchquery = extras.getString("searchQuery");
-		//retrieve data from db
-		DataModelItemList currentItem = DatabaseActivity.getItemFromDatabase(itemID);
-		textViewName.setText(currentItem.getItemName());
-		textViewCategory.setText(currentItem.getItemCategory());
-		//format and set date
-		textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
-		textViewLocation.setText(currentItem.getItemLocation());
-		Log.d("Intent data: ",  "" + currentItem.getItemName());
+		//check if item was deleted
+		if (itemID != 0){
+			//retrieve data from db
+			DataModelItemList currentItem = DatabaseActivity.getItemFromDatabase(itemID);
+			textViewName.setText(currentItem.getItemName());
+			textViewCategory.setText(currentItem.getItemCategory());
+			//format and set date
+			textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
+			textViewLocation.setText(currentItem.getItemLocation());
+			textViewBuyDate.setText(currentItem.getItemBuyDate());
+			textViewValue.setText(String.format("%.2f", currentItem.getItemValue())+ "€");
+			if (extras.getBoolean("fromMain")) {
+				DatabaseActivity.downloadImage(String.valueOf(currentItem.getTimestamp()), imgView, defaultBmp);
+				imgView.invalidate();
+			}
+		} else {
+			finish();
+		}
 	}
 
-	public static void updateDataAfterEdit(DataModelItemList currentItem) {
+	public static void updateDataAfterEdit(DataModelItemList currentItem, boolean newImage, Bitmap bitmap) {
 		//name & cat
 		textViewName.setText(currentItem.getItemName());
 		textViewCategory.setText(currentItem.getItemCategory());
 		//format and set date
 		textViewTime.setText(InputChecker.formattedDate(currentItem).toString());
 		textViewLocation.setText(currentItem.getItemLocation());
+		textViewBuyDate.setText(currentItem.getItemBuyDate());
+		textViewValue.setText(String.format("%.2f", currentItem.getItemValue())+ "€");
+		if (newImage) {
+			if (bitmap != null) {
+				imgView.setImageBitmap(bitmap);
+			} else {
+				imgView.setImageBitmap(defaultBmp); //still necessary?
+			}
+			imgView.invalidate();
+		} else {
+		}
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.d("onActivityResult", "called");
 		// Check which request we're responding to
+		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == 666) {
 			// Make sure the request was successful
 			if (resultCode == Activity.RESULT_OK) {
 				Bundle extras = data.getExtras();
-				Log.d("onActivityResult", "Intent data" + extras.toString());
 				assignDataFromIntent(data);
 			}
+		} else { //code 333
+			finishAndRemoveTask();
 		}
 	}
 }

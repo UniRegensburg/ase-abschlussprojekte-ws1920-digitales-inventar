@@ -1,17 +1,14 @@
 package com.example.digitalesinventar;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -21,12 +18,11 @@ public class SearchActivity extends AppCompatActivity {
 
 	ArrayList<DataModelItemList> dataSet;
 	public ArrayList<DataModelItemList> filteredList = new ArrayList<>();
-	ArrayAdapter adapter;
-	ListView itemListView;
-	Toolbar toolbar;
-	long timestamp;
+	ItemListAdapter adapter;
+	RecyclerView itemListView;
 	String searchquery;
 	TextView result;
+	Button backButton;
 
 
 	//Important to handle Intent in onCreate AND onNewIntent!!
@@ -35,16 +31,15 @@ public class SearchActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search);
 		result = findViewById(R.id.searchresult);
-
-		toolbar = findViewById(R.id.toolbar);
-		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+		itemListView = findViewById(R.id.fragment_list);
+		itemListView.setLayoutManager(new LinearLayoutManager(this));
+		backButton = findViewById(R.id.backButton);
+		backButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();
 			}
 		});
-
-		itemListView = findViewById(R.id.fragment_list);
 		handleIntent(getIntent());
 	}
 
@@ -55,13 +50,11 @@ public class SearchActivity extends AppCompatActivity {
 	}
 
 	private void handleIntent(Intent intent) {
-		Log.i("SearchActivity", "handleIntent");
 		if (intent.getStringExtra("searchQuery") != null && !intent.getStringExtra("searchQuery").equals("")) {
 			search(intent.getStringExtra("searchQuery"));
 			searchquery = "";
-		} else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			String query = intent.getStringExtra(SearchManager.QUERY);
-			Log.i("handleIntent", "query: " + query);
+		} else {
+			String query = intent.getStringExtra("searchQuery");
 			searchquery = query;
 			search(query);
 		}
@@ -70,12 +63,9 @@ public class SearchActivity extends AppCompatActivity {
 
 	public void search(String query){
 		result.setText("Suchergebnis für '" + query + "'");
-		Log.i("SearchActivity", "query: "+ query);
-		adapter = new ItemListAdapter(filteredList,this);
+		adapter = new ItemListAdapter(this, filteredList);
 		itemListView.setAdapter(adapter);
 		dataSet = DatabaseActivity.itemArray;
-		Log.i("DoMySearch", "dataset: " + dataSet);
-
 		if (query.isEmpty()){
 			filteredList = dataSet; //search doesn't get called on empty input
 		} else {
@@ -90,31 +80,6 @@ public class SearchActivity extends AppCompatActivity {
 				}
 			}
 		}
-
-		Log.i("DoMySearch", "filteredList: " + filteredList);
 		adapter.notifyDataSetChanged();
-		itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent,
-															View view, int position, long id) {
-				DataModelItemList itemTs = (DataModelItemList) parent.getItemAtPosition(position);
-				timestamp = itemTs.getTimestamp();
-				Log.i("SearchActItemOnClick", "" + timestamp);
-				launchViewItem();
-			}
-		});
 	}
-
-	private void launchViewItem() {
-		Log.i("SearchActivity", "launchNewItemActivity called");
-		Intent intent = new Intent(this, ViewItemActivity.class);
-		Bundle extras = new Bundle();
-		extras.putLong("itemTs",timestamp);
-		extras.putString("searchQuery", searchquery);
-		intent.putExtras(extras);
-		Log.i("SearchActivity", "intent to start viewItem created");
-		startActivity(intent);
-		finish();
-	}
-
 }

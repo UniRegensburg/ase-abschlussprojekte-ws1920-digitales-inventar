@@ -1,106 +1,169 @@
 package com.example.digitalesinventar;
 
-import android.util.Log;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.fragment.app.FragmentActivity;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 
-//custom ListAdapter to display an object of type "DataModelItemList" which holds a database entry
-public class ItemListAdapter extends ArrayAdapter<DataModelItemList> implements Filterable {
-    ArrayList<DataModelItemList> dataSet;
-    FragmentActivity fragActivity;//functions as "context"
-    ArrayList<DataModelItemList> filteredList;
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
-    private static class ViewHolder {
-        TextView txtItemName;
-        TextView txtTimestamp;
+//custom ListAdapter to display an object of type "DataModelItemList" which holds a database entry
+public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.MultiViewHolder> implements Filterable {
+    ArrayList<DataModelItemList> dataSet;
+    Context context;
+    ArrayList<DataModelItemList> filteredList;
+    boolean multiselect;
+    @SuppressLint("RestrictedApi") DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+    static Bitmap defaultBitmap;
+
+    public ItemListAdapter(Context context, ArrayList<DataModelItemList> data, Bitmap defaultBitmap) {
+        this.context = context;
+        this.dataSet = data;
+        this.filteredList = data;
+        this.defaultBitmap = defaultBitmap;
     }
 
-    public ItemListAdapter(ArrayList<DataModelItemList> data, FragmentActivity fragActivity) {
-        super(fragActivity, R.layout.list_item_itemlist, data);
+    public ItemListAdapter(Context context, ArrayList<DataModelItemList> data) {
+        this.context = context;
         this.dataSet = data;
-        this.fragActivity = fragActivity;
         this.filteredList = data;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
-        DataModelItemList dataModel = getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
-        ViewHolder viewHolder; // view lookup cache stored in tag
+    public ItemListAdapter() {}
 
-        final View result;
-
-        if (convertView == null) {
-
-            viewHolder = new ViewHolder();
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.list_item_itemlist, parent, false);
-            convertView.setTag(dataModel.getTimestamp());
-            Log.i("itemListAdapter", "" + dataModel.getTimestamp());
-            viewHolder.txtItemName = (TextView) convertView.findViewById(R.id.item_name);
-            viewHolder.txtTimestamp = (TextView) convertView.findViewById(R.id.item_ts);
-
-            result = convertView;
-            convertView.setTag(viewHolder);
-
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-            result = convertView;
-        }
-        viewHolder.txtItemName.setText(dataModel.getItemName());
-        viewHolder.txtTimestamp.setText(InputChecker.formattedDate(dataModel).toString());
-
-        // Return the completed view to render on screen
-        return convertView;
+    public void setData(ArrayList<DataModelItemList> data) {
+        this.dataSet = new ArrayList<>();
+        this.dataSet = data;
+        notifyDataSetChanged();
     }
-/*
-    @Override
-    public Filter getFilter(){
-        Log.i("ItemListAdapter", "Filter");
-        return new Filter(){
 
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                String charString = constraint.toString();
-                if (charString.isEmpty()){
-                    filteredList = dataSet;
-                } else {
-                    ArrayList<DataModelItemList> filteredData = new ArrayList<>();
-                    for (DataModelItemList row : dataSet) {
-                        if (row.getItemName().toLowerCase().contains(charString.toLowerCase())) {
-                            filteredData.add(row);
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
+
+    class MultiViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView textViewName;
+        private TextView textViewCategory;
+        private TextView textViewDate;
+        private ImageView imageView;
+        private long timestamp;
+
+        MultiViewHolder(@NonNull View itemView) {
+            super(itemView);
+            textViewName = itemView.findViewById(R.id.item_name);
+            textViewCategory = itemView.findViewById(R.id.item_category);
+            textViewDate = itemView.findViewById(R.id.item_ts);
+            imageView = itemView.findViewById(R.id.item_img);
+        }
+
+        void bind(final DataModelItemList item) {
+            textViewName.setText(item.getItemName());
+            textViewCategory.setText(item.getItemCategory());
+            textViewDate.setText(dateFormat.format(InputChecker.formattedDate(item)));
+            timestamp = item.getTimestamp();
+            DatabaseActivity.downloadImage(Long.toString(item.getTimestamp()), imageView, defaultBitmap);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!multiselect) {
+                        Intent intent = new Intent(context, ViewItemActivity.class);
+                        Bundle extras = new Bundle();
+                        extras.putLong("itemTs",timestamp);
+                        extras.putBoolean("fromMain", true);
+                        intent.putExtras(extras);
+                        context.startActivity(intent);
+                    }else {
+                        if (item.getChecked()) {
+                            item.setChecked(false);
+														MainActivityFragment.setItemCounter(getSelected().size());
+														view.setBackgroundColor(Color.WHITE);
+                        }else{
+                            item.setChecked(true);
+														MainActivityFragment.setItemCounter(getSelected().size());
+                            view.setBackgroundColor(0x09999999);
                         }
                     }
-                    filteredList = filteredData;
                 }
-                Log.i("Filter", "filteredList: " + filteredList);
+            });
 
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = filteredList;
-                return filterResults;
-            }
 
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredList = (ArrayList<DataModelItemList>) results.values;
-                Log.i("publishResult", "filteredList: " + filteredList);
-                notifyDataSetChanged();
-                clear();
-                for(int i = 0, l = filteredList.size(); i < l; i++)
-                    add(filteredList.get(i));
-                notifyDataSetInvalidated();
-            }
-        };
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    MainActivityFragment.setMultiChoiceMode(true);
+                    multiselect = true;
+                    //first Item selected with LongClick
+                    MainActivityFragment.setItemCounter(1);
+                    item.setChecked(true);
+                    view.setBackgroundColor(0x09999999);
+                    return true;
+                }
+            });
+        }
     }
-*/
+
+    public ArrayList<DataModelItemList> getAll() {
+        return dataSet;
+    }
+
+    public ArrayList<DataModelItemList> getSelected() {
+        ArrayList<DataModelItemList> selected = new ArrayList<>();
+        for (int i = 0; i < dataSet.size(); i++) {
+            if (dataSet.get(i).getChecked()) {
+                selected.add(dataSet.get(i));
+            }
+        }
+        return selected;
+    }
+
+		public void unselectAll(RecyclerView viewHolder) {
+			for (int i = 0; i < dataSet.size(); i++) {
+				dataSet.get(i).setChecked(false);
+			}
+			notifyDataSetChanged();
+			//reset colors
+			for (int i = 0; i < viewHolder.getChildCount(); i++) {
+			    viewHolder.getChildAt(i).setBackgroundColor(Color.WHITE);
+      }
+		}
+
+    @NonNull
+    @Override
+    public MultiViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(context).inflate(R.layout.list_item_itemlist, viewGroup, false);
+        return new MultiViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MultiViewHolder multiViewHolder, int position) {
+        multiViewHolder.bind(dataSet.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return dataSet.size();
+    }
+
+    public void setMultiselect(boolean active) {
+			multiselect = active;
+		}
+
 }

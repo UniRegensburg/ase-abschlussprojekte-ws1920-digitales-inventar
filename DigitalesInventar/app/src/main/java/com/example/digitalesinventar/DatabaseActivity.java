@@ -1,6 +1,8 @@
 package com.example.digitalesinventar;
 
-import android.util.Log;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
@@ -11,9 +13,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,64 +31,89 @@ import java.util.Map;
 public class DatabaseActivity {
     // Access a Cloud Firestore instance from your Activity
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    static FirebaseStorage storage = FirebaseStorage.getInstance();
+    static StorageReference storageRef = storage.getReference();
     //ArrayList to store firebase data for displaying later
     public static ArrayList<DataModelItemList> itemArray = new ArrayList<DataModelItemList>();
     private static ArrayList<DataModelItemList> itemArrayBackup = new ArrayList<DataModelItemList>();
     public static ArrayList<String> categoryArray = new ArrayList<>();
+    //Bitmap to be cached while Item is created
+    private static Bitmap cachedBitmap;
+    private static Bitmap downloadedBitmap;
+    //loading bool to prevent duplicating data locally
+    public static boolean currentlyLoading = false;
 
-    //ITEMS
+    private static String removeSpaces(String inputStr) {
+      String returnStr = inputStr;
+      if (inputStr.charAt(0) == ' ') {
+        returnStr = returnStr.substring(1, returnStr.length());
+      }
+      if (inputStr.charAt(inputStr.length()-1) == ' ') {
+        returnStr = returnStr.substring(0, returnStr.length() - 1);
+      }
+      return returnStr;
+    }
 
     //ADD ITEM TO DB
-    public static void addEntry(String name, String category ,String location) {
-        Log.d("DB addEntry", "item added");
+    public static void addEntry(String name, String category , String location, String buyDate, double value, final boolean newImage) {
         long tsLong = System.currentTimeMillis();
-        String ts = Long.toString(tsLong);
+        final String ts = Long.toString(tsLong);
         Map<String, Object> entry = new HashMap<>();
-        entry.put("name", name);
-        entry.put("category", category);
-        entry.put("location", location);
+        entry.put("name", removeSpaces(name));
+        entry.put("category", removeSpaces(category));
+        entry.put("location", removeSpaces(location));
+        entry.put("buydate", buyDate);
+        entry.put("value", value);
         entry.put("ts", ts);
 
-        //db.collection("items").document(ts)
         db.collection("users").document(MainActivity.userID).collection("items").document(ts)
                 .set(entry)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void avoid) {
-                        Log.d("DB addEntry", "item added to database");
-                        getDataFromDatabase(); //or add manually and call updateList
+                      if (newImage) {
+                          uploadImage(cachedBitmap, ts);
+                      } else {
+                        getDataFromDatabase();
+                      }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("DB addEntry", "item NOT added to database");
+
                     }
                 });
     }
 
     //UPDATE EDITED ITEM IN DB
-  //TODO UPDATE ITEM
-    public static void updateEntry(String id, String name, String category, String location, Long timestamp) {
-      final DataModelItemList wipItem = new DataModelItemList(name, category, location, timestamp);
-      //Log.d("DB updateEntry", "data:"+id+" ;"+name+" ;"+category+" ;"+location+" ;"+timestamp);
-      db.collection("users").document(MainActivity.userID).collection("items").document(id)
-        .update("name", name, "category", category, "location", location, "ts", timestamp)
+    public static void updateEntry(String name, String category, String location, String buyDate, String value, final Long timestamp, final boolean newImage) {
+      Double valueWip = Double.valueOf(0);
+      if (value.length() > 0) { //catch for parsing error
+        valueWip = Double.parseDouble(value);
+      }
+      final DataModelItemList wipItem = new DataModelItemList(removeSpaces(name), removeSpaces(category), removeSpaces(location), buyDate, valueWip, false, timestamp);
+      db.collection("users").document(MainActivity.userID).collection("items").document(String.valueOf(timestamp))
+        .update("name", removeSpaces(name), "category", removeSpaces(category), "location", removeSpaces(location), "buydate", buyDate, "value", valueWip,"ts", timestamp)
           .addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void avoid) {
               EditItemActivity.showToast(true);
-              ViewItemActivity.updateDataAfterEdit(wipItem);
-              Log.d("DB updateEntry", "item updated");
-              getDataFromDatabase(); //or add manually and call updateList
-              //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString()); //crashed app
+              if (newImage) {
+                deleteImage(String.valueOf(timestamp));
+                if (cachedBitmap != null) {
+                  uploadImage(cachedBitmap, String.valueOf(timestamp));
+                }
+              } else {
+                getDataFromDatabase();
+              }
+              ViewItemActivity.updateDataAfterEdit(wipItem, newImage, cachedBitmap);
             }
           })
           .addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
               EditItemActivity.showToast(false);
-              Log.d("DB updateEntry", "item NOT updated");
             }
           });
     }
@@ -95,50 +125,47 @@ public class DatabaseActivity {
 
     //GET ITEM-DATA FROM DB
     public static void getDataFromDatabase() {
-        itemArray.clear(); //clear array first to avoid multiple entries of single entry
-        itemArrayBackup.clear();
-        //db.collection("items")
-        db.collection("users").document(MainActivity.userID).collection("items")
-        .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                //add entry as DataModelItemList object
-                                //to be able to reference different attributes of the object later on
-                                DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), Long.parseLong(document.get("ts").toString()));
-                                itemArray.add(newItem);
-                                itemArrayBackup.add(newItem);
-																Collections.reverse(itemArray);
-																Collections.reverse(itemArrayBackup);
-                            }
-                            Log.d("DB loadEntry", "items loaded from db");
-                            //Log.i("current db at 0: " ,"" + itemArray.get(0).itemToString());
-                            MainActivityFragment.updateList(); //update view in fragment
-                        } else {
-                            Log.d("DB loadEntry", "item not loaded from db");
-                        }
-                    }
-                });
+        if(!currentlyLoading) {
+          currentlyLoading = true;
+          itemArray.clear(); //clear array first to avoid multiple entries of single entry
+          itemArrayBackup.clear();
+          db.collection("users").document(MainActivity.userID).collection("items")
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+              @Override
+              public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                  for (QueryDocumentSnapshot document : task.getResult()) {
+                    //add entry as DataModelItemList object
+                    //to be able to reference different attributes of the object later on
+                    DataModelItemList newItem = new DataModelItemList(document.get("name").toString(), document.get("category").toString(), document.get("location").toString(), document.get("buydate").toString(), Double.parseDouble(document.get("value").toString()), false, Long.parseLong(document.get("ts").toString()));
+                    itemArray.add(0, newItem); //add item on top of the list
+                    itemArrayBackup.add(0, newItem);
+                  }
+                  currentlyLoading = false;
+                  MainActivityFragment.updateList(); //update view in fragment
+                } else {
+                  currentlyLoading = false;
+                }
+              }
+            });
+        }
     }
 
     //DELETE ITEM FROM DB
-    public static void deleteItemFromDatabase(String id) {
-        Log.d("DB del Entry", "id" + id);
+    public static void deleteItemFromDatabase(final String id) {
         db.collection("users").document(MainActivity.userID).collection("items").document(id)
         .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void avoid) {
-                        Log.d("DB del Entry", "DocumentSnapshot successfully deleted!");
+                        deleteImage(id);
                         getDataFromDatabase();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("DB del Entry", "Error deleting document", e);
                     }
                 });
     }
@@ -157,61 +184,55 @@ public class DatabaseActivity {
 
     //ADD CATEGORY TO DB
     public static void addCategory(String catName) {
-     Log.d("DB addCategory", "category added");
      Map<String, Object> catEntry = new HashMap<>();
-     catEntry.put("categoryName", catName);
-     db.collection("users").document(MainActivity.userID).collection("categories").document(catName)
+     catEntry.put("categoryName", removeSpaces(catName));
+     db.collection("users").document(MainActivity.userID).collection("categories").document(removeSpaces(catName))
        .set(catEntry)
        .addOnSuccessListener(new OnSuccessListener<Void>() {
          @Override
          public void onSuccess(Void avoid) {
-           Log.d("DB addCategory", "category added to database");
            getCategoriesFromDatabase();
          }
        })
        .addOnFailureListener(new OnFailureListener() {
          @Override
          public void onFailure(@NonNull Exception e) {
-           Log.d("DB addCategory", "Category NOT added to database");
          }
        });
      }
 
     //DELETE CATEGORY FROM DB
     public static void deleteCategoryFromDatabase(String catName) {
-      Log.d("DB del Category", "Catname" + catName);
       db.collection("users").document(MainActivity.userID).collection("categories").document(catName)
         .delete()
         .addOnSuccessListener(new OnSuccessListener<Void>() {
           @Override
           public void onSuccess(Void avoid) {
-            Log.d("DB del category", "DocumentSnapshot successfully deleted!");
             getCategoriesFromDatabase();
           }
         })
         .addOnFailureListener(new OnFailureListener() {
           @Override
           public void onFailure(@NonNull Exception e) {
-            Log.d("DB del category", "Error deleting document", e);
           }
         });
     }
 
-    //GET CATEGORY FROM DB
-    public static String getCategoryFromDatabase(String catName) {
-      for (int i=0; i < categoryArray.size(); i++) {
-        if(categoryArray.get(i).equals(catName)) {
-          return categoryArray.get(i);
+    public static void deleteItemsByCategory(final String category) {
+      deleteCategoryFromDatabase(category);
+      currentlyLoading = true; //prevent loading while deleting
+      for (int i = 0; i < itemArray.size(); i++) {
+          if (itemArray.get(i).getItemCategory().equals(category)) {
+            deleteItemFromDatabase((Long.toString(itemArray.get(i).getTimestamp())));
+          }
         }
-      }
-      return null;
+      currentlyLoading = false;
+      getDataFromDatabase();
     }
 
   //GET CATEGORY-DATA FROM DB
   public static void getCategoriesFromDatabase() {
     categoryArray.clear(); //clear array first to avoid multiple entries of single entry
-    Log.d("dbCollection" , "current: " + db.collection("users").document(MainActivity.userID).collection("categories")
-      .get());
     db.collection("users").document(MainActivity.userID).collection("categories")
       .get()
       .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -219,21 +240,110 @@ public class DatabaseActivity {
         public void onComplete(@NonNull Task<QuerySnapshot> task) {
           if (task.isSuccessful()) {
             //Set default values for categories
-            categoryArray.add("Unterhaltungselektronik");
-            categoryArray.add("Haushaltsgegenstände");
             categoryArray.add("Einrichtung");
             categoryArray.add("Hobby");
-            categoryArray.add("Werkzeug");
+            categoryArray.add("Kleidung");
             //add user's categories
             for (QueryDocumentSnapshot document : task.getResult()) {
               String newItem = document.get("categoryName").toString();
               categoryArray.add(newItem);
             }
-            Log.d("DB loadCategories", "categories loaded from db");
+            try {
+              CategoryFragment.updateList();
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
           } else {
-            Log.d("DB loadCategories", "categories not loaded from db");
           }
         }
       });
   }
+
+  //Update Category
+  public static void updateCategoryInDatabase(String oldCat, final String newCat){
+    db.collection("users").document(MainActivity.userID).collection("categories").document(oldCat)
+      .delete()
+      .addOnSuccessListener(new OnSuccessListener<Void>() {
+        @Override
+        public void onSuccess(Void avoid) {
+          addCategory(newCat);
+        }
+      })
+      .addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure(@NonNull Exception e) {
+        }
+      });
+  }
+
+  //Media
+  public static void setCachedBitmap(Bitmap bitmap) {
+      cachedBitmap = bitmap;
+  }
+
+  public static void uploadImage(Bitmap bitmap, final String itemID) {
+    String pathStr = MainActivity.userID + "/images/" + itemID + ".jpg";
+    StorageReference imagesRef = storageRef.child(pathStr);
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+    byte[] data = baos.toByteArray();
+
+    UploadTask uploadTask = imagesRef.putBytes(data);
+    uploadTask.addOnFailureListener(new OnFailureListener() {
+      @Override
+      public void onFailure(@NonNull Exception exception) {
+        // Handle unsuccessful uploads
+      }
+    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+      @Override
+      public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+        // ...
+        getDataFromDatabase();
+      }
+    });
+  }
+
+  public static void downloadImage(String itemID, final ImageView view, final Bitmap defaultBitmap) {
+    String imgPath = MainActivity.userID + "/images/" + itemID + ".jpg";
+    StorageReference islandRef = storageRef.child(imgPath);
+
+    final long ONE_MEGABYTE = 1024 * 1024;
+    islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+      @Override
+      public void onSuccess(byte[] bytes) {
+        // Data for "images/island.jpg" is returns, use this as needed
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inMutable = true;
+        downloadedBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+        view.setImageBitmap(downloadedBitmap);
+      }
+    }).addOnFailureListener(new OnFailureListener() {
+      @Override
+      public void onFailure(@NonNull Exception exception) {
+        // Handle any errors
+        view.setImageBitmap(defaultBitmap);
+      }
+    });
+
+  }
+
+  public static void deleteImage(String itemID) {
+    String pathStr = MainActivity.userID + "/images/" + itemID + ".jpg";
+    StorageReference deleteRef = storageRef.child(pathStr);
+      // Delete the file
+      deleteRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+        @Override
+        public void onSuccess(Void aVoid) {
+          // File deleted successfully
+            MainActivityFragment.updateList();
+        }
+      }).addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure(@NonNull Exception exception) {
+        }
+      });
+  }
+
 }

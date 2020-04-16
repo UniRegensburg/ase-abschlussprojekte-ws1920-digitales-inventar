@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#e9504d</color>
-    <color name="colorPrimaryDark">#ba3a3d</color>
-    <color name="colorAccent">#33aaaa</color>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#BB86FC</color>
 
     <color name="cat1">#00D0DB</color>
     <color name="cat2">#00B6C4</color>
@@ -15,4 +15,27 @@
     <color name="cat9">#d37940</color>
 
     <color name="selection">#ffc442</color>
+
+    <color name="category_text">#aaaaaa</color>
+    <color name="basis_text">#4d4c4c</color>
+
+    <!--material-ui-palette-->
+    <!--basic-colors-->
+    <color name="primary">#6200EE</color>
+    <color name="primaryVariant">#3700B3</color>
+    <color name="primaryLight">#BB86FC</color>
+    <color name="secondary">#018786</color>
+    <color name="secondaryVariant">#03DAC6</color>
+    <color name="background">#121212</color>
+    <color name="backgroundOverlay">#f4f0fb</color>
+    <color name="darkPrimary">#1F1B24</color>
+    <color name="primaryCaution">#332940</color>
+    <color name="error">#B00020</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent_white">#E6FFFFFF</color>
+    <!--text-->
+    <color name="disabled">#dbdbe3</color>
+    <color name="mediumEmphasized">#9d93ac</color>
+    <color name="highEmphasized">#373737</color>
 </resources>

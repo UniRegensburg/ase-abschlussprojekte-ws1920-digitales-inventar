@@ -17,7 +17,17 @@ public class InputChecker {
 		public CharSequence filter(CharSequence source, int start, int end,
 															 Spanned dest, int dstart, int dend) {
 
-			if (source != null && blockCharacterSet.contains(("" + source))) {
+			if ((source != null) && blockCharacterSet.contains("" + source)) {
+				try {
+					NewItemActivity.hideKeyboard();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				try {
+					EditItemActivity.hideKeyboard();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				return "";
 			}
 			return null;
@@ -40,6 +50,4 @@ public class InputChecker {
 		Date resultdate = new Date(itemTs);
 		return resultdate;
 	}
-	//set date
-
 }

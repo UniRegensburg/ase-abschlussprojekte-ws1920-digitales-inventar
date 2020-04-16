@@ -5,6 +5,20 @@ apply plugin: 'com.google.gms.google-services'
 preBuild.dependsOn('checkstyle')
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('../keystore3.jks')
+            storePassword 'digitalesinventar'
+            keyAlias = 'digitalesinventar'
+            keyPassword 'digitalesinventar'
+        }
+        debug {
+            storeFile file('../keystore3.jks')
+            storePassword 'digitalesinventar'
+            keyAlias = 'digitalesinventar'
+            keyPassword 'digitalesinventar'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -25,15 +39,20 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'com.google.firebase:firebase-analytics:17.2.0'
-    implementation 'com.google.firebase:firebase-firestore:21.3.1'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.firebase:firebase-analytics:17.2.3'
+    implementation 'com.google.firebase:firebase-firestore:21.4.1'
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
+    implementation 'com.google.firebase:firebase-auth:19.3.0'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.miguelcatalan:materialsearchview:1.2.0'//ab 1.0.0 bis 1.2.0 funktionierend, ab 1.3.0 wird nur ein Suchvorschlag angezeigt
 }
 
 task checkstyle(type: Checkstyle) {
@@ -46,7 +65,7 @@ task checkstyle(type: Checkstyle) {
     def configProps = ['proj.module.dir': projectDir.absolutePath]
     configProperties configProps
 
-    // empty classpath
+    //empty classpath
     classpath = files()
 
     showViolations true

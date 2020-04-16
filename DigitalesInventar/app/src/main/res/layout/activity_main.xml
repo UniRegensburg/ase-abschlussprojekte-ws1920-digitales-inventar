@@ -5,141 +5,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-    </com.google.android.material.appbar.AppBarLayout>
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/plusButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_below="@+id/appBarLayout"
         android:id="@+id/all">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_anchorGravity="center"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        <RelativeLayout
-            android:id="@+id/heading1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar">
-
-            <TextView
-                android:id="@+id/textViewHeadingCategories"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="@string/categories"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/firstCates"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/heading1"
-            android:orientation="horizontal">
+            android:layout_marginTop="150px"
+            android:background="@color/primary"
+            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorHeight="15px"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/black">
 
-            <Button
-                android:id="@+id/cat1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/cat1"
-                android:drawableTop="@drawable/fui_ic_anonymous_white_24dp"
-                android:text="@string/cat1"
-                android:textSize="12sp"/>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tab1"
+                android:text="@string/tab_text_1"/>
 
-            <Button
-                android:id="@+id/cat2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/cat2"
-                android:drawableTop="@drawable/fui_ic_anonymous_white_24dp"
-                android:text="@string/cat2"
-                android:textSize="12sp"/>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tab2"
+                android:text="@string/tab_text_2"/>
 
-            <Button
-                android:id="@+id/cat3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/cat3"
-                android:drawableTop="@drawable/fui_ic_anonymous_white_24dp"
-                android:text="@string/cat3"
-                android:textSize="12sp"/>
-        </LinearLayout>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tab3"
+                android:text="@string/tab_text_3"/>
 
-        <LinearLayout
-            android:id="@+id/secondCates"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/firstCates"
-            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/cat4"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:backgroundTint="@color/cat4"
-                android:drawableTop="@drawable/fui_ic_anonymous_white_24dp"
-                android:text="@string/cat4"
-                android:textSize="12sp"/>
-            <Button
-                android:id="@+id/cat5"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:backgroundTint="@color/cat5"
-                android:drawableTop="@drawable/fui_ic_anonymous_white_24dp"
-                android:text="@string/cat5"
-                android:textSize="12sp"/>
-            <Button
-                android:id="@+id/cat6"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:backgroundTint="@color/cat6"
-                android:drawableTop="@drawable/fui_ic_anonymous_white_24dp"
-                android:text="@string/cat6"
-                android:textSize="12sp"/>
-        </LinearLayout>
+        </com.google.android.material.tabs.TabLayout>
 
         <LinearLayout
             android:id="@+id/heading2"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/secondCates">
+            android:layout_below="@+id/tabLayout"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal">
 
             <Space
                 android:id="@+id/spacer"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/textViewSortItems"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sort_items"
-                android:layout_marginLeft="265sp"/>
+                android:text="@string/sort_items"/>
             <Spinner
                 android:id="@+id/spinnerSortBy"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <LinearLayout
@@ -151,8 +79,44 @@
             <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
+                android:layout_height="match_parent"/>
         </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/plusButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/plus50px"/>
+
     </RelativeLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <FrameLayout
+            android:id="@+id/toolbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/primary"
+                app:layout_anchorGravity="center"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+        </FrameLayout>
+</com.google.android.material.appbar.AppBarLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <com.miguelcatalan.materialsearchview.MaterialSearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
