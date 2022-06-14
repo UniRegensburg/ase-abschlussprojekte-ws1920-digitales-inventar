@@ -1,10 +1,10 @@
 # Digitales Inventar
 
-Das Digitale Inventar ist eine Anwendung, welche die Orgnanisation und Verwaltung eines Haushalts vereinfachen und übersichtlicher gestalten soll.<br>
-Mit Hilfe des Digitalen Inventars soll es möglich sein, jegliche Art Gegenstände zu erfassen, diese zu kategorisieren und besser verwalten zu können.<br>
-Der/Die Nutzer/in kann seine/ihre Gegenstände erfassen, benennen und verschieden annotieren.<br>
-Der/Die Nutzer/in kann verschiedene Kategorien erstellen, benennen und verwalten.<br>
-Änderungen des Bestands können über Löschungen und Editierungen an den Gegenständen und Kategorien nachvollzogen werden.<br>
+Das Digitale Inventar ist eine Anwendung, welche die Organisation und Verwaltung eines Haushaltes vereinfachen und übersichtlicher gestalten soll.<br>
+Mit Hilfe des Digitalen Inventars soll es möglich sein, jegliche Art von Gegenständen zu erfassen, diese zu kategorisieren und besser verwalten zu können.<br>
+Nutzer\*innen können Gegenstände erfassen, benennen und verschieden annotieren.<br>
+Zudem können verschiedene Kategorien erstellt, benannt und verwaltet werden.<br>
+Änderungen des Bestands können über Löschen und Editieren der Gegenstände und Kategorien nachvollzogen werden.<br>
 
 ![Screenshot](./docs/images/Screenshot.png)
 
@@ -42,17 +42,18 @@ laura.zeilbeck@stud.uni-regensburg.de<br>
 
 ## Beschreibung
 
-Das Digitale Inventar erlaubt es dem Nutzer/in Gegenstände zu seinem/ihrem Inventar
+Das Digitale Inventar erlaubt es Nutzer*\innnen Gegenstände zu einem Inventar
 hinzuzufügen und diese wieder zu entfernen.
 Eine individuelle Anmeldung ist durch eine Email-Adresse notwendig.<br>
 Dem Gegenstand kann ein Name, ein Ort, eine Kategorie, das Kaufdatum und ein Wert in € gegeben werden.<br>
-Das Erstelldatum wird automatisch vom System hinzugefügt. Der/Die Nutzer/in kann seine/ihre Gegenstände nach dem Erstellen bearbeiten und Name, Ort, Kategorie, Kaufdatum und Wert ändern. Der/Die Nutzer/in kann seine/ihre Gegenstände aufgelistet sehen.<br>
-Der/Die Nutzer/in kann seine/ihre Gegenstände nach "Neueste", "Älteste", "Name absteigend" und "Name aufsteigend" sortieren.<br>
-Der/Die Nutzer/in kann einen Gegenstand durch swipen löschen. Der/Die Nutzer/in kann mehrere Gegenstände durch einen LongClick aus dem System löschen.<br>
-Der/Die Nutzer/in kann die Gegenstandsliste durchsuchen. Dabei werden Suchvorschläge vorgegeben.<br>
-Der/Die Nutzer/in kann die Kategorien aufgelistet sehen. Der/Die Nutzer/in kann neue Kategorien hinzufügen. Der/Die Nutzer/in kann eigene Kategorien neu benennen. Der/Die Nutzer/in kann seine/ihre Kategorien nach "Name absteigend" und "Name aufsteigend" sortieren.<br>
-Der/Die Nutzer/in kann eine eigene Kategorie durch swipen löschen.<br>
-Der/Die Nutzer/in kann seine/ihre Gegenstände nach den Kategorien filtern lassen. Der/Die Nutzer/in kann die Kategorienliste durchsuchen. Dabei werden Suchvorschläge vorgegeben.<br>
-Der/Die Nutzer/in kann die Orte aufgelistet sehen. Der/Die Nutzer/in kann seine/ihre Gegenstände nach den Orten filtern lassen. Der/Die Nutzer/in kann die Ortliste durchsuchen. Dabei werden Suchvorschläge vorgegeben.<br>
+Das Erstelldatum wird automatisch vom System hinzugefügt. Der/Die Nutzer/in kann seine/ihre Gegenstände nach dem Erstellen bearbeiten und Name, Ort, Kategorie, Kaufdatum und Wert ändern.<br>
+Nutzer*\innen können Gegenstände aufgelistet sehen.<br>
+Nutzer*\innen können Gegenstände nach "Neueste", "Älteste", "Name absteigend" und "Name aufsteigend" sortieren.<br>
+Nutzer*\innen können einen Gegenstand durch swipen löschen. Nutzer*\innen können mehrere Gegenstände durch einen LongClick aus dem System löschen.<br>
+Nutzer*\innen können die Gegenstandsliste durchsuchen. Dabei werden Suchvorschläge vorgegeben.<br>
+Nutzer*\innen können die Kategorien aufgelistet sehen. Nutzer*\innen können neue Kategorien hinzufügen. Nutzer*\innen können eigene Kategorien neu benennen. Nutzer*\innen können nach "Name absteigend" und "Name aufsteigend" sortieren.<br>
+Nutzer*\innen können eine eigene Kategorie durch swipen löschen.<br>
+Nutzer*\innen können deren Gegenstände nach Kategorien filtern lassen. Nutzer*\innen können die Kategorienliste durchsuchen. Dabei werden Suchvorschläge vorgegeben.<br>
+Nutzer*\innen können können Orte aufgelistet sehen. Nutzer*\innen können deren Gegenstände nach Orten filtern lassen. Nutzer*\innen können die Ortliste durchsuchen. Dabei werden Suchvorschläge vorgegeben.<br>
 
 ![Demo-Video](./docs/demo/3rd-Release.gif)
